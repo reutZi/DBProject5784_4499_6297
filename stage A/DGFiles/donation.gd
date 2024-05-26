@@ -4,15 +4,15 @@ Version=1
 
 [Preferences]
 Username=
-Password=2876
+Password=2694
 Database=
-DateFormat=dd-mm-yyyy
+DateFormat=
 CommitCount=0
 CommitDelay=0
 InitScript=
 
 [Table]
-Owner=TZIPILEV
+Owner=REUT1
 Name=DONATION
 Count=10..20
 
@@ -42,13 +42,6 @@ Name=VALID
 Type=CHAR
 Size=1
 Data=List('Y', 'N')
-Master=
-
-[Record]
-Name=LICENSE_NUMBER
-Type=NUMBER
-Size=10
-Data=List(select license_number from PARAMEDIC)
 Master=
 
 [Record]

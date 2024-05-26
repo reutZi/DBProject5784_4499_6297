@@ -44,7 +44,7 @@ insert into DONATION_PLACE (place_id, place_phone, manager, address) values (43,
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (44, '1165170136', 'Joaquin Beckmann', '8 Village Hill');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (45, '6754330125', 'Davide Paal', '58481 Green Ridge Alley');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (46, '5128401141', 'Leta Kettell', '22375 Arkansas Drive');
-insert into DONATION_PLACE (place_id, place_phone, manager, address) values (47, '2047456300', 'Terri Haythornthwaite', '2 Evergreen Place');
+insert into DONATION_PLACE (place_id, place_phone, manager, address) values (47, '2047456300', 'Terri Hayth', '2 Evergreen Place');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (48, '7602984356', 'Felice Lerner', '7 Cardinal Alley');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (49, '6464758297', 'Townie Ludvigsen', '1 Village Green Point');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (50, '8597561025', 'Basilius Huke', '86 Stephen Center');
@@ -78,7 +78,7 @@ insert into DONATION_PLACE (place_id, place_phone, manager, address) values (77,
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (78, '7678492470', 'Teddi Gibby', '10 Northview Park');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (79, '1351975720', 'Parker Start', '46 Dexter Center');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (80, '4452057653', 'Hasty Caudrelier', '16706 Rusk Crossing');
-insert into DONATION_PLACE (place_id, place_phone, manager, address) values (81, '8689461207', 'Roseanne Francombe', '6108 Crescent Oaks Crossing');
+insert into DONATION_PLACE (place_id, place_phone, manager, address) values (81, '8689461207', 'Roseanne Francombe', '61 Oaks Crossing');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (82, '3069546148', 'Jacquelin Chitter', '62 Jenna Avenue');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (83, '9417943618', 'Ricca Louw', '44156 Eagle Crest Center');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (84, '9682002665', 'Henryetta Baudin', '8 Mallard Plaza');
@@ -149,7 +149,7 @@ insert into DONATION_PLACE (place_id, place_phone, manager, address) values (148
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (149, '2422796910', 'Garrik Bernardinelli', '65372 Calypso Pass');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (150, '7827065898', 'Felic Burnet', '8260 Bowman Alley');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (151, '1624230569', 'Berkeley Feld', '4 Chinook Center');
-insert into DONATION_PLACE (place_id, place_phone, manager, address) values (152, '5171086988', 'Sigismond Meaddowcroft', '31 Clemons Junction');
+insert into DONATION_PLACE (place_id, place_phone, manager, address) values (152, '5171086988', 'Sigismond Meadd', '31 Clemons Junction');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (153, '2901712365', 'Tobi Mutimer', '698 Boyd Parkway');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (154, '5097444136', 'Gawain Jovicevic', '457 Hanover Center');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (155, '2569988368', 'Zacharia Tiltman', '1 Morrow Drive');
@@ -267,7 +267,7 @@ insert into DONATION_PLACE (place_id, place_phone, manager, address) values (266
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (267, '7497809324', 'Lucais Sends', '3 Hooker Circle');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (268, '6466056583', 'Julian Inmett', '70419 Maryland Terrace');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (269, '4082791627', 'Diann Gymblett', '0 Brown Trail');
-insert into DONATION_PLACE (place_id, place_phone, manager, address) values (270, '8062652142', 'Yardley Raubenheimers', '9823 Manitowish Point');
+insert into DONATION_PLACE (place_id, place_phone, manager, address) values (270, '8062652142', 'Yardley Raubens', '9823 Manitowish Point');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (271, '2213208077', 'Nina Curnucke', '572 Bunting Road');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (272, '3843141459', 'Cheryl Shmyr', '976 Maple Point');
 insert into DONATION_PLACE (place_id, place_phone, manager, address) values (273, '7488572135', 'Luce Monte', '30 Melby Terrace');

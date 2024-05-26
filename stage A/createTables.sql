@@ -65,7 +65,7 @@ CREATE TABLE Donor
 CREATE TABLE Donation
 (
   donation_id NUMERIC(10) NOT NULL,
-  pass_tasts CHAR(1) NOT NULL,
+  pass_tests CHAR(1) NOT NULL,
   donation_date DATE NOT NULL,
   valid CHAR(1) NOT NULL,
   person_id_paramedic NUMERIC(10) NOT NULL,
