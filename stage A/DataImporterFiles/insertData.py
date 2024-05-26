@@ -9,7 +9,7 @@ max_length1 = 10
 max_length3 = 25
 
 # Unique Generated data
-unique_person_ids = [fake.unique.random_number(digits=10, fix_len=True) for _ in range(400)]
+unique_person_ids = [fake.unique.random_number(digits=10, fix_len=True) for _ in range(600)]
 
 
 # Data for Blood table
@@ -32,7 +32,7 @@ person_data = [
         'first_name': fake.first_name()[:max_length1],
         'email': fake.free_email()[:max_length3]
     }
-    for i in range(400)
+    for i in range(600)
 ]
 
 

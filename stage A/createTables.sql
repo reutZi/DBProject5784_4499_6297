@@ -10,15 +10,16 @@ CREATE TABLE Person
 CREATE TABLE Paramedic
 (
   license_number NUMERIC(10) NOT NULL,
+  seniority NUMERIC(2) NOT NULL,
   person_id NUMERIC(10) NOT NULL,
-  PRIMARY KEY (license_number, person_id),
+  PRIMARY KEY (person_id),
   FOREIGN KEY (person_id) REFERENCES Person(person_id)
 );
 
 CREATE TABLE Blood
 (
   sign CHAR(1) NOT NULL,
-  type CHAR(2) NOT NULL,
+  type VARCHAR(2) NOT NULL,
   PRIMARY KEY (sign, type)
 );
 
@@ -55,7 +56,7 @@ CREATE TABLE Donor
   birth_date DATE NOT NULL,
   person_id NUMERIC(10) NOT NULL,
   sign CHAR(1) NOT NULL,
-  type CHAR(2) NOT NULL,
+  type VARCHAR(2) NOT NULL,
   PRIMARY KEY (person_id),
   FOREIGN KEY (person_id) REFERENCES Person(person_id),
   FOREIGN KEY (sign, type) REFERENCES Blood(sign, type)
@@ -64,16 +65,15 @@ CREATE TABLE Donor
 CREATE TABLE Donation
 (
   donation_id NUMERIC(10) NOT NULL,
-  pass_tests CHAR(1) NOT NULL,
+  pass_tasts CHAR(1) NOT NULL,
   donation_date DATE NOT NULL,
   valid CHAR(1) NOT NULL,
-  license_number NUMERIC(10) NOT NULL,
   person_id_paramedic NUMERIC(10) NOT NULL,
   person_id_donor NUMERIC(10) NOT NULL,
   place_id NUMERIC(10) NOT NULL,
   hospital_id NUMERIC(10) NOT NULL,
   PRIMARY KEY (donation_id),
-  FOREIGN KEY (license_number, person_id_paramedic) REFERENCES Paramedic(license_number, person_id),
+  FOREIGN KEY (person_id_paramedic) REFERENCES Paramedic(person_id),
   FOREIGN KEY (person_id_donor) REFERENCES Donor(person_id),
   FOREIGN KEY (place_id) REFERENCES Donation_place(place_id),
   FOREIGN KEY (hospital_id) REFERENCES Receiver(hospital_id)
