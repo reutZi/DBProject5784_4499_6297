@@ -1,0 +1,26 @@
+PL/SQL Developer Project
+
+[Options]
+AutoConnect=0
+Username=
+Password=2590
+Database=
+ConnectAs=Normal
+Edition=
+Workspace=
+HaltAfterError=0
+ShowItems=-1
+
+[Groups]
+stageA=0,1,2,3,
+
+[Files]
+1,0,,,createTables.sql
+1,0,,,dropTables.sql
+1,0,,,insertTables.sql
+1,0,,,selectAll.sql
+
+[Notes]
+{\rtf1\fbidis\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
+\viewkind4\uc1\pard\ltrpar\lang1037\f0\fs16 
+\par }

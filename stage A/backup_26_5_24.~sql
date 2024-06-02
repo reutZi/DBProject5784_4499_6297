@@ -1,5 +1,5 @@
-prompt PL/SQL Developer import file
-prompt Created on йен шащеп 26 оай 2024 by USER
+п»їprompt PL/SQL Developer import file
+prompt Created on Ч™Ч•ЧќВ ЧЁЧђЧ©Ч•Чџ 26 ЧћЧђЧ™ 2024 by USER
 set feedback off
 set define off
 prompt Creating BLOOD...
@@ -80,9 +80,9 @@ prompt Creating DONATION...
 create table DONATION
 (
   donation_id         NUMBER(10) not null,
-  pass_tests          CHAR(1),
+  pass_tests          CHAR(1) not null,
   donation_date       DATE not null,
-  valid               CHAR(1),
+  valid               CHAR(1) not null,
   person_id_paramedic NUMBER(10) not null,
   person_id_donor     NUMBER(10) not null,
   place_id            NUMBER(10) not null,
