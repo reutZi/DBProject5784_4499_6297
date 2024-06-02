@@ -1,0 +1,2 @@
+ALTER TABLE Paramedic
+ADD salary NUMERIC(6) DEFAULT 0;
