@@ -1,4 +1,4 @@
-SELECT P.pid AS person_id, P.f_name AS first_name, P.l_name AS last_name,
+SELECT P.f_name AS first_name, P.l_name AS last_name,
     D.type AS blood_type, D.sign AS rh_sign,
     (SELECT MAX(DN.donation_date) 
      FROM DONATION DN 
@@ -16,4 +16,4 @@ SELECT P.pid AS person_id, P.f_name AS first_name, P.l_name AS last_name,
     END AS can_donate
 FROM PERSON P
 JOIN DONOR D ON P.pid = D.donor_id
-WHERE P.pid = '238348956';
+WHERE P.pid = &<name="ID" type="string" required="true">;

@@ -1,0 +1,33 @@
+-- Step 1: Identify paramedics who participated in more than 5 and more than 7 donations in the last year
+WITH ParamedicParticipation AS (
+    SELECT paramedic_id,
+           COUNT(donation_id) AS donation_count
+    FROM DONATION
+    WHERE donation_date BETWEEN ADD_MONTHS(SYSDATE, -12) AND SYSDATE
+    GROUP BY paramedic_id
+),
+EligibleParamedics AS (
+    SELECT paramedic_id,
+           CASE 
+               WHEN donation_count > 7 THEN 400
+               WHEN donation_count > 5 THEN 200
+               ELSE 0
+           END AS salary_increase
+    FROM ParamedicParticipation
+    WHERE donation_count > 5
+),
+ExperiencedParamedics AS (
+    SELECT P.paramedic_id, P.salary_increase
+    FROM PARAMEDIC PR
+    JOIN EligibleParamedics P ON PR.paramedic_id = P.paramedic_id
+    WHERE PR.seniority > 2
+)
+
+-- Step 2: Update the salary for eligible paramedics
+UPDATE PARAMEDIC
+SET salary = salary + (
+    SELECT EP.salary_increase
+    FROM ExperiencedParamedics EP
+    WHERE EP.paramedic_id = PARAMEDIC.paramedic_id
+)
+WHERE paramedic_id IN (SELECT paramedic_id FROM ExperiencedParamedics);
