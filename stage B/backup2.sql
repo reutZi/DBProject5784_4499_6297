@@ -1,5 +1,5 @@
 ﻿prompt PL/SQL Developer import file
-prompt Created on יום שני 03 יוני 2024 by reutz
+prompt Created on יום שלישי 04 יוני 2024 by reutz
 set feedback off
 set define off
 prompt Creating BLOOD...
@@ -7,10 +7,9 @@ create table BLOOD
 (
   sign CHAR(1) not null,
   type VARCHAR2(2) not null
-)
+);
 alter table BLOOD
-  add primary key (SIGN, TYPE)
-  ;
+  add primary key (SIGN, TYPE);
 
 prompt Creating DONATION_PLACE...
 create table DONATION_PLACE
@@ -19,10 +18,9 @@ create table DONATION_PLACE
   place_phone VARCHAR2(10) not null,
   manager     VARCHAR2(20) not null,
   address     VARCHAR2(25) not null
-)
+);
 alter table DONATION_PLACE
-  add primary key (PLACE_ID)
-  ;
+  add primary key (PLACE_ID);
 
 prompt Creating PERSON...
 create table PERSON
@@ -31,11 +29,9 @@ create table PERSON
   l_name VARCHAR2(10) not null,
   f_name VARCHAR2(10) not null,
   email  VARCHAR2(30)
-)
-
+);
 alter table PERSON
-  add primary key (PID)
-  ;
+  add primary key (PID);
 alter table PERSON
   add constraint CHK_EMAIL_FORMAT
   check (INSTR(email, '@') > 0);
@@ -48,11 +44,9 @@ create table DONOR
   donor_id   VARCHAR2(9) not null,
   sign       CHAR(1) not null,
   type       VARCHAR2(2) not null
-)
-
+);
 alter table DONOR
-  add primary key (DONOR_ID)
-  ;
+  add primary key (DONOR_ID);
 alter table DONOR
   add foreign key (DONOR_ID)
   references PERSON (PID);
@@ -67,11 +61,9 @@ create table PARAMEDIC
   seniority    NUMBER(2) default 0,
   paramedic_id VARCHAR2(9) not null,
   salary       NUMBER(6) default 0
-)
-
+);
 alter table PARAMEDIC
-  add primary key (PARAMEDIC_ID)
-  ;
+  add primary key (PARAMEDIC_ID);
 alter table PARAMEDIC
   add foreign key (PARAMEDIC_ID)
   references PERSON (PID);
@@ -84,11 +76,9 @@ create table RECEIVER
   city           VARCHAR2(15) not null,
   delivery_date  DATE not null,
   hospital_phone VARCHAR2(10) not null
-)
-
+);
 alter table RECEIVER
-  add primary key (HOSPITAL_ID)
-  ;
+  add primary key (HOSPITAL_ID);
 
 prompt Creating DONATION...
 create table DONATION
@@ -101,11 +91,9 @@ create table DONATION
   donor_id      VARCHAR2(9) not null,
   place_id      NUMBER(5) not null,
   hospital_id   NUMBER(5)
-)
-
+);
 alter table DONATION
-  add primary key (DONATION_ID)
-  ;
+  add primary key (DONATION_ID);
 alter table DONATION
   add foreign key (PARAMEDIC_ID)
   references PARAMEDIC (PARAMEDIC_ID);
@@ -127,11 +115,9 @@ create table PERSON_PHONE_NUMBER
 (
   phone_number VARCHAR2(12) not null,
   pid          VARCHAR2(9) not null
-)
-
+);
 alter table PERSON_PHONE_NUMBER
-  add primary key (PHONE_NUMBER, PID)
-  ;
+  add primary key (PHONE_NUMBER, PID);
 alter table PERSON_PHONE_NUMBER
   add foreign key (PID)
   references PERSON (PID);
