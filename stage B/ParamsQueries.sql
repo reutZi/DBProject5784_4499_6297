@@ -42,28 +42,35 @@ JOIN DONOR D ON P.pid = D.donor_id
 WHERE P.pid = &<name="ID" type="string" required="true">;
 
 -- 3.
-SELECT  p.f_name,  p.l_name,  pp.phone_number
-FROM   person p
-   	JOIN donor d ON p.pid = d.donor_id
-   	JOIN person_phone_number pp ON p.pid = pp.pid
-WHERE  d.type = 'O' AND d.sign= '-'
-   	AND ROUND(MONTHS_BETWEEN(SYSDATE, d.birth_date) / 12) BETWEEN  &min_age AND &max_age
-   	AND EXISTS (SELECT 1
-               	FROM   donation dn
-               	WHERE  dn.donor_id = d.donor_id
-                      	AND dn.donation_date >= TRUNC(SYSDATE) - INTERVAL '1' YEAR
-                      	AND dn.pass_tests = 'Y');
+SELECT  p.f_name AS First_name,  p.l_name AS Last_name,  pp.phone_number
+FROM person p
+ 	JOIN donor d ON p.pid = d.donor_id
+ 	JOIN person_phone_number pp ON p.pid = pp.pid
+WHERE  d.type=&<name="Blood type" list="SELECT DISTINCT type FROM BLOOD" type="string">
+ 	AND d.sign=&<name="Rh" list="SELECT DISTINCT sign FROM BLOOD" type="string">
+ 	AND ROUND(MONTHS_BETWEEN(SYSDATE, d.birth_date) / 12) BETWEEN 
+&<name="Min age" hint="The min age for donating is 17" required="true" default="17"> 
+AND &<name="Max age" required="true" default="60">
+ 	AND EXISTS (SELECT 1
+             	FROM   donation dn
+             	WHERE  dn.donor_id = d.donor_id
+                    	AND dn.donation_date >= 
+                        TRUNC(SYSDATE) - INTERVAL '1' YEAR
+                    	AND dn.pass_tests = 'Y'
+                        AND dn.valid = 'Y');
+
 						
 -- 4.
-SELECT p.f_name,
-       p.l_name,
-       p.pid AS paramedic_id,
-       COUNT(d.donation_id) AS donation_count
+SELECT p.f_name AS last_name, p.l_name AS first_name,
+       p.pid AS paramedic_id, COUNT(d.donation_id) AS donation_count
 FROM   person p
-       JOIN paramedic pr ON p.pid = pr.paramedic_id
-       JOIN donation d ON pr.paramedic_id = d.paramedic_id
-WHERE  EXTRACT(MONTH FROM d.donation_date) = EXTRACT(MONTH FROM TO_DATE(&target_month, 'YYYY-MM'))
-       AND EXTRACT(YEAR FROM d.donation_date) = EXTRACT(YEAR FROM TO_DATE(&target_month, 'YYYY-MM'))
+       JOIN PARAMEDIC pr ON p.pid = pr.paramedic_id
+       JOIN DONATION d ON pr.paramedic_id = d.paramedic_id
+       JOIN DONATION_PLACE dp ON d.place_id = dp.place_id
+WHERE  EXTRACT(MONTH FROM d.donation_date) = &<name="Month" required="true" type="integer">
+       AND EXTRACT(YEAR FROM d.donation_date) = &<name="Year" required="true" type="integer">
+       AND dp.address = &<name="Address" required="true" type="string">
+       AND dp.place_id = &<name="Place id" required="true" type="string">
 GROUP BY p.f_name, p.l_name, p.pid
 HAVING COUNT(d.donation_id) > 0
 ORDER BY donation_count DESC;
