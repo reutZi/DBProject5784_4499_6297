@@ -3,7 +3,7 @@ PL/SQL Developer Project
 [Options]
 AutoConnect=0
 Username=
-Password=2590
+Password=2678
 Database=
 ConnectAs=Normal
 Edition=
@@ -12,13 +12,20 @@ HaltAfterError=0
 ShowItems=-1
 
 [Groups]
-stageA=0,1,2,3,
+StageB=4,5,6,7,8,9,
+StageA=0,1,2,3,
 
 [Files]
 1,0,,,createTables.sql
 1,0,,,dropTables.sql
 1,0,,,insertTables.sql
 1,0,,,selectAll.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\alterTables.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\backup2.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\backupTables04_06_2024.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\Constraints.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\ParamsQueries.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\Queries.sql
 
 [Notes]
 {\rtf1\fbidis\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
