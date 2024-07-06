@@ -8,8 +8,13 @@ DECLARE
   v_donor_threshold NUMBER := 13; -- Set the donor threshold value
 BEGIN
   -- Call the Add_Grant procedure first
+  DBMS_OUTPUT.PUT_LINE('Paramedics who received a grant: ');
+  DBMS_OUTPUT.PUT_LINE(' ');
   Add_Grant;
-
+  
+  DBMS_OUTPUT.PUT_LINE(' ');
+  DBMS_OUTPUT.PUT_LINE('Outstanding paramedics: ');
+  DBMS_OUTPUT.PUT_LINE(' ');
   -- Call the Is_Paramedic_Outstanding function to get the cursor
   v_cursor := Is_Paramedic_Outstanding(v_paramedic_threshold, v_donor_threshold);
 

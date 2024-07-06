@@ -1,0 +1,1 @@
+CREATE OR REPLACE TYPE paramedic_id_list AS TABLE OF VARCHAR2(9);
