@@ -3,7 +3,7 @@ PL/SQL Developer Project
 [Options]
 AutoConnect=0
 Username=
-Password=2678
+Password=2301
 Database=
 ConnectAs=Normal
 Edition=
@@ -12,6 +12,7 @@ HaltAfterError=0
 ShowItems=-1
 
 [Groups]
+StageC=10,11,12,13,14,15,16,
 StageB=4,5,6,7,8,9,
 StageA=0,1,2,3,
 
@@ -26,6 +27,13 @@ StageA=0,1,2,3,
 1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\Constraints.sql
 1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\ParamsQueries.sql
 1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage B\Queries.sql
+3,4,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\Add_Grant.prc
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\create_temp_table.sql
+3,4,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\get_donation_statistics_func.fnc
+3,4,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\Is_Paramedic_Outstanding.fnc
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\Main_program1.sql
+1,0,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\Main_program2.sql
+3,4,,,C:\Users\reutz\OneDrive\שולחן העבודה\DBProject5784_4499_6297\stage C\return_blood_to_bank.prc
 
 [Notes]
 {\rtf1\fbidis\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Tahoma;}}
