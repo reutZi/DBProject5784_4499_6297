@@ -4,7 +4,6 @@ DECLARE
     v_blood_sign blood.sign%type;
     v_min_age NUMBER;
     v_max_age NUMBER;
-    v_decision VARCHAR2(1);
 
     v_ratio_invalid NUMBER;
     v_ratio_gender NUMBER;
