@@ -1,5 +1,5 @@
 ﻿prompt PL/SQL Developer import file
-prompt Created on יום שלישי 23 יולי 2024 by reutz
+prompt Created on יום רביעי 24 יולי 2024 by reutz
 set feedback off
 set define off
 prompt Dropping ACTIVITES...
@@ -45,33 +45,9 @@ create table ACTIVITES
   activity_date DATE not null,
   a_start_time  VARCHAR2(15) not null,
   a_end_time    VARCHAR2(15) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table ACTIVITES
-  add primary key (ACTIVITY_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (ACTIVITY_ID);
 
 prompt Creating SHIFTS...
 create table SHIFTS
@@ -82,66 +58,18 @@ create table SHIFTS
   s_end_time   VARCHAR2(15) not null,
   s_location   VARCHAR2(30) not null,
   shift_leader VARCHAR2(30) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table SHIFTS
-  add primary key (SHIFT_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (SHIFT_ID);
 
 prompt Creating EVENT_LOCATION...
 create table EVENT_LOCATION
 (
   location_id NUMBER(5) not null,
-  address     VARCHAR2(35)
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  address     VARCHAR2(25) not null
+);
 alter table EVENT_LOCATION
-  add constraint PK_EVENT_LOCATION primary key (LOCATION_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add constraint PK_EVENT_LOCATION primary key (LOCATION_ID);
 
 prompt Creating EVENTS...
 create table EVENTS
@@ -151,34 +79,10 @@ create table EVENTS
   event_time    VARCHAR2(15) not null,
   e_description VARCHAR2(255) not null,
   shift_id      NUMBER(4) not null,
-  location_id   NUMBER(5)
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  location_id   NUMBER(5) not null
+);
 alter table EVENTS
-  add primary key (EVENT_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (EVENT_ID);
 alter table EVENTS
   add constraint FK_EVENT_LOCATION foreign key (LOCATION_ID)
   references EVENT_LOCATION (LOCATION_ID);
@@ -191,33 +95,9 @@ create table ACTS_IN_EVENTS
 (
   activity_id NUMBER(4) not null,
   event_id    NUMBER(4) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table ACTS_IN_EVENTS
-  add primary key (ACTIVITY_ID, EVENT_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (ACTIVITY_ID, EVENT_ID);
 alter table ACTS_IN_EVENTS
   add foreign key (ACTIVITY_ID)
   references ACTIVITES (ACTIVITY_ID);
@@ -230,33 +110,9 @@ create table BLOOD
 (
   sign CHAR(1) not null,
   type VARCHAR2(2) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table BLOOD
-  add primary key (SIGN, TYPE)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (SIGN, TYPE);
 
 prompt Creating DONATION_PLACE...
 create table DONATION_PLACE
@@ -264,33 +120,9 @@ create table DONATION_PLACE
   place_id    NUMBER(5) not null,
   place_phone VARCHAR2(10) not null,
   manager     VARCHAR2(20) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table DONATION_PLACE
-  add primary key (PLACE_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (PLACE_ID);
 alter table DONATION_PLACE
   add constraint FK_EVENT_LOCATION2 foreign key (PLACE_ID)
   references EVENT_LOCATION (LOCATION_ID);
@@ -302,33 +134,9 @@ create table PERSON
   l_name VARCHAR2(10) not null,
   f_name VARCHAR2(10) not null,
   email  VARCHAR2(30)
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table PERSON
-  add primary key (PID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (PID);
 alter table PERSON
   add constraint CHK_EMAIL_FORMAT
   check (INSTR(email, '@') > 0);
@@ -341,33 +149,9 @@ create table DONOR
   donor_id   VARCHAR2(9) not null,
   sign       CHAR(1) not null,
   type       VARCHAR2(2) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table DONOR
-  add primary key (DONOR_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (DONOR_ID);
 alter table DONOR
   add foreign key (DONOR_ID)
   references PERSON (PID);
@@ -382,33 +166,9 @@ create table PARAMEDIC
   seniority    NUMBER(2) default 0,
   paramedic_id VARCHAR2(9) not null,
   salary       NUMBER(6) default 0
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table PARAMEDIC
-  add primary key (PARAMEDIC_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (PARAMEDIC_ID);
 alter table PARAMEDIC
   add foreign key (PARAMEDIC_ID)
   references PERSON (PID);
@@ -421,33 +181,9 @@ create table RECEIVER
   city           VARCHAR2(15) not null,
   delivery_date  DATE not null,
   hospital_phone VARCHAR2(10) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table RECEIVER
-  add primary key (HOSPITAL_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (HOSPITAL_ID);
 
 prompt Creating DONATION...
 create table DONATION
@@ -460,33 +196,9 @@ create table DONATION
   donor_id      VARCHAR2(9) not null,
   place_id      NUMBER(5) not null,
   hospital_id   NUMBER(5)
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table DONATION
-  add primary key (DONATION_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (DONATION_ID);
 alter table DONATION
   add foreign key (PARAMEDIC_ID)
   references PARAMEDIC (PARAMEDIC_ID);
@@ -508,33 +220,9 @@ create table PERSON_PHONE_NUMBER
 (
   phone_number VARCHAR2(12) not null,
   pid          VARCHAR2(9) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table PERSON_PHONE_NUMBER
-  add primary key (PHONE_NUMBER, PID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (PHONE_NUMBER, PID);
 alter table PERSON_PHONE_NUMBER
   add foreign key (PID)
   references PERSON (PID);
@@ -550,33 +238,9 @@ create table REPORTS
   report_type VARCHAR2(30) not null,
   r_content   VARCHAR2(255) not null,
   event_id    NUMBER(4) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table REPORTS
-  add primary key (REPORT_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (REPORT_ID);
 alter table REPORTS
   add foreign key (EVENT_ID)
   references EVENTS (EVENT_ID);
@@ -589,70 +253,21 @@ create table ROLES
   role_description  VARCHAR2(255) not null,
   required_training NUMBER(1) not null,
   max_volunteers    NUMBER(1) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table ROLES
-  add primary key (ROLE_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (ROLE_ID);
 
 prompt Creating VOLUNTEERS...
 create table VOLUNTEERS
 (
   volunteer_id VARCHAR2(9) not null,
-  phone_number VARCHAR2(10) not null,
   address      VARCHAR2(255) not null,
   status       VARCHAR2(255) not null,
   role_id      NUMBER(4) not null,
   mentor_id    VARCHAR2(9)
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table VOLUNTEERS
-  add primary key (VOLUNTEER_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (VOLUNTEER_ID);
 alter table VOLUNTEERS
   add constraint FK_PARAMEDIC foreign key (MENTOR_ID)
   references PARAMEDIC (PARAMEDIC_ID);
@@ -668,33 +283,9 @@ create table VS_IN_SHIFTS
 (
   shift_id     NUMBER(4) not null,
   volunteer_id VARCHAR2(9) not null
-)
-tablespace SYSTEM
-  pctfree 10
-  pctused 40
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 alter table VS_IN_SHIFTS
-  add primary key (SHIFT_ID, VOLUNTEER_ID)
-  using index 
-  tablespace SYSTEM
-  pctfree 10
-  initrans 2
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+  add primary key (SHIFT_ID, VOLUNTEER_ID);
 alter table VS_IN_SHIFTS
   add foreign key (SHIFT_ID)
   references SHIFTS (SHIFT_ID);
@@ -738,33 +329,33 @@ prompt Disabling triggers for VS_IN_SHIFTS...
 alter table VS_IN_SHIFTS disable all triggers;
 prompt Disabling foreign key constraints for EVENTS...
 alter table EVENTS disable constraint FK_EVENT_LOCATION;
-alter table EVENTS disable constraint SYS_C008013;
+alter table EVENTS disable constraint SYS_C008195;
 prompt Disabling foreign key constraints for ACTS_IN_EVENTS...
-alter table ACTS_IN_EVENTS disable constraint SYS_C008017;
-alter table ACTS_IN_EVENTS disable constraint SYS_C008018;
+alter table ACTS_IN_EVENTS disable constraint SYS_C008199;
+alter table ACTS_IN_EVENTS disable constraint SYS_C008200;
 prompt Disabling foreign key constraints for DONATION_PLACE...
 alter table DONATION_PLACE disable constraint FK_EVENT_LOCATION2;
 prompt Disabling foreign key constraints for DONOR...
-alter table DONOR disable constraint SYS_C007179;
-alter table DONOR disable constraint SYS_C007180;
+alter table DONOR disable constraint SYS_C008248;
+alter table DONOR disable constraint SYS_C008249;
 prompt Disabling foreign key constraints for PARAMEDIC...
-alter table PARAMEDIC disable constraint SYS_C007168;
+alter table PARAMEDIC disable constraint SYS_C008253;
 prompt Disabling foreign key constraints for DONATION...
-alter table DONATION disable constraint SYS_C007187;
-alter table DONATION disable constraint SYS_C007188;
-alter table DONATION disable constraint SYS_C007189;
-alter table DONATION disable constraint SYS_C007190;
+alter table DONATION disable constraint SYS_C008266;
+alter table DONATION disable constraint SYS_C008267;
+alter table DONATION disable constraint SYS_C008268;
+alter table DONATION disable constraint SYS_C008269;
 prompt Disabling foreign key constraints for PERSON_PHONE_NUMBER...
-alter table PERSON_PHONE_NUMBER disable constraint SYS_C007172;
+alter table PERSON_PHONE_NUMBER disable constraint SYS_C008274;
 prompt Disabling foreign key constraints for REPORTS...
-alter table REPORTS disable constraint SYS_C008025;
+alter table REPORTS disable constraint SYS_C008207;
 prompt Disabling foreign key constraints for VOLUNTEERS...
 alter table VOLUNTEERS disable constraint FK_PARAMEDIC;
 alter table VOLUNTEERS disable constraint FK_PER;
-alter table VOLUNTEERS disable constraint SYS_C008041;
+alter table VOLUNTEERS disable constraint SYS_C008223;
 prompt Disabling foreign key constraints for VS_IN_SHIFTS...
-alter table VS_IN_SHIFTS disable constraint SYS_C008045;
-alter table VS_IN_SHIFTS disable constraint SYS_C008046;
+alter table VS_IN_SHIFTS disable constraint SYS_C008227;
+alter table VS_IN_SHIFTS disable constraint SYS_C008228;
 prompt Loading ACTIVITES...
 insert into ACTIVITES (activity_id, activity_name, a_description, activity_date, a_start_time, a_end_time)
 values (1, 'mend', 'delectus odio libero.  aliqua. ', to_date('23-09-2017', 'dd-mm-yyyy'), '3:51', '15:29');
@@ -1195,1198 +786,1198 @@ commit;
 prompt 200 records loaded
 prompt Loading EVENT_LOCATION...
 insert into EVENT_LOCATION (location_id, address)
-values (11131, '78 Sartain AveUetikon am See');
+values (81582, '92 Nugent Road');
 insert into EVENT_LOCATION (location_id, address)
-values (12658, '24 Chad DriveTadley');
+values (37672, '40 Albright Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (12845, '54 Robertson BlvdAlvechurch');
+values (93715, '50 Willis Road');
 insert into EVENT_LOCATION (location_id, address)
-values (12846, '65 Everetts BlvdSzczecin');
+values (31471, '15 Spiner Road');
 insert into EVENT_LOCATION (location_id, address)
-values (12888, '83 Alcobendas StreetNashua');
+values (55511, '10 William Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (12956, '38 Hewett RoadBillund');
+values (94895, '81 Emerson Road');
 insert into EVENT_LOCATION (location_id, address)
-values (13358, '1 PotterNagano');
+values (56874, '30 Sorvino Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (13517, '29 Carla DrivePalo Alto');
+values (25888, '67 Deborah Street');
 insert into EVENT_LOCATION (location_id, address)
-values (14132, '87 Debbie StreetBarcelona');
+values (46151, '75 Lynch Road');
 insert into EVENT_LOCATION (location_id, address)
-values (14434, '70 Allison AveNew Delhi');
+values (83722, '89 Hermitage Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (14491, '74 Keitel AveWalldorf');
+values (41668, '66 Giraldo Road');
 insert into EVENT_LOCATION (location_id, address)
-values (14656, '63 Bishop BlvdHuddinge');
+values (64358, '32 Luis Street');
 insert into EVENT_LOCATION (location_id, address)
-values (14757, '16 Ilmenau BlvdHolliston');
+values (89911, '63rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (15254, '100 Taylor DriveSoroe');
+values (37652, '7 Merrilee Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (15468, '54 Lakeville RoadAnnandale');
+values (33126, '13rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (15638, '19 Keeslar StreetToronto');
+values (95166, '78 Blossoms Road');
 insert into EVENT_LOCATION (location_id, address)
-values (15643, '98 Everett RoadCheshire');
+values (62641, '97 Rooker Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (15693, '77 Goss BlvdStuttgart');
+values (27465, '75 Warszawa Road');
 insert into EVENT_LOCATION (location_id, address)
-values (15814, '23rd StreetTakapuna');
+values (92496, '7 Spine Road');
 insert into EVENT_LOCATION (location_id, address)
-values (16675, '45 Wilson RoadKobenhavn');
+values (81645, '976 Jerry Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (16941, '74 Jemison StreetRedwood City');
+values (44671, '985 Raleigh Road');
 insert into EVENT_LOCATION (location_id, address)
-values (17415, '43 Pinter BlvdBishopbriggs');
+values (87731, '95 Lightfoot Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (17435, '33 Everetts StLutry');
+values (38776, '80 Lynette Road');
 insert into EVENT_LOCATION (location_id, address)
-values (17632, '8 Steyr DriveOsaka');
+values (97938, '35 Diamond Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (17919, '63 Moe DriveUlm');
+values (43238, '861 Long Island City');
 insert into EVENT_LOCATION (location_id, address)
-values (18131, '40 Jaime RoadAurora');
+values (55124, '90 Warren Street');
 insert into EVENT_LOCATION (location_id, address)
-values (18367, '29 Sandra RoadMenlo Park');
+values (41644, '13 Mito Street');
 insert into EVENT_LOCATION (location_id, address)
-values (18439, '74 Everetts StLutry');
+values (48163, '34 Van Helden Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (18442, '22 Everetts StLutry');
+values (36945, '59 Wichita Road');
 insert into EVENT_LOCATION (location_id, address)
-values (18671, '63 Robertson BlvdAlvechurch');
+values (95566, '65 Rob Street');
 insert into EVENT_LOCATION (location_id, address)
-values (19196, '22 Everetts BlvdSzczecin');
+values (99531, '93 Streep Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (19354, '63 Parker RoadBad Camberg');
+values (91352, '36 Mellencamp Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (19631, '80 Chandler StreetAlessandria');
+values (73717, '751 James Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (19739, '31st StreetMason');
+values (55256, '3 Epps Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (21117, '718 Kiefer RoadMaidenhead');
+values (78828, '27 Rosas Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (22145, '56 Warren AveBretzfeld-Waldbach');
+values (51299, '957 Vanian Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (22277, '42 Rourke RoadHounslow');
+values (39555, '80 Hilversum Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (22353, '35 Goss AveGlen Head');
+values (85689, '4 Kadison Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (22514, '93 Chandler BlvdStuttgart');
+values (84829, '33 Harper Road');
 insert into EVENT_LOCATION (location_id, address)
-values (22586, '55 Amsterdam AveBreda');
+values (71553, '83rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (22673, '74 Bishop StreetGrimbergen');
+values (82939, '12nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (22689, '77 Goss BlvdBristol');
+values (75561, '11 Paal Beringen');
 insert into EVENT_LOCATION (location_id, address)
-values (23725, '33 Bishop BlvdHuddinge');
+values (58775, '18 Lexington Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (23968, '88 Dan DriveThalwil');
+values (98616, '1 Shaw Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (24169, '66 Vance DriveBrentwood');
+values (82364, '65 Mann Street');
 insert into EVENT_LOCATION (location_id, address)
-values (24215, '36 Guzman BlvdFairbanks');
+values (54175, '587 Lou Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (24344, '27 Keitel StreetSouth Weber');
+values (86381, '63 Geneve Street');
 insert into EVENT_LOCATION (location_id, address)
-values (24379, '54 Fairborn AveLinz');
+values (36729, '951 Hamilton Road');
 insert into EVENT_LOCATION (location_id, address)
-values (24479, '77 Bishop BlvdBristol');
+values (81874, '99 Hagar Road');
 insert into EVENT_LOCATION (location_id, address)
-values (24563, '63 Parker RoadBad Camberg');
+values (69585, '81 Machine Road');
 insert into EVENT_LOCATION (location_id, address)
-values (24919, '88 Dan DriveThalwil');
+values (13358, '33 Ned Road');
 insert into EVENT_LOCATION (location_id, address)
-values (24931, '8 Steyr DriveOsaka');
+values (76244, '93 Gifu Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (24938, '83 Alcobendas StreetNashua');
+values (86947, '138 Jamal');
 insert into EVENT_LOCATION (location_id, address)
-values (25134, '16 Ilmenau BlvdHolliston');
+values (58434, '88 Warwick Road');
 insert into EVENT_LOCATION (location_id, address)
-values (25388, '63 Moe DriveUlm');
+values (85267, '779 Wainwright Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (25499, '100 Taylor DriveSoroe');
+values (68776, '42 Llewelyn Road');
 insert into EVENT_LOCATION (location_id, address)
-values (25536, '80 Chandler StreetAlessandria');
+values (65568, '66 Klein Street');
 insert into EVENT_LOCATION (location_id, address)
-values (25648, '78 Sartain AveUetikon am See');
+values (19196, '53 Coventry Street');
 insert into EVENT_LOCATION (location_id, address)
-values (25749, '40 Jaime RoadAurora');
+values (53416, '70 Morse Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (25888, '31st StreetMason');
+values (71762, '41 Bergara Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (25889, '66 Vance DriveBrentwood');
+values (12845, '43rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (26145, '36 Guzman BlvdFairbanks');
+values (42627, '40 Coldmeece Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (26645, '38 Hewett RoadBillund');
+values (94395, '82 MacDonald Street');
 insert into EVENT_LOCATION (location_id, address)
-values (27382, '718 Kiefer RoadMaidenhead');
+values (65269, '638 Phoenix Street');
 insert into EVENT_LOCATION (location_id, address)
-values (27465, '27 Keitel StreetSouth Weber');
+values (46819, '82 Berkeley Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (27486, '54 Fairborn AveLinz');
+values (57522, '23rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (27573, '1 PotterNagano');
+values (95717, '33 Skaggs');
 insert into EVENT_LOCATION (location_id, address)
-values (28463, '29 Carla DrivePalo Alto');
+values (28748, '27 Solido Street');
 insert into EVENT_LOCATION (location_id, address)
-values (28466, '54 Lakeville RoadAnnandale');
+values (57583, '50 Kier Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (28596, '56 Warren AveBretzfeld-Waldbach');
+values (51455, '67 Newbury Street');
 insert into EVENT_LOCATION (location_id, address)
-values (28748, '23rd StreetTakapuna');
+values (84454, '2 Lake Forest Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (28835, '42 Rourke RoadHounslow');
+values (86683, '60 Whitford Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (28952, '45 Wilson RoadKobenhavn');
+values (54959, '98 Wien Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (28984, '63 Moe DriveUlm');
+values (99338, '92nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (29371, '35 Goss AveGlen Head');
+values (63578, '52 Wilson Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (29744, '24 Chad DriveTadley');
+values (59846, '832 Cazale Road');
 insert into EVENT_LOCATION (location_id, address)
-values (31345, '74 Jemison StreetRedwood City');
+values (59785, '75 Krumholtz Road');
 insert into EVENT_LOCATION (location_id, address)
-values (31426, '19 Keeslar StreetToronto');
+values (46276, '35 Rosario Road');
 insert into EVENT_LOCATION (location_id, address)
-values (31464, '98 Everett RoadCheshire');
+values (14491, '42 Dysart Road');
 insert into EVENT_LOCATION (location_id, address)
-values (31471, '87 Debbie StreetBarcelona');
+values (29744, '6 Cuba Street');
 insert into EVENT_LOCATION (location_id, address)
-values (32254, '56 Warren AveBretzfeld-Waldbach');
+values (32598, '50 Gena Road');
 insert into EVENT_LOCATION (location_id, address)
-values (32298, '70 Allison AveNew Delhi');
+values (26145, '12 Nelly Street');
 insert into EVENT_LOCATION (location_id, address)
-values (32343, '43 Pinter BlvdBishopbriggs');
+values (41456, '17 Sisto Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (32589, '40 Jaime RoadAurora');
+values (22689, '47 Guest Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (32598, '29 Sandra RoadMenlo Park');
+values (19354, '84 Candice Road');
 insert into EVENT_LOCATION (location_id, address)
-values (33126, '93 Chandler BlvdStuttgart');
+values (97646, '1 Radney Road');
 insert into EVENT_LOCATION (location_id, address)
-values (33265, '74 Keitel AveWalldorf');
+values (33657, '814 DeVita Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (33578, '55 Amsterdam AveBreda');
+values (24215, '11 Stockard Road');
 insert into EVENT_LOCATION (location_id, address)
-values (33657, '74 Bishop StreetGrimbergen');
+values (12956, '78 Farrell Street');
 insert into EVENT_LOCATION (location_id, address)
-values (33828, '74 Everetts StLutry');
+values (13517, '15 Cooper Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (34333, '54 Robertson BlvdAlvechurch');
+values (57478, '69 Neil');
 insert into EVENT_LOCATION (location_id, address)
-values (35331, '65 Everetts BlvdSzczecin');
+values (61349, '91 Calcutta Street');
 insert into EVENT_LOCATION (location_id, address)
-values (35724, '77 Goss BlvdBristol');
+values (62163, '82 Richardson Road');
 insert into EVENT_LOCATION (location_id, address)
-values (35743, '63 Bishop BlvdHuddinge');
+values (66398, '7 Suvari Road');
 insert into EVENT_LOCATION (location_id, address)
-values (35785, '77 Goss BlvdStuttgart');
+values (45416, '60 Lucas');
 insert into EVENT_LOCATION (location_id, address)
-values (35911, '22 Everetts StLutry');
+values (25536, '4 New Hope Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (36279, '33 Bishop BlvdHuddinge');
+values (65295, '80 Fukui Road');
 insert into EVENT_LOCATION (location_id, address)
-values (36454, '77 Bishop BlvdBristol');
+values (94167, '4 Mainz-kastel Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (36629, '63 Robertson BlvdAlvechurch');
+values (85931, '54 Solikamsk Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (36729, '22 Everetts BlvdSzczecin');
+values (48488, '35 Benson Street');
 commit;
 prompt 100 records committed...
 insert into EVENT_LOCATION (location_id, address)
-values (36814, '33 Everetts StLutry');
+values (78159, '42nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (36833, '33 Bishop BlvdHuddinge');
+values (88766, '33 Liotta Street');
 insert into EVENT_LOCATION (location_id, address)
-values (36945, '33 Bishop BlvdHuddinge');
+values (86895, '5 McNarland Street');
 insert into EVENT_LOCATION (location_id, address)
-values (37517, '77 Bishop BlvdBristol');
+values (66743, '111 Taylor Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (37552, '33 Bishop BlvdHuddinge');
+values (79968, '80 Burlington Road');
 insert into EVENT_LOCATION (location_id, address)
-values (37574, '63 Robertson BlvdAlvechurch');
+values (15814, '64 Laws Street');
 insert into EVENT_LOCATION (location_id, address)
-values (37618, '77 Bishop BlvdBristol');
+values (28463, '22nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (37634, '33 Bishop BlvdHuddinge');
+values (25499, '85 Lahr Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (37652, '77 Bishop BlvdBristol');
+values (47741, '65 Hunt Valley Road');
 insert into EVENT_LOCATION (location_id, address)
-values (37672, '63 Robertson BlvdAlvechurch');
+values (32589, '6 Chapman Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (38356, '33 Bishop BlvdHuddinge');
+values (58944, '83 Margulies Street');
 insert into EVENT_LOCATION (location_id, address)
-values (38486, '33 Bishop BlvdHuddinge');
+values (86192, '93 Kozani Road');
 insert into EVENT_LOCATION (location_id, address)
-values (38674, '33 Bishop BlvdHuddinge');
+values (92889, '53 Neil Road');
 insert into EVENT_LOCATION (location_id, address)
-values (38776, '33 Bishop BlvdHuddinge');
+values (98579, '67 Tzi Street');
 insert into EVENT_LOCATION (location_id, address)
-values (38992, '77 Bishop BlvdBristol');
+values (76448, '95 Butner Street');
 insert into EVENT_LOCATION (location_id, address)
-values (39145, '33 Bishop BlvdHuddinge');
+values (14132, '10 Nelly Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (39243, '33 Bishop BlvdHuddinge');
+values (67426, '19 Bacharach Street');
 insert into EVENT_LOCATION (location_id, address)
-values (39269, '33 Bishop BlvdHuddinge');
+values (17435, '29 Chris');
 insert into EVENT_LOCATION (location_id, address)
-values (39337, '33 Bishop BlvdHuddinge');
+values (65253, '75 Hurt Road');
 insert into EVENT_LOCATION (location_id, address)
-values (39555, '33 Bishop BlvdHuddinge');
+values (36833, '32 Plymouth Meeting Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (39921, '33 Bishop BlvdHuddinge');
+values (22277, '74 Hurt Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (39931, '33 Bishop BlvdHuddinge');
+values (69958, '21st Street');
 insert into EVENT_LOCATION (location_id, address)
-values (39963, '77 Bishop BlvdBristol');
+values (88991, '32 Cate Road');
 insert into EVENT_LOCATION (location_id, address)
-values (41326, '33 Bishop BlvdHuddinge');
+values (25648, '42 Weir Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (41456, '33 Bishop BlvdHuddinge');
+values (83321, '87 Oberwangen Road');
 insert into EVENT_LOCATION (location_id, address)
-values (41644, '33 Bishop BlvdHuddinge');
+values (44422, '112 Pasadena Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (41668, '33 Bishop BlvdHuddinge');
+values (74399, '74 Hugh Road');
 insert into EVENT_LOCATION (location_id, address)
-values (41673, '33 Bishop BlvdHuddinge');
+values (77488, '95 Sarandon Street');
 insert into EVENT_LOCATION (location_id, address)
-values (41828, '33 Bishop BlvdHuddinge');
+values (24479, '867 Balk');
 insert into EVENT_LOCATION (location_id, address)
-values (42587, '33 Bishop BlvdHuddinge');
+values (44996, '63 Borger Road');
 insert into EVENT_LOCATION (location_id, address)
-values (42627, '33 Bishop BlvdHuddinge');
+values (96595, '61 Herford Street');
 insert into EVENT_LOCATION (location_id, address)
-values (43238, '33 Bishop BlvdHuddinge');
+values (83828, '31st Street');
 insert into EVENT_LOCATION (location_id, address)
-values (43614, '33 Bishop BlvdHuddinge');
+values (52994, '235 Duesseldorf Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (43757, '33 Bishop BlvdHuddinge');
+values (39243, '54 Ismaning Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (44222, '33 Bishop BlvdHuddinge');
+values (36454, '92nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (44422, '33 Bishop BlvdHuddinge');
+values (68826, '69 Myles Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (44546, '33 Bishop BlvdHuddinge');
+values (37574, '84 Berry Road');
 insert into EVENT_LOCATION (location_id, address)
-values (44671, '33 Bishop BlvdHuddinge');
+values (63671, '88 Waldbronn');
 insert into EVENT_LOCATION (location_id, address)
-values (44955, '33 Bishop BlvdHuddinge');
+values (12888, '56 Henstridge Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (44996, '33 Bishop BlvdHuddinge');
+values (96613, '27 Buffy Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (45156, '33 Bishop BlvdHuddinge');
+values (12658, '84 Gifu Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (45416, '33 Bishop BlvdHuddinge');
+values (55959, '10 Albuquerque Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (45461, '33 Bishop BlvdHuddinge');
+values (59261, '929 Vince Street');
 insert into EVENT_LOCATION (location_id, address)
-values (46151, '33 Bishop BlvdHuddinge');
+values (15693, '97 Mantegna Street');
 insert into EVENT_LOCATION (location_id, address)
-values (46195, '33 Bishop BlvdHuddinge');
+values (48382, '6 Recife Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (46276, '33 Bishop BlvdHuddinge');
+values (24344, '7 Battle Creek Street');
 insert into EVENT_LOCATION (location_id, address)
-values (46424, '33 Bishop BlvdHuddinge');
+values (71948, '100 Mickey Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (46796, '33 Bishop BlvdHuddinge');
+values (76974, '95 Skarsgard Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (46819, '33 Bishop BlvdHuddinge');
+values (12846, '83 Sevilla Road');
 insert into EVENT_LOCATION (location_id, address)
-values (47431, '33 Bishop BlvdHuddinge');
+values (65496, '12 Summerside Road');
 insert into EVENT_LOCATION (location_id, address)
-values (47741, '33 Bishop BlvdHuddinge');
+values (65853, '100 Posener Road');
 insert into EVENT_LOCATION (location_id, address)
-values (48163, '33 Bishop BlvdHuddinge');
+values (25134, '706 Freddie Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (48197, '33 Bishop BlvdHuddinge');
+values (66926, '92 Burstyn Road');
 insert into EVENT_LOCATION (location_id, address)
-values (48374, '33 Bishop BlvdHuddinge');
+values (57213, '44 Spencer Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (48376, '33 Bishop BlvdHuddinge');
+values (56366, '89 Pulheim-brauweiler Roa');
 insert into EVENT_LOCATION (location_id, address)
-values (48382, '33 Bishop BlvdHuddinge');
+values (41326, '28 Dolenz Street');
 insert into EVENT_LOCATION (location_id, address)
-values (48488, '33 Bishop BlvdHuddinge');
+values (36279, '74 Nelly Street');
 insert into EVENT_LOCATION (location_id, address)
-values (48689, '33 Bishop BlvdHuddinge');
+values (51932, '81st Street');
 insert into EVENT_LOCATION (location_id, address)
-values (48969, '33 Bishop BlvdHuddinge');
+values (74331, '78 Austin Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (48995, '33 Bishop BlvdHuddinge');
+values (43614, '9 Irkutsk Street');
 insert into EVENT_LOCATION (location_id, address)
-values (49313, '33 Bishop BlvdHuddinge');
+values (43757, '70 Yokohama Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (49573, '33 Bishop BlvdHuddinge');
+values (19631, '53 Butler');
 insert into EVENT_LOCATION (location_id, address)
-values (49942, '33 Bishop BlvdHuddinge');
+values (44546, '69 Burr Ridge');
 insert into EVENT_LOCATION (location_id, address)
-values (51231, '33 Bishop BlvdHuddinge');
+values (36629, '73 Cruz Street');
 insert into EVENT_LOCATION (location_id, address)
-values (68558, '40 Jaime RoadAurora');
+values (17415, '230 Calgary Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (51268, '33 Bishop BlvdHuddinge');
+values (88768, '11st Street');
 insert into EVENT_LOCATION (location_id, address)
-values (51299, '33 Bishop BlvdHuddinge');
+values (48969, '62nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (51447, '33 Bishop BlvdHuddinge');
+values (96976, '25 Jack Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (51455, '33 Bishop BlvdHuddinge');
+values (72949, '84 Carlyle Road');
 insert into EVENT_LOCATION (location_id, address)
-values (51566, '33 Bishop BlvdHuddinge');
+values (82229, '44 Gordon Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (51611, '33 Bishop BlvdHuddinge');
+values (48689, '65 Willie');
 insert into EVENT_LOCATION (location_id, address)
-values (51673, '33 Bishop BlvdHuddinge');
+values (31426, '264 Lakeville Street');
 insert into EVENT_LOCATION (location_id, address)
-values (51931, '33 Bishop BlvdHuddinge');
+values (68623, '64 Carr');
 insert into EVENT_LOCATION (location_id, address)
-values (51932, '33 Bishop BlvdHuddinge');
+values (18367, '82 Maura Road');
 insert into EVENT_LOCATION (location_id, address)
-values (52277, '33 Bishop BlvdHuddinge');
+values (98457, '23 Blaine Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (52339, '33 Bishop BlvdHuddinge');
+values (78624, '27 Shandling Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (52573, '33 Bishop BlvdHuddinge');
+values (38674, '86 Mueller-Stahl Road');
 insert into EVENT_LOCATION (location_id, address)
-values (52994, '33 Bishop BlvdHuddinge');
+values (89655, '75 Tamala');
 insert into EVENT_LOCATION (location_id, address)
-values (53162, '33 Bishop BlvdHuddinge');
+values (94778, '33 Rickman Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (53299, '33 Bishop BlvdHuddinge');
+values (51268, '91 Kid Road');
 insert into EVENT_LOCATION (location_id, address)
-values (53416, '33 Bishop BlvdHuddinge');
+values (85466, '238 Fukuoka Street');
 insert into EVENT_LOCATION (location_id, address)
-values (53616, '33 Bishop BlvdHuddinge');
+values (46195, '9 Shalhoub Road');
 insert into EVENT_LOCATION (location_id, address)
-values (53641, '33 Bishop BlvdHuddinge');
+values (25749, '93 Mitra Street');
 insert into EVENT_LOCATION (location_id, address)
-values (54147, '33 Bishop BlvdHuddinge');
+values (71786, '33 Jeremy Street');
 insert into EVENT_LOCATION (location_id, address)
-values (54149, '33 Bishop BlvdHuddinge');
+values (24379, '52nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (54175, '33 Bishop BlvdHuddinge');
+values (51566, '19 Dayne Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (54514, '33 Bishop BlvdHuddinge');
+values (24931, '12nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (54855, '33 Bishop BlvdHuddinge');
+values (36814, '87 Ani Street');
 insert into EVENT_LOCATION (location_id, address)
-values (54959, '33 Bishop BlvdHuddinge');
+values (31345, '74 Edgar Road');
 insert into EVENT_LOCATION (location_id, address)
-values (55124, '33 Bishop BlvdHuddinge');
+values (94696, '88 Stans Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (55256, '33 Bishop BlvdHuddinge');
+values (79129, '25 Kirsten Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (55395, '33 Bishop BlvdHuddinge');
+values (61565, '66 Vertical Street');
 insert into EVENT_LOCATION (location_id, address)
-values (55511, '33 Bishop BlvdHuddinge');
+values (24563, '619 Seth Road');
 insert into EVENT_LOCATION (location_id, address)
-values (55879, '33 Bishop BlvdHuddinge');
+values (48376, '20 Terri Street');
 insert into EVENT_LOCATION (location_id, address)
-values (55959, '33 Bishop BlvdHuddinge');
+values (73857, '21 Paris Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (56366, '33 Bishop BlvdHuddinge');
+values (35785, '32 Isaac Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (56381, '33 Bishop BlvdHuddinge');
+values (55395, '841 Boise Road');
 insert into EVENT_LOCATION (location_id, address)
-values (56469, '33 Bishop BlvdHuddinge');
+values (33828, '20 Magnuson Road');
 insert into EVENT_LOCATION (location_id, address)
-values (56874, '33 Bishop BlvdHuddinge');
+values (75715, '51 Blair Road');
 insert into EVENT_LOCATION (location_id, address)
-values (57213, '33 Bishop BlvdHuddinge');
+values (75118, '4 Shalhoub Blvd');
 commit;
 prompt 200 records committed...
 insert into EVENT_LOCATION (location_id, address)
-values (57331, '33 Bishop BlvdHuddinge');
+values (91966, '31 Rotterdam Street');
 insert into EVENT_LOCATION (location_id, address)
-values (57478, '33 Bishop BlvdHuddinge');
+values (83832, '889 Diesel');
 insert into EVENT_LOCATION (location_id, address)
-values (57522, '33 Bishop BlvdHuddinge');
+values (51231, '78 Sylvian Road');
 insert into EVENT_LOCATION (location_id, address)
-values (57583, '33 Bishop BlvdHuddinge');
+values (28466, '468 Keen Street');
 insert into EVENT_LOCATION (location_id, address)
-values (57991, '33 Bishop BlvdHuddinge');
+values (27486, '98 Holliston Road');
 insert into EVENT_LOCATION (location_id, address)
-values (58177, '33 Bishop BlvdHuddinge');
+values (25889, '34 Joanna Street');
 insert into EVENT_LOCATION (location_id, address)
-values (58186, '33 Bishop BlvdHuddinge');
+values (54514, '73rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (58325, '33 Bishop BlvdHuddinge');
+values (51447, '49 Philadelphia Road');
 insert into EVENT_LOCATION (location_id, address)
-values (58434, '33 Bishop BlvdHuddinge');
+values (82538, '77 Crouse Street');
 insert into EVENT_LOCATION (location_id, address)
-values (58775, '33 Bishop BlvdHuddinge');
+values (66689, '40 Harriet Street');
 insert into EVENT_LOCATION (location_id, address)
-values (58923, '33 Bishop BlvdHuddinge');
+values (69545, '63 Lily Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (58944, '33 Bishop BlvdHuddinge');
+values (64121, '1 Kyra Road');
 insert into EVENT_LOCATION (location_id, address)
-values (59261, '33 Bishop BlvdHuddinge');
+values (66614, '82nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (59339, '33 Bishop BlvdHuddinge');
+values (38992, '19 Paris Road');
 insert into EVENT_LOCATION (location_id, address)
-values (59785, '33 Bishop BlvdHuddinge');
+values (66591, '5 Koteas Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (59816, '33 Bishop BlvdHuddinge');
+values (57991, '100 Macclesfield Street');
 insert into EVENT_LOCATION (location_id, address)
-values (59846, '33 Bishop BlvdHuddinge');
+values (73885, '87 Cochran Road');
 insert into EVENT_LOCATION (location_id, address)
-values (61144, '33 Bishop BlvdHuddinge');
+values (79584, '65 Christina');
 insert into EVENT_LOCATION (location_id, address)
-values (61319, '33 Bishop BlvdHuddinge');
+values (77149, '240 Springville Road');
 insert into EVENT_LOCATION (location_id, address)
-values (61349, '33 Bishop BlvdHuddinge');
+values (65883, '60 Cesena Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (61565, '33 Bishop BlvdHuddinge');
+values (53299, '77 Zaandam Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (61912, '33 Bishop BlvdHuddinge');
+values (32254, '334 Begley Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (61993, '33 Bishop BlvdHuddinge');
+values (18439, '50 Kier Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (62163, '33 Bishop BlvdHuddinge');
+values (96488, '75 Balk Road');
 insert into EVENT_LOCATION (location_id, address)
-values (62641, '33 Bishop BlvdHuddinge');
+values (39145, '18 Ashley Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (62992, '33 Bishop BlvdHuddinge');
+values (39963, '8 Reading Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (63365, '33 Bishop BlvdHuddinge');
+values (41673, '99 Brittany Road');
 insert into EVENT_LOCATION (location_id, address)
-values (63578, '33 Bishop BlvdHuddinge');
+values (56469, '76 Wolf Road');
 insert into EVENT_LOCATION (location_id, address)
-values (63671, '33 Bishop BlvdHuddinge');
+values (22514, '2 Lightfoot Road');
 insert into EVENT_LOCATION (location_id, address)
-values (64121, '33 Bishop BlvdHuddinge');
+values (39269, '25 Carl Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (64265, '33 Bishop BlvdHuddinge');
+values (96672, '239 Dayne Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (64358, '33 Bishop BlvdHuddinge');
+values (18442, '79 Amos Street');
 insert into EVENT_LOCATION (location_id, address)
-values (64513, '33 Bishop BlvdHuddinge');
+values (24919, '252 Fichtner');
 insert into EVENT_LOCATION (location_id, address)
-values (64656, '33 Bishop BlvdHuddinge');
+values (56381, '68 James Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (64766, '33 Bishop BlvdHuddinge');
+values (33578, '65 Devon Road');
 insert into EVENT_LOCATION (location_id, address)
-values (65253, '33 Bishop BlvdHuddinge');
+values (22586, '88 Burmester Road');
 insert into EVENT_LOCATION (location_id, address)
-values (65269, '33 Bishop BlvdHuddinge');
+values (52573, '43 Holden Road');
 insert into EVENT_LOCATION (location_id, address)
-values (65295, '33 Bishop BlvdHuddinge');
+values (34333, '11 Breslin Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (65496, '33 Bishop BlvdHuddinge');
+values (88711, '31 Vicious Road');
 insert into EVENT_LOCATION (location_id, address)
-values (65568, '33 Bishop BlvdHuddinge');
+values (86219, '93rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (65853, '33 Bishop BlvdHuddinge');
+values (99345, '17 Beckham Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (65883, '33 Bishop BlvdHuddinge');
+values (35724, '53 urban Road');
 insert into EVENT_LOCATION (location_id, address)
-values (66398, '33 Bishop BlvdHuddinge');
+values (89948, '32 Oakland Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (66591, '33 Bishop BlvdHuddinge');
+values (46424, '84 Redding Street');
 insert into EVENT_LOCATION (location_id, address)
-values (66614, '33 Bishop BlvdHuddinge');
+values (35911, '37 Steven Road');
 insert into EVENT_LOCATION (location_id, address)
-values (66689, '33 Bishop BlvdHuddinge');
+values (45461, '70 Marina Street');
 insert into EVENT_LOCATION (location_id, address)
-values (66743, '33 Bishop BlvdHuddinge');
+values (87316, '20 Levy Street');
 insert into EVENT_LOCATION (location_id, address)
-values (66926, '33 Bishop BlvdHuddinge');
+values (28952, '147 Lowe Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (67426, '33 Bishop BlvdHuddinge');
+values (88414, '92nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (67669, '33 Bishop BlvdHuddinge');
+values (79649, '98 Suwon-city Road');
 insert into EVENT_LOCATION (location_id, address)
-values (67679, '33 Bishop BlvdHuddinge');
+values (38356, '23 Utrecht Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (67738, '33 Bishop BlvdHuddinge');
+values (42587, '18 Elche Road');
 insert into EVENT_LOCATION (location_id, address)
-values (67864, '33 Bishop BlvdHuddinge');
+values (32343, '80 Michaels Road');
 insert into EVENT_LOCATION (location_id, address)
-values (68623, '33 Bishop BlvdHuddinge');
+values (57331, '940 Winslet Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (68776, '55 Amsterdam AveBreda');
+values (82179, '46 Aglukark Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (68826, '33 Bishop BlvdHuddinge');
+values (67738, '54 Duncan Street');
 insert into EVENT_LOCATION (location_id, address)
-values (68932, '33 Bishop BlvdHuddinge');
+values (61144, '38 DeLuise Street');
 insert into EVENT_LOCATION (location_id, address)
-values (69545, '33 Bishop BlvdHuddinge');
+values (64656, '46 Craig Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (69585, '77 Bishop BlvdBristol');
+values (37517, '61 Joseph Road');
 insert into EVENT_LOCATION (location_id, address)
-values (69587, '33 Bishop BlvdHuddinge');
+values (37618, '56 Buffy Road');
 insert into EVENT_LOCATION (location_id, address)
-values (69958, '33 Bishop BlvdHuddinge');
+values (97475, '61 Ming-Na Road');
 insert into EVENT_LOCATION (location_id, address)
-values (69998, '74 Jemison StreetRedwood City');
+values (64766, '89 Blair Street');
 insert into EVENT_LOCATION (location_id, address)
-values (71553, '33 Bishop BlvdHuddinge');
+values (44955, '91 Rebhorn Road');
 insert into EVENT_LOCATION (location_id, address)
-values (71729, '33 Bishop BlvdHuddinge');
+values (58325, '659 Waco');
 insert into EVENT_LOCATION (location_id, address)
-values (71762, '33 Bishop BlvdHuddinge');
+values (61912, '58 Terry Road');
 insert into EVENT_LOCATION (location_id, address)
-values (71786, '35 Goss AveGlen Head');
+values (73382, '28 O''Sullivan Street');
 insert into EVENT_LOCATION (location_id, address)
-values (71898, '33 Bishop BlvdHuddinge');
+values (24169, '83 Richmond');
 insert into EVENT_LOCATION (location_id, address)
-values (71948, '33 Bishop BlvdHuddinge');
+values (53162, '54 Aachen Road');
 insert into EVENT_LOCATION (location_id, address)
-values (72541, '33 Bishop BlvdHuddinge');
+values (68558, '83 Charles Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (72949, '33 Bishop BlvdHuddinge');
+values (14434, '17 Bell Road');
 insert into EVENT_LOCATION (location_id, address)
-values (73341, '77 Bishop BlvdBristol');
+values (99258, '28 Brock Street');
 insert into EVENT_LOCATION (location_id, address)
-values (73382, '33 Bishop BlvdHuddinge');
+values (37552, '16 Gavin Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (73442, '77 Bishop BlvdBristol');
+values (45156, '91 Collective');
 insert into EVENT_LOCATION (location_id, address)
-values (73453, '33 Bishop BlvdHuddinge');
+values (62992, '82 Cash Street');
 insert into EVENT_LOCATION (location_id, address)
-values (73717, '29 Carla DrivePalo Alto');
+values (77481, '10 Lucy Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (73857, '33 Bishop BlvdHuddinge');
+values (64265, '32 Reeves Road');
 insert into EVENT_LOCATION (location_id, address)
-values (73885, '1 PotterNagano');
+values (28596, '39 Judi Road');
 insert into EVENT_LOCATION (location_id, address)
-values (74331, '33 Bishop BlvdHuddinge');
+values (91773, '418 Philadelphia Road');
 insert into EVENT_LOCATION (location_id, address)
-values (74399, '33 Bishop BlvdHuddinge');
+values (49573, '20 Levine Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (74465, '63 Robertson BlvdAlvechurch');
+values (39921, '64 Coburn Road');
 insert into EVENT_LOCATION (location_id, address)
-values (74717, '33 Bishop BlvdHuddinge');
+values (78775, '21 Szazhalombatta Street');
 insert into EVENT_LOCATION (location_id, address)
-values (75118, '54 Robertson BlvdAlvechurch');
+values (32298, '79 Hannover Road');
 insert into EVENT_LOCATION (location_id, address)
-values (75561, '33 Bishop BlvdHuddinge');
+values (76179, '97 Geraldine Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (75715, '77 Bishop BlvdBristol');
+values (61319, '51 Dan');
 insert into EVENT_LOCATION (location_id, address)
-values (75754, '33 Bishop BlvdHuddinge');
+values (69587, '36 Walsh Road');
 insert into EVENT_LOCATION (location_id, address)
-values (76179, '45 Wilson RoadKobenhavn');
+values (41828, '82 San Francisco Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (76244, '33 Bishop BlvdHuddinge');
+values (31464, '31 Zaandam Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (76448, '29 Carla DrivePalo Alto');
+values (96762, '81st Street');
 insert into EVENT_LOCATION (location_id, address)
-values (76974, '77 Bishop BlvdBristol');
+values (35331, '63 New Castle Road');
 insert into EVENT_LOCATION (location_id, address)
-values (77149, '33 Bishop BlvdHuddinge');
+values (96963, '399 Rosemead Street');
 insert into EVENT_LOCATION (location_id, address)
-values (77415, '33 Bishop BlvdHuddinge');
+values (61993, '87 Danger Street');
 insert into EVENT_LOCATION (location_id, address)
-values (77481, '33 Bishop BlvdHuddinge');
+values (68932, '19 Chemnitz Road');
 insert into EVENT_LOCATION (location_id, address)
-values (77488, '63 Bishop BlvdHuddinge');
+values (78888, '19 Mac Street');
 insert into EVENT_LOCATION (location_id, address)
-values (78159, '54 Lakeville RoadAnnandale');
+values (82736, '509 Wilkinson Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (78249, '33 Bishop BlvdHuddinge');
+values (63365, '7 Sorvino');
 insert into EVENT_LOCATION (location_id, address)
-values (78345, '33 Bishop BlvdHuddinge');
+values (58177, '82nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (78624, '63 Robertson BlvdAlvechurch');
+values (83772, '333 Kirk Road');
 insert into EVENT_LOCATION (location_id, address)
-values (78775, '78 Sartain AveUetikon am See');
+values (97516, '58 Stuart Street');
 insert into EVENT_LOCATION (location_id, address)
-values (78789, '23rd StreetTakapuna');
+values (89235, '53 Maura Road');
 insert into EVENT_LOCATION (location_id, address)
-values (78828, '77 Bishop BlvdBristol');
+values (18131, '33rd Street');
 commit;
 prompt 300 records committed...
 insert into EVENT_LOCATION (location_id, address)
-values (78888, '33 Bishop BlvdHuddinge');
+values (27382, '143 Morrison Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (78954, '33 Bishop BlvdHuddinge');
+values (46796, '28 Saffron');
 insert into EVENT_LOCATION (location_id, address)
-values (79129, '33 Bishop BlvdHuddinge');
+values (67669, '93 Terrence Road');
 insert into EVENT_LOCATION (location_id, address)
-values (79172, '65 Everetts BlvdSzczecin');
+values (95833, '73rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (79584, '33 Bishop BlvdHuddinge');
+values (51611, '37 Kurtwood Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (79649, '33 Bishop BlvdHuddinge');
+values (35743, '61 Pitstone');
 insert into EVENT_LOCATION (location_id, address)
-values (79765, '77 Bishop BlvdBristol');
+values (86846, '37 Pitney');
 insert into EVENT_LOCATION (location_id, address)
-values (79811, '33 Bishop BlvdHuddinge');
+values (37634, '30 Kitty');
 insert into EVENT_LOCATION (location_id, address)
-values (79968, '24 Chad DriveTadley');
+values (89466, '809 Belle Street');
 insert into EVENT_LOCATION (location_id, address)
-values (81361, '33 Bishop BlvdHuddinge');
+values (28835, '50 Peter Street');
 insert into EVENT_LOCATION (location_id, address)
-values (81582, '33 Bishop BlvdHuddinge');
+values (14757, '38 Perrineau Road');
 insert into EVENT_LOCATION (location_id, address)
-values (81645, '40 Jaime RoadAurora');
+values (67864, '87 Wheel');
 insert into EVENT_LOCATION (location_id, address)
-values (81874, '63 Bishop BlvdHuddinge');
+values (59339, '41 McLachlan Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (82179, '36 Guzman BlvdFairbanks');
+values (18671, '55 Kahn Road');
 insert into EVENT_LOCATION (location_id, address)
-values (82229, '33 Bishop BlvdHuddinge');
+values (17919, '77 Glover Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (82364, '33 Bishop BlvdHuddinge');
+values (22673, '37 Krabbe Road');
 insert into EVENT_LOCATION (location_id, address)
-values (82538, '33 Bishop BlvdHuddinge');
+values (51673, '33 Hector Road');
 insert into EVENT_LOCATION (location_id, address)
-values (82736, '63 Robertson BlvdAlvechurch');
+values (14656, '34 Spresiano');
 insert into EVENT_LOCATION (location_id, address)
-values (82939, '33 Bishop BlvdHuddinge');
+values (78954, '865 Campbell Street');
 insert into EVENT_LOCATION (location_id, address)
-values (83133, '33 Bishop BlvdHuddinge');
+values (74465, '458 Leslie Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (83321, '33 Bishop BlvdHuddinge');
+values (28984, '29 Lemmon Road');
 insert into EVENT_LOCATION (location_id, address)
-values (83722, '33 Bishop BlvdHuddinge');
+values (96359, '46 Lesley');
 insert into EVENT_LOCATION (location_id, address)
-values (83772, '54 Robertson BlvdAlvechurch');
+values (19739, '40 Suwon Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (83828, '33 Bishop BlvdHuddinge');
+values (73341, '21 Gary Street');
 insert into EVENT_LOCATION (location_id, address)
-values (83832, '33 Bishop BlvdHuddinge');
+values (23968, '40 Mitchell Street');
 insert into EVENT_LOCATION (location_id, address)
-values (84454, '33 Bishop BlvdHuddinge');
+values (96858, '84 Coverdale Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (84829, '23rd StreetTakapuna');
+values (75754, '40 Murdock Street');
 insert into EVENT_LOCATION (location_id, address)
-values (85267, '54 Lakeville RoadAnnandale');
+values (54855, '22nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (85463, '31st StreetMason');
+values (89243, '5 Shepard Street');
 insert into EVENT_LOCATION (location_id, address)
-values (85466, '74 Bishop StreetGrimbergen');
+values (52339, '27 Ted Street');
 insert into EVENT_LOCATION (location_id, address)
-values (85689, '23rd StreetTakapuna');
+values (74717, '21 Salt Lake City Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (85739, '33 Bishop BlvdHuddinge');
+values (39337, '41 Jonathan Street');
 insert into EVENT_LOCATION (location_id, address)
-values (85931, '22 Everetts BlvdSzczecin');
+values (15468, '27 Fonda Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (85941, '33 Bishop BlvdHuddinge');
+values (85463, '68 Hughes Road');
 insert into EVENT_LOCATION (location_id, address)
-values (86192, '98 Everett RoadCheshire');
+values (24938, '51 Miami Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (86219, '77 Bishop BlvdBristol');
+values (49313, '28 Koteas Road');
 insert into EVENT_LOCATION (location_id, address)
-values (86381, '98 Everett RoadCheshire');
+values (39931, '7 Garry Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (86683, '55 Amsterdam AveBreda');
+values (88682, '92 Short Road');
 insert into EVENT_LOCATION (location_id, address)
-values (86846, '33 Bishop BlvdHuddinge');
+values (78345, '23rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (86895, '16 Ilmenau BlvdHolliston');
+values (54149, '72 Gaby Street');
 insert into EVENT_LOCATION (location_id, address)
-values (86947, '54 Fairborn AveLinz');
+values (79765, '91 Savage Street');
 insert into EVENT_LOCATION (location_id, address)
-values (87316, '23rd StreetTakapuna');
+values (21117, '46 Albert Street');
 insert into EVENT_LOCATION (location_id, address)
-values (87731, '33 Bishop BlvdHuddinge');
+values (64513, '7 Kadison Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (88291, '36 Guzman BlvdFairbanks');
+values (16941, '43rd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (88349, '33 Bishop BlvdHuddinge');
+values (54147, '856 Johnette Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (88414, '63 Bishop BlvdHuddinge');
+values (53616, '90 Adamstown Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (88682, '33 Bishop BlvdHuddinge');
+values (52277, '78 Chestnut');
 insert into EVENT_LOCATION (location_id, address)
-values (88711, '54 Lakeville RoadAnnandale');
+values (69998, '15 Rollins Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (88766, '33 Everetts StLutry');
+values (92597, '81 Candy Street');
 insert into EVENT_LOCATION (location_id, address)
-values (88768, '33 Bishop BlvdHuddinge');
+values (58186, '72nd Street');
 insert into EVENT_LOCATION (location_id, address)
-values (88991, '33 Bishop BlvdHuddinge');
+values (59816, '11st Street');
 insert into EVENT_LOCATION (location_id, address)
-values (89235, '54 Robertson BlvdAlvechurch');
+values (78789, '15 Burr Ridge Street');
 insert into EVENT_LOCATION (location_id, address)
-values (89243, '54 Robertson BlvdAlvechurch');
+values (11131, '79 Carlton Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (89466, '33 Bishop BlvdHuddinge');
+values (47431, '87 Paige Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (89655, '33 Bishop BlvdHuddinge');
+values (78249, '85 M׳¦nchengladbach');
 insert into EVENT_LOCATION (location_id, address)
-values (89911, '33 Bishop BlvdHuddinge');
+values (95955, '100 Cube Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (89948, '80 Chandler StreetAlessandria');
+values (94289, '10 Freeman Road');
 insert into EVENT_LOCATION (location_id, address)
-values (91352, '33 Bishop BlvdHuddinge');
+values (27573, '86 Epps');
 insert into EVENT_LOCATION (location_id, address)
-values (91773, '33 Bishop BlvdHuddinge');
+values (23725, '5 Nantes Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (91966, '33 Bishop BlvdHuddinge');
+values (22145, '40 Haysbert');
 insert into EVENT_LOCATION (location_id, address)
-values (92154, '33 Bishop BlvdHuddinge');
+values (73442, '44 James Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (92496, '29 Carla DrivePalo Alto');
+values (48374, '74 Kelly Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (92597, '16 Ilmenau BlvdHolliston');
+values (79172, '25 Zagreb Road');
 insert into EVENT_LOCATION (location_id, address)
-values (92677, '33 Bishop BlvdHuddinge');
+values (85739, '41 Mel Ave');
 insert into EVENT_LOCATION (location_id, address)
-values (92889, '65 Everetts BlvdSzczecin');
+values (72541, '33 Stanley Street');
 insert into EVENT_LOCATION (location_id, address)
-values (93651, '38 Hewett RoadBillund');
+values (55879, '17 Martin Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (93715, '33 Bishop BlvdHuddinge');
+values (15643, '37 Thornton Road');
 insert into EVENT_LOCATION (location_id, address)
-values (94167, '33 Bishop BlvdHuddinge');
+values (48995, '26 Cherry Road');
 insert into EVENT_LOCATION (location_id, address)
-values (94184, '33 Bishop BlvdHuddinge');
+values (17632, '70 Rawlins Street');
 insert into EVENT_LOCATION (location_id, address)
-values (94289, '33 Bishop BlvdHuddinge');
+values (94184, '23 Percy Road');
 insert into EVENT_LOCATION (location_id, address)
-values (94395, '33 Bishop BlvdHuddinge');
+values (33265, '32 Oyten Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (94696, '54 Lakeville RoadAnnandale');
+values (22353, '903 LeVar Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (94778, '33 Bishop BlvdHuddinge');
+values (53641, '68 Lynskey Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (94895, '35 Goss AveGlen Head');
+values (79811, '55 Warwick Road');
 insert into EVENT_LOCATION (location_id, address)
-values (95166, '22 Everetts BlvdSzczecin');
+values (77415, '45 McGill Street');
 insert into EVENT_LOCATION (location_id, address)
-values (95566, '63 Bishop BlvdHuddinge');
+values (25388, '682 Cheadle Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (95717, '33 Bishop BlvdHuddinge');
+values (81361, '23 Victoria Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (95833, '35 Goss AveGlen Head');
+values (15638, '47 Hirsch Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (95955, '31st StreetMason');
+values (85941, '84 Bening Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (96359, '33 Bishop BlvdHuddinge');
+values (73453, '58 Paquin Street');
 insert into EVENT_LOCATION (location_id, address)
-values (96488, '33 Bishop BlvdHuddinge');
+values (26645, '27 Yaphet');
 insert into EVENT_LOCATION (location_id, address)
-values (96595, '29 Sandra RoadMenlo Park');
+values (16675, '78 Fiona Street');
 insert into EVENT_LOCATION (location_id, address)
-values (96613, '63 Robertson BlvdAlvechurch');
+values (71729, '30 Canal Winchester Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (96672, '33 Bishop BlvdHuddinge');
+values (58923, '33 Zן¢•rich Road');
 insert into EVENT_LOCATION (location_id, address)
-values (96762, '29 Carla DrivePalo Alto');
+values (38486, '484 Hawn Road');
 insert into EVENT_LOCATION (location_id, address)
-values (96858, '29 Sandra RoadMenlo Park');
+values (15254, '39 Palo Alto Street');
 insert into EVENT_LOCATION (location_id, address)
-values (96963, '33 Bishop BlvdHuddinge');
+values (92677, '100 Hawke Road');
 insert into EVENT_LOCATION (location_id, address)
-values (96976, '54 Robertson BlvdAlvechurch');
+values (51931, '899 Anne Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (97475, '33 Bishop BlvdHuddinge');
+values (67679, '42 Rhona Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (97516, '33 Bishop BlvdHuddinge');
+values (48197, '10 Barnett Street');
 insert into EVENT_LOCATION (location_id, address)
-values (97646, '74 Keitel AveWalldorf');
+values (29371, '470 St Leonards Drive');
 insert into EVENT_LOCATION (location_id, address)
-values (97938, '33 Bishop BlvdHuddinge');
+values (93651, '92 Vega Road');
 insert into EVENT_LOCATION (location_id, address)
-values (98457, '40 Jaime RoadAurora');
+values (49942, '100 Darren');
 insert into EVENT_LOCATION (location_id, address)
-values (98579, '33 Bishop BlvdHuddinge');
+values (88349, '40 Duschel Road');
 insert into EVENT_LOCATION (location_id, address)
-values (98616, '54 Lakeville RoadAnnandale');
+values (88291, '95 Knutsford Road');
 insert into EVENT_LOCATION (location_id, address)
-values (99258, '33 Bishop BlvdHuddinge');
+values (92154, '19 Buckingham Road');
 insert into EVENT_LOCATION (location_id, address)
-values (99338, '33 Bishop BlvdHuddinge');
+values (71898, '4 Rhea Street');
 insert into EVENT_LOCATION (location_id, address)
-values (99345, '33 Bishop BlvdHuddinge');
+values (44222, '918 Gyllenhaal Blvd');
 insert into EVENT_LOCATION (location_id, address)
-values (99531, '54 Robertson BlvdAlvechurch');
+values (83133, '29 Malone Road');
 commit;
 prompt 399 records loaded
 prompt Loading EVENTS...
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2273, to_date('03-08-2018', 'dd-mm-yyyy'), '0:41', 'ea facilis et sunt saepe quo id incididunt recusandae eiusmod. ', 1136, null);
+values (2273, to_date('03-08-2018', 'dd-mm-yyyy'), '0:41', 'ea facilis et sunt saepe quo id incididunt recusandae eiusmod. ', 1136, 78775);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2274, to_date('20-05-2023', 'dd-mm-yyyy'), '11:18', 'laboris tenetur ad est sapiente debitis irure at cumque. ', 1232, null);
+values (2274, to_date('20-05-2023', 'dd-mm-yyyy'), '11:18', 'laboris tenetur ad est sapiente debitis irure at cumque. ', 1232, 53162);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2275, to_date('12-03-2017', 'dd-mm-yyyy'), '5:5', 'tenetur quas rerum voluptas elit in. ', 1154, null);
+values (2275, to_date('12-03-2017', 'dd-mm-yyyy'), '5:5', 'tenetur quas rerum voluptas elit in. ', 1154, 32298);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2276, to_date('08-03-2020', 'dd-mm-yyyy'), '2:39', 'cillum et ea reiciendis et ullamco fuga. ', 1115, null);
+values (2276, to_date('08-03-2020', 'dd-mm-yyyy'), '2:39', 'cillum et ea reiciendis et ullamco fuga. ', 1115, 54175);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2277, to_date('06-04-2025', 'dd-mm-yyyy'), '8:8', 'iusto in. ', 1300, null);
+values (2277, to_date('06-04-2025', 'dd-mm-yyyy'), '8:8', 'iusto in. ', 1300, 37618);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2278, to_date('19-11-2015', 'dd-mm-yyyy'), '10:57', 'in eu. ', 1155, null);
+values (2278, to_date('19-11-2015', 'dd-mm-yyyy'), '10:57', 'in eu. ', 1155, 55879);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2279, to_date('06-02-2027', 'dd-mm-yyyy'), '7:13', 'eu quo ut in molestias quidem molestias cillum quis qui. ', 1159, null);
+values (2279, to_date('06-02-2027', 'dd-mm-yyyy'), '7:13', 'eu quo ut in molestias quidem molestias cillum quis qui. ', 1159, 64513);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2280, to_date('01-04-2028', 'dd-mm-yyyy'), '4:20', 'nisi dolorum iusto. ', 1265, null);
+values (2280, to_date('01-04-2028', 'dd-mm-yyyy'), '4:20', 'nisi dolorum iusto. ', 1265, 51931);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2281, to_date('18-09-2030', 'dd-mm-yyyy'), '7:26', 'esse facere labore itaque nisi. ', 1287, null);
+values (2281, to_date('18-09-2030', 'dd-mm-yyyy'), '7:26', 'esse facere labore itaque nisi. ', 1287, 86846);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2282, to_date('06-05-2021', 'dd-mm-yyyy'), '2:54', 'aut est dolorum optio dolores aliqua voluptate recusandae perferendis voluptate.  officia. ', 1239, null);
+values (2282, to_date('06-05-2021', 'dd-mm-yyyy'), '2:54', 'aut est dolorum optio dolores aliqua voluptate recusandae perferendis voluptate.  officia. ', 1239, 25134);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2283, to_date('21-11-2030', 'dd-mm-yyyy'), '9:4', 'aut eiusmod quod. ', 1266, null);
+values (2283, to_date('21-11-2030', 'dd-mm-yyyy'), '9:4', 'aut eiusmod quod. ', 1266, 93651);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2284, to_date('23-02-2025', 'dd-mm-yyyy'), '1:3', 'voluptas similique voluptatum itaque et autem ut amet laborum. ', 1149, null);
+values (2284, to_date('23-02-2025', 'dd-mm-yyyy'), '1:3', 'voluptas similique voluptatum itaque et autem ut amet laborum. ', 1149, 78954);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2285, to_date('04-10-2025', 'dd-mm-yyyy'), '10:37', 'repudiandae perferendis libero consectetur laborum similique eu fugiat ex consectetur. ', 1150, null);
+values (2285, to_date('04-10-2025', 'dd-mm-yyyy'), '10:37', 'repudiandae perferendis libero consectetur laborum similique eu fugiat ex consectetur. ', 1150, 16941);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2286, to_date('22-03-2028', 'dd-mm-yyyy'), '8:7', 'irure sint et eu ut aliquip fugiat nisi non cupiditate.  in cupidatat rerum. ', 1128, null);
+values (2286, to_date('22-03-2028', 'dd-mm-yyyy'), '8:7', 'irure sint et eu ut aliquip fugiat nisi non cupiditate.  in cupidatat rerum. ', 1128, 66926);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2287, to_date('18-12-2028', 'dd-mm-yyyy'), '2:24', 'elit deserunt qui excepturi quas ut vero cupidatat et. ', 1156, null);
+values (2287, to_date('18-12-2028', 'dd-mm-yyyy'), '2:24', 'elit deserunt qui excepturi quas ut vero cupidatat et. ', 1156, 51455);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2288, to_date('05-01-2022', 'dd-mm-yyyy'), '12:47', 'in occaecati delectus praesentium excepteur mollitia est id ex. ', 1210, null);
+values (2288, to_date('05-01-2022', 'dd-mm-yyyy'), '12:47', 'in occaecati delectus praesentium excepteur mollitia est id ex. ', 1210, 53416);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2289, to_date('26-08-2015', 'dd-mm-yyyy'), '12:58', 'cillum libero ad cupiditate delectus dolore distinctio omnis et amet.  et culpa dolorum vero est. ', 1293, null);
+values (2289, to_date('26-08-2015', 'dd-mm-yyyy'), '12:58', 'cillum libero ad cupiditate delectus dolore distinctio omnis et amet.  et culpa dolorum vero est. ', 1293, 74717);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2290, to_date('15-07-2027', 'dd-mm-yyyy'), '10:28', 'et est proident provident expedita est et officiis duis alias.  occaecati. ', 1242, null);
+values (2290, to_date('15-07-2027', 'dd-mm-yyyy'), '10:28', 'et est proident provident expedita est et officiis duis alias.  occaecati. ', 1242, 37574);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2291, to_date('20-07-2018', 'dd-mm-yyyy'), '4:41', 'rerum mollitia et sint repudiandae pariatur id tenetur omnis id.  cupiditate. ', 1176, null);
+values (2291, to_date('20-07-2018', 'dd-mm-yyyy'), '4:41', 'rerum mollitia et sint repudiandae pariatur id tenetur omnis id.  cupiditate. ', 1176, 51611);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2292, to_date('25-11-2023', 'dd-mm-yyyy'), '0:6', 'ducimus ut exercitation distinctio officia et maiores ullamco tenetur excepturi.  est quos. ', 1170, null);
+values (2292, to_date('25-11-2023', 'dd-mm-yyyy'), '0:6', 'ducimus ut exercitation distinctio officia et maiores ullamco tenetur excepturi.  est quos. ', 1170, 76179);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2293, to_date('27-09-2030', 'dd-mm-yyyy'), '4:1', 'aliqua qui sint in et. ', 1238, null);
+values (2293, to_date('27-09-2030', 'dd-mm-yyyy'), '4:1', 'aliqua qui sint in et. ', 1238, 96672);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2294, to_date('20-03-2026', 'dd-mm-yyyy'), '8:22', 'magna nisi corrupti ut soluta quas aliquip id voluptate minim.  rerum ullamco. ', 1240, null);
+values (2294, to_date('20-03-2026', 'dd-mm-yyyy'), '8:22', 'magna nisi corrupti ut soluta quas aliquip id voluptate minim.  rerum ullamco. ', 1240, 69998);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2295, to_date('06-10-2029', 'dd-mm-yyyy'), '1:41', 'omnis sunt. ', 1133, null);
+values (2295, to_date('06-10-2029', 'dd-mm-yyyy'), '1:41', 'omnis sunt. ', 1133, 73885);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2296, to_date('08-07-2022', 'dd-mm-yyyy'), '11:57', 'voluptate blanditiis repudiandae reprehenderit occaecati. ', 1194, null);
+values (2296, to_date('08-07-2022', 'dd-mm-yyyy'), '11:57', 'voluptate blanditiis repudiandae reprehenderit occaecati. ', 1194, 35911);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2297, to_date('22-02-2021', 'dd-mm-yyyy'), '5:3', 'et in. ', 1276, null);
+values (2297, to_date('22-02-2021', 'dd-mm-yyyy'), '5:3', 'et in. ', 1276, 25134);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2299, to_date('20-03-2030', 'dd-mm-yyyy'), '10:34', 'aut amet et amet perferendis cumque laboris aut non dolorum.  accusamus ad itaque et eos fugiat. ', 1168, null);
+values (2299, to_date('20-03-2030', 'dd-mm-yyyy'), '10:34', 'aut amet et amet perferendis cumque laboris aut non dolorum.  accusamus ad itaque et eos fugiat. ', 1168, 22689);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2300, to_date('15-08-2019', 'dd-mm-yyyy'), '6:20', 'aute in et eos id maxime. ', 1174, null);
+values (2300, to_date('15-08-2019', 'dd-mm-yyyy'), '6:20', 'aute in et eos id maxime. ', 1174, 91352);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2301, to_date('15-03-2025', 'dd-mm-yyyy'), '3:45', 'quibusdam similique magna nam occaecati in. ', 1220, null);
+values (2301, to_date('15-03-2025', 'dd-mm-yyyy'), '3:45', 'quibusdam similique magna nam occaecati in. ', 1220, 24479);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2302, to_date('28-04-2016', 'dd-mm-yyyy'), '10:22', 'soluta rerum tenetur laborum voluptatum deleniti eligendi culpa. ', 1147, null);
+values (2302, to_date('28-04-2016', 'dd-mm-yyyy'), '10:22', 'soluta rerum tenetur laborum voluptatum deleniti eligendi culpa. ', 1147, 41673);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2303, to_date('30-06-2018', 'dd-mm-yyyy'), '11:37', 'mollit saepe ut amet eiusmod ut. ', 1193, null);
+values (2303, to_date('30-06-2018', 'dd-mm-yyyy'), '11:37', 'mollit saepe ut amet eiusmod ut. ', 1193, 25889);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2304, to_date('01-07-2022', 'dd-mm-yyyy'), '3:34', 'rerum ullamco non odio quo incididunt omnis sint earum. ', 1168, null);
+values (2304, to_date('01-07-2022', 'dd-mm-yyyy'), '3:34', 'rerum ullamco non odio quo incididunt omnis sint earum. ', 1168, 55395);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2305, to_date('04-03-2017', 'dd-mm-yyyy'), '2:2', 'dignissimos id autem repellendus temporibus duis irure eveniet repudiandae dolore.  cumque elit et. ', 1296, null);
+values (2305, to_date('04-03-2017', 'dd-mm-yyyy'), '2:2', 'dignissimos id autem repellendus temporibus duis irure eveniet repudiandae dolore.  cumque elit et. ', 1296, 49942);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2306, to_date('30-06-2027', 'dd-mm-yyyy'), '10:20', 'cillum proident cillum omnis est delectus pariatur blanditiis. ', 1135, null);
+values (2306, to_date('30-06-2027', 'dd-mm-yyyy'), '10:20', 'cillum proident cillum omnis est delectus pariatur blanditiis. ', 1135, 12658);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2307, to_date('28-08-2026', 'dd-mm-yyyy'), '1:48', 'non quod et nihil voluptatibus maiores est est. ', 1136, null);
+values (2307, to_date('28-08-2026', 'dd-mm-yyyy'), '1:48', 'non quod et nihil voluptatibus maiores est est. ', 1136, 96595);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2308, to_date('29-10-2020', 'dd-mm-yyyy'), '8:57', 'dolor ut cumque non et tempor sint laboris vero officia.  nostrud voluptates in labore. ', 1307, null);
+values (2308, to_date('29-10-2020', 'dd-mm-yyyy'), '8:57', 'dolor ut cumque non et tempor sint laboris vero officia.  nostrud voluptates in labore. ', 1307, 96858);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2309, to_date('20-03-2019', 'dd-mm-yyyy'), '10:47', 'tempore deleniti est aute odio do temporibus debitis hic sapiente. ', 1194, null);
+values (2309, to_date('20-03-2019', 'dd-mm-yyyy'), '10:47', 'tempore deleniti est aute odio do temporibus debitis hic sapiente. ', 1194, 96359);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2310, to_date('23-06-2015', 'dd-mm-yyyy'), '10:53', 'pariatur ea iusto. ', 1206, null);
+values (2310, to_date('23-06-2015', 'dd-mm-yyyy'), '10:53', 'pariatur ea iusto. ', 1206, 26145);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2111, to_date('14-06-2018', 'dd-mm-yyyy'), '9:58', 'id omnis et ipsum pariatur sit nihil sint duis. ', 1182, null);
+values (2111, to_date('14-06-2018', 'dd-mm-yyyy'), '9:58', 'id omnis et ipsum pariatur sit nihil sint duis. ', 1182, 82538);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2112, to_date('19-03-2016', 'dd-mm-yyyy'), '2:31', 'voluptas sunt accusamus excepturi excepteur est temporibus repellendus alias deleniti.  eu amet. ', 1119, null);
+values (2112, to_date('19-03-2016', 'dd-mm-yyyy'), '2:31', 'voluptas sunt accusamus excepturi excepteur est temporibus repellendus alias deleniti.  eu amet. ', 1119, 53616);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2113, to_date('25-04-2025', 'dd-mm-yyyy'), '2:48', 'sunt mollitia quidem est nostrud molestiae nisi quod. ', 1287, null);
+values (2113, to_date('25-04-2025', 'dd-mm-yyyy'), '2:48', 'sunt mollitia quidem est nostrud molestiae nisi quod. ', 1287, 68558);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2114, to_date('07-09-2029', 'dd-mm-yyyy'), '9:38', 'ut proident et. ', 1166, null);
+values (2114, to_date('07-09-2029', 'dd-mm-yyyy'), '9:38', 'ut proident et. ', 1166, 88766);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2115, to_date('02-01-2027', 'dd-mm-yyyy'), '8:17', 'et id facere harum maxime hic soluta. ', 1112, null);
+values (2115, to_date('02-01-2027', 'dd-mm-yyyy'), '8:17', 'et id facere harum maxime hic soluta. ', 1112, 79968);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2116, to_date('22-08-2021', 'dd-mm-yyyy'), '11:58', 'aut ut dolores hic a itaque quidem quo molestiae ea.  labore irure a et. ', 1253, null);
+values (2116, to_date('22-08-2021', 'dd-mm-yyyy'), '11:58', 'aut ut dolores hic a itaque quidem quo molestiae ea.  labore irure a et. ', 1253, 63365);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2117, to_date('29-06-2028', 'dd-mm-yyyy'), '6:31', 'aut excepteur temporibus do impedit nostrud cillum nostrud alias. ', 1203, null);
+values (2117, to_date('29-06-2028', 'dd-mm-yyyy'), '6:31', 'aut excepteur temporibus do impedit nostrud cillum nostrud alias. ', 1203, 37517);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2118, to_date('12-09-2016', 'dd-mm-yyyy'), '0:21', 'nam quidem eiusmod recusandae a. ', 1147, null);
+values (2118, to_date('12-09-2016', 'dd-mm-yyyy'), '0:21', 'nam quidem eiusmod recusandae a. ', 1147, 68623);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2119, to_date('30-12-2021', 'dd-mm-yyyy'), '6:14', 'distinctio occaecat dolor nam. ', 1118, null);
+values (2119, to_date('30-12-2021', 'dd-mm-yyyy'), '6:14', 'distinctio occaecat dolor nam. ', 1118, 25499);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2120, to_date('09-11-2029', 'dd-mm-yyyy'), '9:18', 'nobis sunt tempore et dolor consectetur. ', 1218, null);
+values (2120, to_date('09-11-2029', 'dd-mm-yyyy'), '9:18', 'nobis sunt tempore et dolor consectetur. ', 1218, 91352);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2121, to_date('23-02-2015', 'dd-mm-yyyy'), '7:35', 'similique cum tempor libero et esse mollitia distinctio itaque proident.  voluptate officia. ', 1112, null);
+values (2121, to_date('23-02-2015', 'dd-mm-yyyy'), '7:35', 'similique cum tempor libero et esse mollitia distinctio itaque proident.  voluptate officia. ', 1112, 24215);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2122, to_date('10-07-2019', 'dd-mm-yyyy'), '2:49', 'exercitation quod elit enim eligendi. ', 1127, null);
+values (2122, to_date('10-07-2019', 'dd-mm-yyyy'), '2:49', 'exercitation quod elit enim eligendi. ', 1127, 25648);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2123, to_date('29-03-2022', 'dd-mm-yyyy'), '1:17', 'et hic ut proident distinctio consequat ut. ', 1267, null);
+values (2123, to_date('29-03-2022', 'dd-mm-yyyy'), '1:17', 'et hic ut proident distinctio consequat ut. ', 1267, 74465);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2124, to_date('08-11-2026', 'dd-mm-yyyy'), '1:18', 'fugiat sit minus reprehenderit aut veniam qui consectetur. ', 1299, null);
+values (2124, to_date('08-11-2026', 'dd-mm-yyyy'), '1:18', 'fugiat sit minus reprehenderit aut veniam qui consectetur. ', 1299, 19354);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2125, to_date('08-01-2024', 'dd-mm-yyyy'), '5:44', 'dolores adipisicing aut placeat adipisicing ut. ', 1228, null);
+values (2125, to_date('08-01-2024', 'dd-mm-yyyy'), '5:44', 'dolores adipisicing aut placeat adipisicing ut. ', 1228, 56874);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2126, to_date('27-02-2018', 'dd-mm-yyyy'), '11:48', 'provident sint delectus id incididunt vero nulla consequatur molestias ut. ', 1171, null);
+values (2126, to_date('27-02-2018', 'dd-mm-yyyy'), '11:48', 'provident sint delectus id incididunt vero nulla consequatur molestias ut. ', 1171, 73442);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2127, to_date('20-11-2027', 'dd-mm-yyyy'), '12:5', 'praesentium voluptates nulla vero. ', 1121, null);
+values (2127, to_date('20-11-2027', 'dd-mm-yyyy'), '12:5', 'praesentium voluptates nulla vero. ', 1121, 22277);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2128, to_date('29-12-2026', 'dd-mm-yyyy'), '7:24', 'dolorum corrupti repellat repudiandae. ', 1255, null);
+values (2128, to_date('29-12-2026', 'dd-mm-yyyy'), '7:24', 'dolorum corrupti repellat repudiandae. ', 1255, 46819);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2129, to_date('15-01-2018', 'dd-mm-yyyy'), '4:47', 'placeat sint dolores laboris officia et expedita officia ducimus. ', 1281, null);
+values (2129, to_date('15-01-2018', 'dd-mm-yyyy'), '4:47', 'placeat sint dolores laboris officia et expedita officia ducimus. ', 1281, 49313);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2130, to_date('13-06-2018', 'dd-mm-yyyy'), '4:37', 'nulla est officia voluptatum occaecat sint officia possimus et aut. ', 1165, null);
+values (2130, to_date('13-06-2018', 'dd-mm-yyyy'), '4:37', 'nulla est officia voluptatum occaecat sint officia possimus et aut. ', 1165, 23725);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2131, to_date('09-06-2017', 'dd-mm-yyyy'), '9:41', 'cupidatat omnis molestias. ', 1310, null);
+values (2131, to_date('09-06-2017', 'dd-mm-yyyy'), '9:41', 'cupidatat omnis molestias. ', 1310, 66743);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2132, to_date('07-12-2019', 'dd-mm-yyyy'), '6:41', 'lorem qui similique. ', 1145, null);
+values (2132, to_date('07-12-2019', 'dd-mm-yyyy'), '6:41', 'lorem qui similique. ', 1145, 77149);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2133, to_date('13-08-2030', 'dd-mm-yyyy'), '4:29', 'quibusdam et magna minus iusto est similique voluptatum nulla delectus.  voluptates. ', 1308, null);
+values (2133, to_date('13-08-2030', 'dd-mm-yyyy'), '4:29', 'quibusdam et magna minus iusto est similique voluptatum nulla delectus.  voluptates. ', 1308, 37672);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2134, to_date('15-11-2022', 'dd-mm-yyyy'), '1:18', 'veniam amet impedit fugiat qui rerum est aut culpa et. ', 1165, null);
+values (2134, to_date('15-11-2022', 'dd-mm-yyyy'), '1:18', 'veniam amet impedit fugiat qui rerum est aut culpa et. ', 1165, 98579);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2135, to_date('22-09-2020', 'dd-mm-yyyy'), '8:44', 'et quas. ', 1264, null);
+values (2135, to_date('22-09-2020', 'dd-mm-yyyy'), '8:44', 'et quas. ', 1264, 41668);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2136, to_date('06-01-2016', 'dd-mm-yyyy'), '8:20', 'libero quidem et minus aute quis itaque adipisicing sunt duis. ', 1274, null);
+values (2136, to_date('06-01-2016', 'dd-mm-yyyy'), '8:20', 'libero quidem et minus aute quis itaque adipisicing sunt duis. ', 1274, 48689);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2137, to_date('26-06-2017', 'dd-mm-yyyy'), '11:46', 'dolore id soluta vero reiciendis maxime similique minus nobis dolor.  et alias repellat quod. ', 1229, null);
+values (2137, to_date('26-06-2017', 'dd-mm-yyyy'), '11:46', 'dolore id soluta vero reiciendis maxime similique minus nobis dolor.  et alias repellat quod. ', 1229, 24479);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2138, to_date('19-11-2015', 'dd-mm-yyyy'), '2:16', 'laborum distinctio sint rerum autem nam similique autem harum aut.  nostrud cum. ', 1309, null);
+values (2138, to_date('19-11-2015', 'dd-mm-yyyy'), '2:16', 'laborum distinctio sint rerum autem nam similique autem harum aut.  nostrud cum. ', 1309, 76974);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2140, to_date('24-12-2026', 'dd-mm-yyyy'), '6:7', 'a deserunt dolor quis minus. ', 1143, null);
+values (2140, to_date('24-12-2026', 'dd-mm-yyyy'), '6:7', 'a deserunt dolor quis minus. ', 1143, 49313);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2141, to_date('21-11-2026', 'dd-mm-yyyy'), '10:15', 'et ut sint hic consequatur. ', 1153, null);
+values (2141, to_date('21-11-2026', 'dd-mm-yyyy'), '10:15', 'et ut sint hic consequatur. ', 1153, 95833);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2142, to_date('17-09-2021', 'dd-mm-yyyy'), '6:37', 'ut harum cupidatat consectetur cumque. ', 1291, null);
+values (2142, to_date('17-09-2021', 'dd-mm-yyyy'), '6:37', 'ut harum cupidatat consectetur cumque. ', 1291, 61565);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2143, to_date('05-10-2025', 'dd-mm-yyyy'), '6:37', 'sunt labore. ', 1146, null);
+values (2143, to_date('05-10-2025', 'dd-mm-yyyy'), '6:37', 'sunt labore. ', 1146, 25388);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2144, to_date('20-12-2030', 'dd-mm-yyyy'), '9:36', 'et et id eu cillum molestiae impedit proident perferendis sed.  maxime. ', 1222, null);
+values (2144, to_date('20-12-2030', 'dd-mm-yyyy'), '9:36', 'et et id eu cillum molestiae impedit proident perferendis sed.  maxime. ', 1222, 34333);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2145, to_date('12-04-2030', 'dd-mm-yyyy'), '3:30', 'esse consequatur cum minus excepturi et eveniet veniam doloribus velit.  eu. ', 1309, null);
+values (2145, to_date('12-04-2030', 'dd-mm-yyyy'), '3:30', 'esse consequatur cum minus excepturi et eveniet veniam doloribus velit.  eu. ', 1309, 88711);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2146, to_date('23-10-2022', 'dd-mm-yyyy'), '3:53', 'in blanditiis sint ipsum ea. ', 1215, null);
+values (2146, to_date('23-10-2022', 'dd-mm-yyyy'), '3:53', 'in blanditiis sint ipsum ea. ', 1215, 48376);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2147, to_date('20-12-2020', 'dd-mm-yyyy'), '8:44', 'exercitation quis aut atque aut reiciendis do mollitia qui maiores.  quas. ', 1261, null);
+values (2147, to_date('20-12-2020', 'dd-mm-yyyy'), '8:44', 'exercitation quis aut atque aut reiciendis do mollitia qui maiores.  quas. ', 1261, 85931);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2148, to_date('11-04-2019', 'dd-mm-yyyy'), '9:39', 'saepe quas et quidem ad sit molestiae dolor excepteur perferendis.  labore. ', 1304, null);
+values (2148, to_date('11-04-2019', 'dd-mm-yyyy'), '9:39', 'saepe quas et quidem ad sit molestiae dolor excepteur perferendis.  labore. ', 1304, 82229);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2149, to_date('18-12-2023', 'dd-mm-yyyy'), '3:49', 'nostrud culpa aute cupidatat maiores odio dolores a rerum culpa.  ut proident corrupti. ', 1232, null);
+values (2149, to_date('18-12-2023', 'dd-mm-yyyy'), '3:49', 'nostrud culpa aute cupidatat maiores odio dolores a rerum culpa.  ut proident corrupti. ', 1232, 41456);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2150, to_date('21-01-2029', 'dd-mm-yyyy'), '12:22', 'omnis quas excepturi praesentium id irure ex occaecati exercitation nulla.  et ut. ', 1131, null);
+values (2150, to_date('21-01-2029', 'dd-mm-yyyy'), '12:22', 'omnis quas excepturi praesentium id irure ex occaecati exercitation nulla.  et ut. ', 1131, 14132);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2151, to_date('06-10-2021', 'dd-mm-yyyy'), '4:57', 'at autem. ', 1299, null);
+values (2151, to_date('06-10-2021', 'dd-mm-yyyy'), '4:57', 'at autem. ', 1299, 73442);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2152, to_date('24-10-2027', 'dd-mm-yyyy'), '10:19', 'eu nostrud et dolore debitis officia aut est veniam. ', 1288, null);
+values (2152, to_date('24-10-2027', 'dd-mm-yyyy'), '10:19', 'eu nostrud et dolore debitis officia aut est veniam. ', 1288, 27465);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2153, to_date('28-06-2025', 'dd-mm-yyyy'), '12:36', 'consectetur fuga non placeat quos qui et aut in id. ', 1259, null);
+values (2153, to_date('28-06-2025', 'dd-mm-yyyy'), '12:36', 'consectetur fuga non placeat quos qui et aut in id. ', 1259, 51455);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2154, to_date('08-04-2020', 'dd-mm-yyyy'), '11:19', 'rerum do blanditiis saepe odio et voluptate voluptate aut mollitia.  anim. ', 1186, null);
+values (2154, to_date('08-04-2020', 'dd-mm-yyyy'), '11:19', 'rerum do blanditiis saepe odio et voluptate voluptate aut mollitia.  anim. ', 1186, 17415);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2155, to_date('23-08-2015', 'dd-mm-yyyy'), '1:0', 'repellat facilis amet vero nulla tempore duis est veniam nihil.  cum elit. ', 1260, null);
+values (2155, to_date('23-08-2015', 'dd-mm-yyyy'), '1:0', 'repellat facilis amet vero nulla tempore duis est veniam nihil.  cum elit. ', 1260, 55395);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2156, to_date('06-05-2027', 'dd-mm-yyyy'), '10:20', 'ipsum saepe laborum rerum saepe officia dignissimos facere aliquip voluptatum. ', 1125, null);
+values (2156, to_date('06-05-2027', 'dd-mm-yyyy'), '10:20', 'ipsum saepe laborum rerum saepe officia dignissimos facere aliquip voluptatum. ', 1125, 26145);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2157, to_date('20-06-2030', 'dd-mm-yyyy'), '11:1', 'distinctio sint minim tempore. ', 1179, null);
+values (2157, to_date('20-06-2030', 'dd-mm-yyyy'), '11:1', 'distinctio sint minim tempore. ', 1179, 19196);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2158, to_date('02-01-2030', 'dd-mm-yyyy'), '1:53', 'id deserunt eveniet eu nam hic fugiat cillum quis mollitia.  tempore qui voluptas dolorum et. ', 1129, null);
+values (2158, to_date('02-01-2030', 'dd-mm-yyyy'), '1:53', 'id deserunt eveniet eu nam hic fugiat cillum quis mollitia.  tempore qui voluptas dolorum et. ', 1129, 43614);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2159, to_date('28-04-2015', 'dd-mm-yyyy'), '6:42', 'ut ut aute accusamus voluptates dolores laboris ipsum id id.  mollitia qui nostrud non dolor. ', 1301, null);
+values (2159, to_date('28-04-2015', 'dd-mm-yyyy'), '6:42', 'ut ut aute accusamus voluptates dolores laboris ipsum id id.  mollitia qui nostrud non dolor. ', 1301, 73857);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2160, to_date('08-08-2026', 'dd-mm-yyyy'), '8:54', 'minus nihil enim rerum. ', 1282, null);
+values (2160, to_date('08-08-2026', 'dd-mm-yyyy'), '8:54', 'minus nihil enim rerum. ', 1282, 85689);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2161, to_date('28-05-2021', 'dd-mm-yyyy'), '2:33', 'facere quis pariatur nostrud. ', 1306, null);
+values (2161, to_date('28-05-2021', 'dd-mm-yyyy'), '2:33', 'facere quis pariatur nostrud. ', 1306, 68826);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2162, to_date('30-08-2027', 'dd-mm-yyyy'), '2:29', 'id quibusdam labore aute omnis dolorum ullamco iusto quo aut. ', 1245, null);
+values (2162, to_date('30-08-2027', 'dd-mm-yyyy'), '2:29', 'id quibusdam labore aute omnis dolorum ullamco iusto quo aut. ', 1245, 77149);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2163, to_date('27-01-2020', 'dd-mm-yyyy'), '2:4', 'mollitia eos. ', 1207, null);
+values (2163, to_date('27-01-2020', 'dd-mm-yyyy'), '2:4', 'mollitia eos. ', 1207, 15643);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2164, to_date('01-12-2028', 'dd-mm-yyyy'), '8:37', 'occaecat labore eu occaecati reiciendis placeat. ', 1175, null);
+values (2164, to_date('01-12-2028', 'dd-mm-yyyy'), '8:37', 'occaecat labore eu occaecati reiciendis placeat. ', 1175, 97516);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2165, to_date('07-04-2025', 'dd-mm-yyyy'), '4:15', 'commodo et quis mollitia aut mollit repellendus aliqua et autem.  laboris ut. ', 1273, null);
+values (2165, to_date('07-04-2025', 'dd-mm-yyyy'), '4:15', 'commodo et quis mollitia aut mollit repellendus aliqua et autem.  laboris ut. ', 1273, 46276);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2166, to_date('30-08-2023', 'dd-mm-yyyy'), '4:15', 'ipsum eligendi est aut et in laborum incididunt. ', 1152, null);
+values (2166, to_date('30-08-2023', 'dd-mm-yyyy'), '4:15', 'ipsum eligendi est aut et in laborum incididunt. ', 1152, 79129);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2167, to_date('05-08-2030', 'dd-mm-yyyy'), '2:53', 'voluptas aliquip doloribus in nihil nihil mollit laborum saepe quibusdam.  voluptatum. ', 1135, null);
+values (2167, to_date('05-08-2030', 'dd-mm-yyyy'), '2:53', 'voluptas aliquip doloribus in nihil nihil mollit laborum saepe quibusdam.  voluptatum. ', 1135, 85941);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2168, to_date('16-03-2016', 'dd-mm-yyyy'), '6:59', 'autem duis deleniti cupiditate aut minus. ', 1145, null);
+values (2168, to_date('16-03-2016', 'dd-mm-yyyy'), '6:59', 'autem duis deleniti cupiditate aut minus. ', 1145, 34333);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2169, to_date('18-09-2024', 'dd-mm-yyyy'), '10:40', 'ea animi ducimus asperiores hic adipisicing labore asperiores irure consectetur.  doloribus quo. ', 1231, null);
+values (2169, to_date('18-09-2024', 'dd-mm-yyyy'), '10:40', 'ea animi ducimus asperiores hic adipisicing labore asperiores irure consectetur.  doloribus quo. ', 1231, 24169);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2170, to_date('09-06-2030', 'dd-mm-yyyy'), '5:44', 'officia nulla atque quas repellendus blanditiis tempor debitis deserunt. ', 1202, null);
+values (2170, to_date('09-06-2030', 'dd-mm-yyyy'), '5:44', 'officia nulla atque quas repellendus blanditiis tempor debitis deserunt. ', 1202, 68826);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2171, to_date('13-01-2015', 'dd-mm-yyyy'), '5:46', 'officia elit voluptatum deserunt eos libero sint id omnis et.  eu placeat. ', 1136, null);
+values (2171, to_date('13-01-2015', 'dd-mm-yyyy'), '5:46', 'officia elit voluptatum deserunt eos libero sint id omnis et.  eu placeat. ', 1136, 12658);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2172, to_date('19-11-2029', 'dd-mm-yyyy'), '12:42', 'est quas qui. ', 1256, null);
+values (2172, to_date('19-11-2029', 'dd-mm-yyyy'), '12:42', 'est quas qui. ', 1256, 18367);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2173, to_date('13-07-2027', 'dd-mm-yyyy'), '5:17', 'possimus ut eiusmod ex eiusmod qui et soluta enim asperiores.  et aut. ', 1161, null);
+values (2173, to_date('13-07-2027', 'dd-mm-yyyy'), '5:17', 'possimus ut eiusmod ex eiusmod qui et soluta enim asperiores.  et aut. ', 1161, 51455);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2174, to_date('05-11-2016', 'dd-mm-yyyy'), '4:39', 'quis dolor eos voluptatibus lorem. ', 1302, null);
+values (2174, to_date('05-11-2016', 'dd-mm-yyyy'), '4:39', 'quis dolor eos voluptatibus lorem. ', 1302, 46796);
 commit;
 prompt 100 records committed...
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2175, to_date('03-11-2021', 'dd-mm-yyyy'), '7:25', 'sapiente nulla exercitation non est voluptate dolores rerum. ', 1113, null);
+values (2175, to_date('03-11-2021', 'dd-mm-yyyy'), '7:25', 'sapiente nulla exercitation non est voluptate dolores rerum. ', 1113, 85739);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2176, to_date('11-06-2029', 'dd-mm-yyyy'), '8:35', 'ut ut molestiae est sunt impedit quod. ', 1245, null);
+values (2176, to_date('11-06-2029', 'dd-mm-yyyy'), '8:35', 'ut ut molestiae est sunt impedit quod. ', 1245, 51931);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2178, to_date('29-05-2015', 'dd-mm-yyyy'), '6:44', 'lorem et non id amet facere cupiditate quo nam corrupti.  maxime ad. ', 1153, null);
+values (2178, to_date('29-05-2015', 'dd-mm-yyyy'), '6:44', 'lorem et non id amet facere cupiditate quo nam corrupti.  maxime ad. ', 1153, 51673);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2179, to_date('24-07-2021', 'dd-mm-yyyy'), '9:13', 'sint laborum animi doloribus molestias corrupti reprehenderit commodo ut rerum. ', 1162, null);
+values (2179, to_date('24-07-2021', 'dd-mm-yyyy'), '9:13', 'sint laborum animi doloribus molestias corrupti reprehenderit commodo ut rerum. ', 1162, 48163);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2180, to_date('03-05-2025', 'dd-mm-yyyy'), '2:48', 'non corrupti cumque fugiat eu omnis animi ut sit. ', 1298, null);
+values (2180, to_date('03-05-2025', 'dd-mm-yyyy'), '2:48', 'non corrupti cumque fugiat eu omnis animi ut sit. ', 1298, 89466);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2181, to_date('31-08-2019', 'dd-mm-yyyy'), '2:50', 'ut repellendus voluptate deserunt pariatur ullamco mollitia quos animi distinctio.  optio. ', 1115, null);
+values (2181, to_date('31-08-2019', 'dd-mm-yyyy'), '2:50', 'ut repellendus voluptate deserunt pariatur ullamco mollitia quos animi distinctio.  optio. ', 1115, 31471);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2183, to_date('06-01-2028', 'dd-mm-yyyy'), '11:54', 'molestiae saepe. ', 1202, null);
+values (2183, to_date('06-01-2028', 'dd-mm-yyyy'), '11:54', 'molestiae saepe. ', 1202, 61349);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2184, to_date('29-08-2020', 'dd-mm-yyyy'), '0:2', 'quos do deserunt nulla sit et omnis eligendi recusandae. ', 1248, null);
+values (2184, to_date('29-08-2020', 'dd-mm-yyyy'), '0:2', 'quos do deserunt nulla sit et omnis eligendi recusandae. ', 1248, 33578);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2185, to_date('22-03-2023', 'dd-mm-yyyy'), '8:33', 'qui nobis distinctio quos amet mollit et nisi repudiandae molestiae. ', 1137, null);
+values (2185, to_date('22-03-2023', 'dd-mm-yyyy'), '8:33', 'qui nobis distinctio quos amet mollit et nisi repudiandae molestiae. ', 1137, 42627);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2187, to_date('07-05-2019', 'dd-mm-yyyy'), '5:4', 'eu. ', 1246, null);
+values (2187, to_date('07-05-2019', 'dd-mm-yyyy'), '5:4', 'eu. ', 1246, 33265);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2188, to_date('24-06-2019', 'dd-mm-yyyy'), '12:52', 'sint veniam cupiditate voluptas lorem eveniet culpa animi. ', 1296, null);
+values (2188, to_date('24-06-2019', 'dd-mm-yyyy'), '12:52', 'sint veniam cupiditate voluptas lorem eveniet culpa animi. ', 1296, 56366);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2189, to_date('18-10-2017', 'dd-mm-yyyy'), '5:26', 'dolore a molestiae eligendi consequat rerum. ', 1183, null);
+values (2189, to_date('18-10-2017', 'dd-mm-yyyy'), '5:26', 'dolore a molestiae eligendi consequat rerum. ', 1183, 52277);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2190, to_date('06-07-2019', 'dd-mm-yyyy'), '11:38', 'et rerum mollit provident eligendi aut iusto magna id magna.  molestias non proident et. ', 1161, null);
+values (2190, to_date('06-07-2019', 'dd-mm-yyyy'), '11:38', 'et rerum mollit provident eligendi aut iusto magna id magna.  molestias non proident et. ', 1161, 67738);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2191, to_date('08-10-2017', 'dd-mm-yyyy'), '1:12', 'id eligendi debitis. ', 1190, null);
+values (2191, to_date('08-10-2017', 'dd-mm-yyyy'), '1:12', 'id eligendi debitis. ', 1190, 46819);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2192, to_date('24-03-2024', 'dd-mm-yyyy'), '0:14', 'et officia similique ut voluptatibus hic qui excepturi eligendi. ', 1165, null);
+values (2192, to_date('24-03-2024', 'dd-mm-yyyy'), '0:14', 'et officia similique ut voluptatibus hic qui excepturi eligendi. ', 1165, 52573);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2193, to_date('23-11-2019', 'dd-mm-yyyy'), '12:7', 'sed molestiae dolor ut aut aut do occaecati aute ut.  in et. ', 1225, null);
+values (2193, to_date('23-11-2019', 'dd-mm-yyyy'), '12:7', 'sed molestiae dolor ut aut aut do occaecati aute ut.  in et. ', 1225, 86381);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2194, to_date('05-12-2023', 'dd-mm-yyyy'), '5:45', 'necessitatibus asperiores quod. ', 1230, null);
+values (2194, to_date('05-12-2023', 'dd-mm-yyyy'), '5:45', 'necessitatibus asperiores quod. ', 1230, 37672);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2195, to_date('05-04-2015', 'dd-mm-yyyy'), '12:12', 'labore laborum voluptates aliquip facilis animi possimus quos nobis dignissimos.  dolorum. ', 1308, null);
+values (2195, to_date('05-04-2015', 'dd-mm-yyyy'), '12:12', 'labore laborum voluptates aliquip facilis animi possimus quos nobis dignissimos.  dolorum. ', 1308, 81645);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2196, to_date('03-06-2021', 'dd-mm-yyyy'), '12:54', 'aut necessitatibus ex praesentium. ', 1258, null);
+values (2196, to_date('03-06-2021', 'dd-mm-yyyy'), '12:54', 'aut necessitatibus ex praesentium. ', 1258, 37652);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2197, to_date('09-02-2028', 'dd-mm-yyyy'), '6:52', 'sint facilis culpa et debitis. ', 1238, null);
+values (2197, to_date('09-02-2028', 'dd-mm-yyyy'), '6:52', 'sint facilis culpa et debitis. ', 1238, 66398);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2198, to_date('08-04-2028', 'dd-mm-yyyy'), '10:48', 'et impedit hic animi excepturi id et tempore libero earum.  voluptate eu quos. ', 1112, null);
+values (2198, to_date('08-04-2028', 'dd-mm-yyyy'), '10:48', 'et impedit hic animi excepturi id et tempore libero earum.  voluptate eu quos. ', 1112, 67679);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2199, to_date('14-09-2015', 'dd-mm-yyyy'), '9:28', 'ex id expedita cillum. ', 1141, null);
+values (2199, to_date('14-09-2015', 'dd-mm-yyyy'), '9:28', 'ex id expedita cillum. ', 1141, 36454);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2200, to_date('08-04-2024', 'dd-mm-yyyy'), '12:4', 'ut dolore quidem hic molestiae sint do expedita quo dolor. ', 1227, null);
+values (2200, to_date('08-04-2024', 'dd-mm-yyyy'), '12:4', 'ut dolore quidem hic molestiae sint do expedita quo dolor. ', 1227, 66398);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2201, to_date('18-08-2020', 'dd-mm-yyyy'), '5:50', 'omnis corrupti voluptatibus minus excepteur consectetur. ', 1281, null);
+values (2201, to_date('18-08-2020', 'dd-mm-yyyy'), '5:50', 'omnis corrupti voluptatibus minus excepteur consectetur. ', 1281, 58923);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2202, to_date('04-07-2021', 'dd-mm-yyyy'), '11:11', 'corrupti. ', 1197, null);
+values (2202, to_date('04-07-2021', 'dd-mm-yyyy'), '11:11', 'corrupti. ', 1197, 41668);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2203, to_date('01-12-2027', 'dd-mm-yyyy'), '6:43', 'a aliquip. ', 1220, null);
+values (2203, to_date('01-12-2027', 'dd-mm-yyyy'), '6:43', 'a aliquip. ', 1220, 61144);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2204, to_date('27-06-2025', 'dd-mm-yyyy'), '2:45', 'mollitia dolor. ', 1267, null);
+values (2204, to_date('27-06-2025', 'dd-mm-yyyy'), '2:45', 'mollitia dolor. ', 1267, 79765);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2205, to_date('31-12-2021', 'dd-mm-yyyy'), '0:37', 'blanditiis. ', 1256, null);
+values (2205, to_date('31-12-2021', 'dd-mm-yyyy'), '0:37', 'blanditiis. ', 1256, 68623);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2206, to_date('25-04-2015', 'dd-mm-yyyy'), '1:29', 'dolor dolores proident omnis tenetur aliqua dolor in. ', 1227, null);
+values (2206, to_date('25-04-2015', 'dd-mm-yyyy'), '1:29', 'dolor dolores proident omnis tenetur aliqua dolor in. ', 1227, 41828);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2207, to_date('08-05-2021', 'dd-mm-yyyy'), '8:44', 'voluptatibus dolore culpa lorem laborum dolorum. ', 1193, null);
+values (2207, to_date('08-05-2021', 'dd-mm-yyyy'), '8:44', 'voluptatibus dolore culpa lorem laborum dolorum. ', 1193, 19739);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2208, to_date('03-08-2029', 'dd-mm-yyyy'), '2:4', 'rerum cupidatat autem sint enim tenetur quod hic et duis.  cupidatat repudiandae assumenda. ', 1155, null);
+values (2208, to_date('03-08-2029', 'dd-mm-yyyy'), '2:4', 'rerum cupidatat autem sint enim tenetur quod hic et duis.  cupidatat repudiandae assumenda. ', 1155, 75754);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2209, to_date('19-01-2019', 'dd-mm-yyyy'), '0:22', 'officia in omnis ea eu amet velit placeat consectetur quod.  repellendus non elit. ', 1113, null);
+values (2209, to_date('19-01-2019', 'dd-mm-yyyy'), '0:22', 'officia in omnis ea eu amet velit placeat consectetur quod.  repellendus non elit. ', 1113, 91352);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2210, to_date('03-11-2019', 'dd-mm-yyyy'), '10:6', 'aliqua repellendus duis iusto duis expedita dolor aliquip esse officia.  similique. ', 1166, null);
+values (2210, to_date('03-11-2019', 'dd-mm-yyyy'), '10:6', 'aliqua repellendus duis iusto duis expedita dolor aliquip esse officia.  similique. ', 1166, 91773);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2211, to_date('13-01-2017', 'dd-mm-yyyy'), '0:14', 'eos irure fugiat irure eos maiores omnis voluptas voluptates nostrud. ', 1150, null);
+values (2211, to_date('13-01-2017', 'dd-mm-yyyy'), '0:14', 'eos irure fugiat irure eos maiores omnis voluptas voluptates nostrud. ', 1150, 37552);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2212, to_date('27-09-2025', 'dd-mm-yyyy'), '6:28', 'et voluptate mollit voluptates tempore accusamus pariatur et. ', 1242, null);
+values (2212, to_date('27-09-2025', 'dd-mm-yyyy'), '6:28', 'et voluptate mollit voluptates tempore accusamus pariatur et. ', 1242, 96359);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2213, to_date('29-08-2018', 'dd-mm-yyyy'), '5:55', 'proident magna sint. ', 1207, null);
+values (2213, to_date('29-08-2018', 'dd-mm-yyyy'), '5:55', 'proident magna sint. ', 1207, 53641);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2214, to_date('16-08-2030', 'dd-mm-yyyy'), '0:5', 'eu ex officia ut laborum aut minim. ', 1222, null);
+values (2214, to_date('16-08-2030', 'dd-mm-yyyy'), '0:5', 'eu ex officia ut laborum aut minim. ', 1222, 38674);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2215, to_date('02-09-2026', 'dd-mm-yyyy'), '4:44', 'commodo ut dolor laborum sint eu quas quod nobis repudiandae.  dolorum ad sit et cupidatat amet. ', 1242, null);
+values (2215, to_date('02-09-2026', 'dd-mm-yyyy'), '4:44', 'commodo ut dolor laborum sint eu quas quod nobis repudiandae.  dolorum ad sit et cupidatat amet. ', 1242, 61912);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2216, to_date('17-12-2017', 'dd-mm-yyyy'), '4:41', 'id ipsum minus placeat nam. ', 1257, null);
+values (2216, to_date('17-12-2017', 'dd-mm-yyyy'), '4:41', 'id ipsum minus placeat nam. ', 1257, 14491);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2217, to_date('22-12-2023', 'dd-mm-yyyy'), '3:7', 'nulla cum ad vero voluptates excepteur quis cillum ea cum.  nihil eos rerum. ', 1200, null);
+values (2217, to_date('22-12-2023', 'dd-mm-yyyy'), '3:7', 'nulla cum ad vero voluptates excepteur quis cillum ea cum.  nihil eos rerum. ', 1200, 81361);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2218, to_date('23-04-2023', 'dd-mm-yyyy'), '3:2', 'et et et mollitia distinctio. ', 1113, null);
+values (2218, to_date('23-04-2023', 'dd-mm-yyyy'), '3:2', 'et et et mollitia distinctio. ', 1113, 55124);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2219, to_date('14-11-2020', 'dd-mm-yyyy'), '8:51', 'voluptates non quo et perferendis et tenetur. ', 1301, null);
+values (2219, to_date('14-11-2020', 'dd-mm-yyyy'), '8:51', 'voluptates non quo et perferendis et tenetur. ', 1301, 88766);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2220, to_date('02-05-2022', 'dd-mm-yyyy'), '6:57', 'dolores qui excepteur atque qui ut. ', 1125, null);
+values (2220, to_date('02-05-2022', 'dd-mm-yyyy'), '6:57', 'dolores qui excepteur atque qui ut. ', 1125, 48376);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2221, to_date('03-08-2017', 'dd-mm-yyyy'), '5:0', 'distinctio animi id laboris. ', 1252, null);
+values (2221, to_date('03-08-2017', 'dd-mm-yyyy'), '5:0', 'distinctio animi id laboris. ', 1252, 86846);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2222, to_date('18-09-2017', 'dd-mm-yyyy'), '5:30', 'sunt ut quas. ', 1225, null);
+values (2222, to_date('18-09-2017', 'dd-mm-yyyy'), '5:30', 'sunt ut quas. ', 1225, 66689);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2223, to_date('18-07-2028', 'dd-mm-yyyy'), '9:4', 'fuga voluptates reiciendis possimus et. ', 1244, null);
+values (2223, to_date('18-07-2028', 'dd-mm-yyyy'), '9:4', 'fuga voluptates reiciendis possimus et. ', 1244, 98579);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2224, to_date('22-12-2016', 'dd-mm-yyyy'), '11:27', 'excepteur est labore. ', 1251, null);
+values (2224, to_date('22-12-2016', 'dd-mm-yyyy'), '11:27', 'excepteur est labore. ', 1251, 75561);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2225, to_date('09-05-2029', 'dd-mm-yyyy'), '5:42', 'accusamus sed rerum animi corrupti cupiditate ex exercitation asperiores ducimus.  cum. ', 1286, null);
+values (2225, to_date('09-05-2029', 'dd-mm-yyyy'), '5:42', 'accusamus sed rerum animi corrupti cupiditate ex exercitation asperiores ducimus.  cum. ', 1286, 39931);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2226, to_date('18-06-2028', 'dd-mm-yyyy'), '1:41', 'tempore proident rerum sunt earum aut blanditiis ex amet. ', 1233, null);
+values (2226, to_date('18-06-2028', 'dd-mm-yyyy'), '1:41', 'tempore proident rerum sunt earum aut blanditiis ex amet. ', 1233, 29744);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2227, to_date('15-01-2024', 'dd-mm-yyyy'), '6:29', 'tempore adipisicing perferendis blanditiis voluptates pariatur nam duis et excepturi. ', 1213, null);
+values (2227, to_date('15-01-2024', 'dd-mm-yyyy'), '6:29', 'tempore adipisicing perferendis blanditiis voluptates pariatur nam duis et excepturi. ', 1213, 65295);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2229, to_date('13-06-2018', 'dd-mm-yyyy'), '5:25', 'mollitia perferendis pariatur et. ', 1309, null);
+values (2229, to_date('13-06-2018', 'dd-mm-yyyy'), '5:25', 'mollitia perferendis pariatur et. ', 1309, 22586);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2230, to_date('23-10-2025', 'dd-mm-yyyy'), '12:28', 'est sint sapiente et proident ut. ', 1177, null);
+values (2230, to_date('23-10-2025', 'dd-mm-yyyy'), '12:28', 'est sint sapiente et proident ut. ', 1177, 55395);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2231, to_date('01-11-2027', 'dd-mm-yyyy'), '6:42', 'rerum. ', 1259, null);
+values (2231, to_date('01-11-2027', 'dd-mm-yyyy'), '6:42', 'rerum. ', 1259, 22277);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2232, to_date('06-08-2016', 'dd-mm-yyyy'), '3:27', 'sint nihil culpa et odio praesentium voluptas ducimus est dolor. ', 1258, null);
+values (2232, to_date('06-08-2016', 'dd-mm-yyyy'), '3:27', 'sint nihil culpa et odio praesentium voluptas ducimus est dolor. ', 1258, 36629);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2233, to_date('03-03-2027', 'dd-mm-yyyy'), '9:7', 'praesentium ullamco repudiandae optio rerum voluptate et similique autem in.  nisi dolor officia. ', 1172, null);
+values (2233, to_date('03-03-2027', 'dd-mm-yyyy'), '9:7', 'praesentium ullamco repudiandae optio rerum voluptate et similique autem in.  nisi dolor officia. ', 1172, 15254);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2234, to_date('16-05-2023', 'dd-mm-yyyy'), '10:24', 'debitis incididunt maiores a sed cupiditate. ', 1131, null);
+values (2234, to_date('16-05-2023', 'dd-mm-yyyy'), '10:24', 'debitis incididunt maiores a sed cupiditate. ', 1131, 48376);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2236, to_date('26-07-2028', 'dd-mm-yyyy'), '5:58', 'ut saepe labore ut. ', 1238, null);
+values (2236, to_date('26-07-2028', 'dd-mm-yyyy'), '5:58', 'ut saepe labore ut. ', 1238, 71898);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2237, to_date('30-05-2023', 'dd-mm-yyyy'), '2:24', 'excepteur dolor amet minus excepteur eveniet quibusdam animi. ', 1231, null);
+values (2237, to_date('30-05-2023', 'dd-mm-yyyy'), '2:24', 'excepteur dolor amet minus excepteur eveniet quibusdam animi. ', 1231, 33126);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2238, to_date('07-12-2017', 'dd-mm-yyyy'), '5:4', 'autem rerum et laborum. ', 1293, null);
+values (2238, to_date('07-12-2017', 'dd-mm-yyyy'), '5:4', 'autem rerum et laborum. ', 1293, 86381);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2239, to_date('17-11-2026', 'dd-mm-yyyy'), '8:34', 'autem. ', 1304, null);
+values (2239, to_date('17-11-2026', 'dd-mm-yyyy'), '8:34', 'autem. ', 1304, 61993);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2240, to_date('07-06-2018', 'dd-mm-yyyy'), '2:21', 'ipsum eligendi aut voluptatibus fuga et impedit mollitia non consequat.  voluptate dolor et. ', 1212, null);
+values (2240, to_date('07-06-2018', 'dd-mm-yyyy'), '2:21', 'ipsum eligendi aut voluptatibus fuga et impedit mollitia non consequat.  voluptate dolor et. ', 1212, 39963);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2241, to_date('19-01-2023', 'dd-mm-yyyy'), '9:1', 'facilis. ', 1177, null);
+values (2241, to_date('19-01-2023', 'dd-mm-yyyy'), '9:1', 'facilis. ', 1177, 92496);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2242, to_date('26-08-2017', 'dd-mm-yyyy'), '1:31', 'nisi. ', 1202, null);
+values (2242, to_date('26-08-2017', 'dd-mm-yyyy'), '1:31', 'nisi. ', 1202, 28984);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2243, to_date('25-10-2025', 'dd-mm-yyyy'), '10:21', 'in pariatur et vero eligendi in ut labore sint et. ', 1115, null);
+values (2243, to_date('25-10-2025', 'dd-mm-yyyy'), '10:21', 'in pariatur et vero eligendi in ut labore sint et. ', 1115, 37552);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2244, to_date('14-11-2016', 'dd-mm-yyyy'), '7:40', 'id id atque velit non est impedit ipsum rerum do.  eiusmod. ', 1268, null);
+values (2244, to_date('14-11-2016', 'dd-mm-yyyy'), '7:40', 'id id atque velit non est impedit ipsum rerum do.  eiusmod. ', 1268, 62641);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2245, to_date('08-05-2027', 'dd-mm-yyyy'), '7:13', 'officia dolor. ', 1269, null);
+values (2245, to_date('08-05-2027', 'dd-mm-yyyy'), '7:13', 'officia dolor. ', 1269, 36833);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2246, to_date('10-01-2027', 'dd-mm-yyyy'), '3:22', 'do in in. ', 1307, null);
+values (2246, to_date('10-01-2027', 'dd-mm-yyyy'), '3:22', 'do in in. ', 1307, 51455);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2247, to_date('18-03-2022', 'dd-mm-yyyy'), '10:42', 'tempor aliqua sed exercitation. ', 1286, null);
+values (2247, to_date('18-03-2022', 'dd-mm-yyyy'), '10:42', 'tempor aliqua sed exercitation. ', 1286, 17415);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2248, to_date('30-09-2024', 'dd-mm-yyyy'), '12:33', 'accusamus sunt et sint aut odio quibusdam aut nobis provident. ', 1221, null);
+values (2248, to_date('30-09-2024', 'dd-mm-yyyy'), '12:33', 'accusamus sunt et sint aut odio quibusdam aut nobis provident. ', 1221, 18131);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2249, to_date('29-09-2027', 'dd-mm-yyyy'), '0:37', 'irure. ', 1216, null);
+values (2249, to_date('29-09-2027', 'dd-mm-yyyy'), '0:37', 'irure. ', 1216, 98616);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2250, to_date('24-10-2016', 'dd-mm-yyyy'), '3:28', 'maxime. ', 1145, null);
+values (2250, to_date('24-10-2016', 'dd-mm-yyyy'), '3:28', 'maxime. ', 1145, 94778);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2251, to_date('03-03-2022', 'dd-mm-yyyy'), '6:28', 'est enim optio aute nisi consectetur ducimus voluptates. ', 1253, null);
+values (2251, to_date('03-03-2022', 'dd-mm-yyyy'), '6:28', 'est enim optio aute nisi consectetur ducimus voluptates. ', 1253, 99258);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2252, to_date('15-08-2028', 'dd-mm-yyyy'), '9:30', 'cillum. ', 1235, null);
+values (2252, to_date('15-08-2028', 'dd-mm-yyyy'), '9:30', 'cillum. ', 1235, 38992);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2253, to_date('11-11-2022', 'dd-mm-yyyy'), '8:39', 'culpa accusamus qui incididunt praesentium in cumque maxime laborum maiores. ', 1237, null);
+values (2253, to_date('11-11-2022', 'dd-mm-yyyy'), '8:39', 'culpa accusamus qui incididunt praesentium in cumque maxime laborum maiores. ', 1237, 66689);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2254, to_date('02-08-2027', 'dd-mm-yyyy'), '7:11', 'at excepturi rerum cillum excepteur deserunt deleniti alias et hic.  libero dolore sit a. ', 1243, null);
+values (2254, to_date('02-08-2027', 'dd-mm-yyyy'), '7:11', 'at excepturi rerum cillum excepteur deserunt deleniti alias et hic.  libero dolore sit a. ', 1243, 78888);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2255, to_date('30-12-2025', 'dd-mm-yyyy'), '1:33', 'velit et nobis repellendus eiusmod id officia dolor temporibus expedita.  optio. ', 1281, null);
+values (2255, to_date('30-12-2025', 'dd-mm-yyyy'), '1:33', 'velit et nobis repellendus eiusmod id officia dolor temporibus expedita.  optio. ', 1281, 64656);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2256, to_date('07-04-2029', 'dd-mm-yyyy'), '6:16', 'in aut animi cillum. ', 1157, null);
+values (2256, to_date('07-04-2029', 'dd-mm-yyyy'), '6:16', 'in aut animi cillum. ', 1157, 68826);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2257, to_date('20-08-2026', 'dd-mm-yyyy'), '1:49', 'corrupti debitis quo animi aut optio omnis sint quod mollitia.  quas lorem cillum minim quod. ', 1150, null);
+values (2257, to_date('20-08-2026', 'dd-mm-yyyy'), '1:49', 'corrupti debitis quo animi aut optio omnis sint quod mollitia.  quas lorem cillum minim quod. ', 1150, 89466);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2258, to_date('06-01-2028', 'dd-mm-yyyy'), '9:48', 'molestiae quod dolorum iusto dolores ipsum occaecati. ', 1250, null);
+values (2258, to_date('06-01-2028', 'dd-mm-yyyy'), '9:48', 'molestiae quod dolorum iusto dolores ipsum occaecati. ', 1250, 54959);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2259, to_date('26-06-2027', 'dd-mm-yyyy'), '7:28', 'aliquip. ', 1131, null);
+values (2259, to_date('26-06-2027', 'dd-mm-yyyy'), '7:28', 'aliquip. ', 1131, 45461);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2260, to_date('30-05-2024', 'dd-mm-yyyy'), '7:18', 'irure deserunt in odio eos delectus et quidem itaque excepturi.  alias. ', 1261, null);
+values (2260, to_date('30-05-2024', 'dd-mm-yyyy'), '7:18', 'irure deserunt in odio eos delectus et quidem itaque excepturi.  alias. ', 1261, 27573);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2261, to_date('16-05-2028', 'dd-mm-yyyy'), '9:36', 'recusandae ut eu ut nam. ', 1130, null);
+values (2261, to_date('16-05-2028', 'dd-mm-yyyy'), '9:36', 'recusandae ut eu ut nam. ', 1130, 22277);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2262, to_date('26-08-2020', 'dd-mm-yyyy'), '6:18', 'dolor necessitatibus est repellendus libero tempor magna. ', 1291, null);
+values (2262, to_date('26-08-2020', 'dd-mm-yyyy'), '6:18', 'dolor necessitatibus est repellendus libero tempor magna. ', 1291, 97938);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2263, to_date('11-06-2015', 'dd-mm-yyyy'), '8:47', 'optio id temporibus reiciendis quis eveniet consequat aute labore. ', 1299, null);
+values (2263, to_date('11-06-2015', 'dd-mm-yyyy'), '8:47', 'optio id temporibus reiciendis quis eveniet consequat aute labore. ', 1299, 94395);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2264, to_date('04-12-2028', 'dd-mm-yyyy'), '2:29', 'occaecat anim eu ex. ', 1184, null);
+values (2264, to_date('04-12-2028', 'dd-mm-yyyy'), '2:29', 'occaecat anim eu ex. ', 1184, 77415);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2265, to_date('18-09-2028', 'dd-mm-yyyy'), '7:6', 'fuga veniam laborum et cupiditate eu atque et et est.  saepe commodo aute eu dignissimos aut. ', 1290, null);
+values (2265, to_date('18-09-2028', 'dd-mm-yyyy'), '7:6', 'fuga veniam laborum et cupiditate eu atque et et est.  saepe commodo aute eu dignissimos aut. ', 1290, 88711);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2266, to_date('10-11-2019', 'dd-mm-yyyy'), '7:31', 'consectetur corrupti aliquip omnis. ', 1150, null);
+values (2266, to_date('10-11-2019', 'dd-mm-yyyy'), '7:31', 'consectetur corrupti aliquip omnis. ', 1150, 48969);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2267, to_date('30-06-2023', 'dd-mm-yyyy'), '2:57', 'atque id id sint dolore possimus. ', 1182, null);
+values (2267, to_date('30-06-2023', 'dd-mm-yyyy'), '2:57', 'atque id id sint dolore possimus. ', 1182, 85941);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2268, to_date('02-12-2016', 'dd-mm-yyyy'), '10:28', 'facere quas sed alias et sit. ', 1273, null);
+values (2268, to_date('02-12-2016', 'dd-mm-yyyy'), '10:28', 'facere quas sed alias et sit. ', 1273, 93715);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2269, to_date('30-12-2015', 'dd-mm-yyyy'), '10:14', 'laboris harum quos dolor sunt duis sunt saepe. ', 1179, null);
+values (2269, to_date('30-12-2015', 'dd-mm-yyyy'), '10:14', 'laboris harum quos dolor sunt duis sunt saepe. ', 1179, 17415);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2270, to_date('10-03-2030', 'dd-mm-yyyy'), '10:37', 'harum et ducimus qui quos dolor temporibus voluptatibus eu excepteur. ', 1119, null);
+values (2270, to_date('10-03-2030', 'dd-mm-yyyy'), '10:37', 'harum et ducimus qui quos dolor temporibus voluptatibus eu excepteur. ', 1119, 87731);
 insert into EVENTS (event_id, event_date, event_time, e_description, shift_id, location_id)
-values (2271, to_date('10-06-2022', 'dd-mm-yyyy'), '3:54', 'facere deleniti in et possimus. ', 1144, null);
+values (2271, to_date('10-06-2022', 'dd-mm-yyyy'), '3:54', 'facere deleniti in et possimus. ', 1144, 28748);
 commit;
 prompt 192 records loaded
 prompt Loading ACTS_IN_EVENTS...
@@ -2637,7 +2228,7 @@ values (55511, '033504865', 'Gil  Cara');
 insert into DONATION_PLACE (place_id, place_phone, manager)
 values (94895, '047049008', 'Olga  Kilmer');
 insert into DONATION_PLACE (place_id, place_phone, manager)
-values (56874, '090715465', 'Chantי  Kidman');
+values (56874, '090715465', 'Chant׳™  Kidman');
 insert into DONATION_PLACE (place_id, place_phone, manager)
 values (25888, '091338753', 'Jean-Luc  Bryson');
 insert into DONATION_PLACE (place_id, place_phone, manager)
@@ -6464,811 +6055,811 @@ commit;
 prompt 400 records loaded
 prompt Loading PARAMEDIC...
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (25654, 32, '971155219', 16507);
+values (25654, 32, '971155219', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (67432, 37, '987133432', 13175);
+values (67432, 37, '987133432', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (28637, 7, '581109827', 5531);
+values (28637, 7, '581109827', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (78628, 5, '216860273', 6986);
+values (78628, 5, '216860273', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (63763, 10, '155290755', 6986);
+values (63763, 10, '155290755', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76582, 32, '382880573', 14841);
+values (76582, 32, '382880573', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45262, 7, '760837533', 8636);
+values (45262, 7, '760837533', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (73315, 32, '591978627', 13567);
+values (73315, 32, '591978627', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (27378, 32, '409938518', 8765);
+values (27378, 32, '409938518', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87282, 33, '339753654', 9157);
+values (87282, 33, '339753654', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51946, 9, '162799501', 10188);
+values (51946, 9, '162799501', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (12872, 35, '975087097', 12391);
+values (12872, 35, '975087097', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (46761, 15, '534346136', 9121);
+values (46761, 15, '534346136', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16333, 18, '080849238', 13452);
+values (16333, 18, '080849238', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (42267, 38, '151716759', 14449);
+values (42267, 38, '151716759', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (49361, 4, '323308058', 10188);
+values (49361, 4, '323308058', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (63829, 34, '168999525', 14449);
+values (63829, 34, '168999525', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (21736, 14, '074081051', 5531);
+values (21736, 14, '074081051', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (32211, 40, '318657191', 11313);
+values (32211, 40, '318657191', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (21919, 28, '178510404', 16507);
+values (21919, 28, '178510404', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (38422, 32, '922303690', 8079);
+values (38422, 32, '922303690', 6100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (67332, 44, '610341868', 17641);
+values (67332, 44, '610341868', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (43282, 35, '532015902', 8765);
+values (43282, 35, '532015902', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (33781, 40, '490388060', 14841);
+values (33781, 40, '490388060', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (88385, 30, '242316965', 9475);
+values (88385, 30, '242316965', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (38957, 29, '608382546', 11221);
+values (38957, 29, '608382546', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (13784, 16, '644185876', 7631);
+values (13784, 16, '644185876', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (46949, 23, '771703424', 12288);
+values (46949, 23, '771703424', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39325, 19, '414116543', 14841);
+values (39325, 19, '414116543', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (17641, 39, '629219354', 8765);
+values (17641, 39, '629219354', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87951, 50, '570331042', 41105);
+values (87951, 50, '570331042', 9800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (72744, 8, '781611704', 14407);
+values (72744, 8, '781611704', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (21446, 13, '919897956', 10291);
+values (21446, 13, '919897956', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39159, 40, '696511331', 7687);
+values (39159, 40, '696511331', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (59564, 21, '477713746', 7631);
+values (59564, 21, '477713746', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (23291, 23, '918868012', 12391);
+values (23291, 23, '918868012', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (73474, 49, '119591809', 42967);
+values (73474, 49, '119591809', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (72447, 45, '652031992', 17249);
+values (72447, 45, '652031992', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (79474, 44, '027847108', 19307);
+values (79474, 44, '027847108', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (36664, 44, '104654240', 11957);
+values (36664, 44, '104654240', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (89258, 36, '307716898', 12391);
+values (89258, 36, '307716898', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (12579, 18, '522338180', 11124);
+values (12579, 18, '522338180', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (52329, 49, '976460507', 40713);
+values (52329, 49, '976460507', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (38346, 42, '035198344', 8975);
+values (38346, 42, '035198344', 6300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (15614, 5, '773999246', 5531);
+values (15614, 5, '773999246', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (63438, 17, '871634320', 9086);
+values (63438, 17, '871634320', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91541, 43, '273455017', 11957);
+values (91541, 43, '273455017', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91342, 40, '178613896', 10823);
+values (91342, 40, '178613896', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (67718, 13, '455747246', 6986);
+values (67718, 13, '455747246', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (37176, 1, '874173884', 12226);
+values (37176, 1, '874173884', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (37584, 3, '819059056', 8636);
+values (37584, 3, '819059056', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (63871, 5, '780987486', 7375);
+values (63871, 5, '780987486', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (25372, 37, '637020775', 10823);
+values (25372, 37, '637020775', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (59524, 24, '368067148', 8698);
+values (59524, 24, '368067148', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (99736, 34, '731452579', 9549);
+values (99736, 34, '731452579', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (69365, 5, '833221223', 10188);
+values (69365, 5, '833221223', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39423, 25, '159478573', 10736);
+values (39423, 25, '159478573', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (48743, 38, '485749616', 11215);
+values (48743, 38, '485749616', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (42622, 6, '147206940', 8636);
+values (42622, 6, '147206940', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66923, 3, '113488805', 14407);
+values (66923, 3, '113488805', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (93969, 0, '551911744', 6986);
+values (93969, 0, '551911744', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (13758, 44, '318741729', 14015);
+values (13758, 44, '318741729', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (35645, 18, '921955127', 16507);
+values (35645, 18, '921955127', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (13136, 10, '062725544', 10188);
+values (13136, 10, '062725544', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (64563, 39, '615121626', 14841);
+values (64563, 39, '615121626', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (48479, 38, '072622442', 8079);
+values (48479, 38, '072622442', 6100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66191, 38, '158592795', 13567);
+values (66191, 38, '158592795', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (83579, 21, '237161395', 16507);
+values (83579, 21, '237161395', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (35318, 18, '942081370', 9086);
+values (35318, 18, '942081370', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39916, 41, '591817202', 13875);
+values (39916, 41, '591817202', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (46622, 24, '498813862', 11221);
+values (46622, 24, '498813862', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91293, 27, '102771731', 13064);
+values (91293, 27, '102771731', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (46777, 42, '995091462', 12013);
+values (46777, 42, '995091462', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (47479, 23, '657771509', 16507);
+values (47479, 23, '657771509', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (22146, 32, '213743877', 12391);
+values (22146, 32, '213743877', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (71179, 4, '249125666', 12226);
+values (71179, 4, '249125666', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (63352, 27, '448322939', 16507);
+values (63352, 27, '448322939', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (74678, 38, '948688656', 7687);
+values (74678, 38, '948688656', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (72294, 40, '392142161', 9157);
+values (72294, 40, '392142161', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66848, 24, '313406747', 12288);
+values (66848, 24, '313406747', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (99953, 35, '684307055', 14449);
+values (99953, 35, '684307055', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86728, 29, '684169296', 14326);
+values (86728, 29, '684169296', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (77694, 18, '218095746', 7687);
+values (77694, 18, '218095746', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97684, 15, '238418580', 10576);
+values (97684, 15, '238418580', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (32926, 11, '841337498', 11352);
+values (32926, 11, '841337498', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39226, 8, '816100549', 6986);
+values (39226, 8, '816100549', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (89636, 25, '771995680', 14326);
+values (89636, 25, '771995680', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (41416, 4, '385432292', 6598);
+values (41416, 4, '385432292', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (55757, 13, '172623234', 14996);
+values (55757, 13, '172623234', 15300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26385, 40, '817077179', 14449);
+values (26385, 40, '817077179', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51659, 21, '859643900', 16507);
+values (51659, 21, '859643900', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (32948, 33, '048142005', 14841);
+values (32948, 33, '048142005', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81397, 50, '182761224', 60791);
+values (81397, 50, '182761224', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (22735, 44, '423925364', 15975);
+values (22735, 44, '423925364', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45168, 14, '659988335', 10964);
+values (45168, 14, '659988335', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (69995, 9, '871894052', 6986);
+values (69995, 9, '871894052', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54353, 36, '725569007', 14449);
+values (54353, 36, '725569007', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (18248, 11, '599521985', 9024);
+values (18248, 11, '599521985', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (24396, 8, '810158730', 14407);
+values (24396, 8, '810158730', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (35337, 33, '840379495', 7687);
+values (35337, 33, '840379495', 5700);
 commit;
 prompt 100 records committed...
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (77927, 19, '370632269', 15429);
+values (77927, 19, '370632269', 13200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87995, 48, '160587152', 38557);
+values (87995, 48, '160587152', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98357, 39, '909147578', 16507);
+values (98357, 39, '909147578', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (27154, 2, '980638570', 14407);
+values (27154, 2, '980638570', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81565, 1, '371775100', 8636);
+values (81565, 1, '371775100', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (43415, 9, '780106789', 6986);
+values (43415, 9, '780106789', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26942, 39, '267506309', 9157);
+values (26942, 39, '267506309', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (68148, 10, '421599017', 12741);
+values (68148, 10, '421599017', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (53329, 26, '957767584', 7631);
+values (53329, 26, '957767584', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86726, 19, '014700822', 8698);
+values (86726, 19, '014700822', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81736, 38, '083033817', 11215);
+values (81736, 38, '083033817', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (53448, 18, '433660379', 16507);
+values (53448, 18, '433660379', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (14712, 50, '740704902', 38557);
+values (14712, 50, '740704902', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51143, 21, '508158601', 8698);
+values (51143, 21, '508158601', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54219, 11, '929475618', 9121);
+values (54219, 11, '929475618', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (32961, 46, '292509980', 38165);
+values (32961, 46, '292509980', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97235, 39, '086595664', 10823);
+values (97235, 39, '086595664', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (18158, 18, '044352560', 9086);
+values (18158, 18, '044352560', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (88993, 40, '234039968', 8765);
+values (88993, 40, '234039968', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (36511, 14, '624367005', 9121);
+values (36511, 14, '624367005', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91775, 12, '285751992', 10964);
+values (91775, 12, '285751992', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (56166, 48, '002554127', 45907);
+values (56166, 48, '002554127', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (19571, 3, '489718006', 14407);
+values (19571, 3, '489718006', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (34924, 34, '683895199', 9157);
+values (34924, 34, '683895199', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (28736, 5, '955370738', 10964);
+values (28736, 5, '955370738', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (74481, 30, '441166212', 16507);
+values (74481, 30, '441166212', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (47932, 41, '420963265', 12013);
+values (47932, 41, '420963265', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16936, 26, '699031142', 11313);
+values (16936, 26, '699031142', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26744, 47, '360157179', 41791);
+values (26744, 47, '360157179', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54481, 28, '009223928', 13064);
+values (54481, 28, '009223928', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26499, 29, '274382117', 11221);
+values (26499, 29, '274382117', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16136, 24, '262097637', 11221);
+values (16136, 24, '262097637', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39635, 12, '403751552', 8636);
+values (39635, 12, '403751552', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (27582, 12, '009934088', 9121);
+values (27582, 12, '009934088', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (82316, 8, '511568325', 9121);
+values (82316, 8, '511568325', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (65746, 38, '680478146', 14449);
+values (65746, 38, '680478146', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (44158, 16, '141337002', 7631);
+values (44158, 16, '141337002', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (12685, 41, '133134505', 13091);
+values (12685, 41, '133134505', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (36551, 12, '525011460', 9024);
+values (36551, 12, '525011460', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (42834, 22, '502582320', 13452);
+values (42834, 22, '502582320', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26575, 15, '664166389', 14407);
+values (26575, 15, '664166389', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (93262, 8, '585289028', 6598);
+values (93262, 8, '585289028', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (82156, 27, '048374256', 14326);
+values (82156, 27, '048374256', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81532, 49, '267941315', 41791);
+values (81532, 49, '267941315', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (48796, 19, '680172578', 9475);
+values (48796, 19, '680172578', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87721, 16, '758794404', 16507);
+values (87721, 16, '758794404', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (68127, 40, '133060414', 8765);
+values (68127, 40, '133060414', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (47884, 9, '597995474', 10964);
+values (47884, 9, '597995474', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (49174, 39, '725345981', 13763);
+values (49174, 39, '725345981', 11900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76379, 10, '752785736', 9121);
+values (76379, 10, '752785736', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (19195, 33, '937684812', 16507);
+values (19195, 33, '937684812', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54416, 45, '144998512', 15191);
+values (54416, 45, '144998512', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (25412, 9, '759729703', 10188);
+values (25412, 9, '759729703', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (89452, 42, '493961904', 15149);
+values (89452, 42, '493961904', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (75717, 40, '575116250', 16507);
+values (75717, 40, '575116250', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (55865, 38, '973262503', 7687);
+values (55865, 38, '973262503', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (71424, 46, '320257722', 40223);
+values (71424, 46, '320257722', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (32143, 28, '722968346', 16900);
+values (32143, 28, '722968346', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (19773, 1, '799167503', 14407);
+values (19773, 1, '799167503', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (84815, 47, '539935524', 40713);
+values (84815, 47, '539935524', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (19424, 18, '621900616', 16507);
+values (19424, 18, '621900616', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (13929, 27, '593607007', 10736);
+values (13929, 27, '593607007', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (23718, 36, '128122177', 13175);
+values (23718, 36, '128122177', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76672, 17, '891313788', 12288);
+values (76672, 17, '891313788', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16741, 15, '237230933', 8636);
+values (16741, 15, '237230933', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (47365, 45, '671348563', 19600);
+values (47365, 45, '671348563', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (89317, 37, '514972615', 8765);
+values (89317, 37, '514972615', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (68773, 32, '026254013', 13175);
+values (68773, 32, '026254013', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (79534, 32, '375496232', 14449);
+values (79534, 32, '375496232', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (93278, 49, '311853595', 38949);
+values (93278, 49, '311853595', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (75393, 29, '999821449', 13064);
+values (75393, 29, '999821449', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16329, 15, '354683638', 10188);
+values (16329, 15, '354683638', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87819, 34, '353521370', 14449);
+values (87819, 34, '353521370', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (52821, 37, '487945649', 8765);
+values (52821, 37, '487945649', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97532, 8, '230155515', 9121);
+values (97532, 8, '230155515', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91248, 17, '728485742', 14326);
+values (91248, 17, '728485742', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (92358, 31, '031240584', 7687);
+values (92358, 31, '031240584', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (31598, 16, '669496513', 7687);
+values (31598, 16, '669496513', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (75433, 16, '036492757', 17488);
+values (75433, 16, '036492757', 15300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (55967, 22, '901831943', 12288);
+values (55967, 22, '901831943', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (32958, 18, '363254369', 7687);
+values (32958, 18, '363254369', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (38417, 28, '617696093', 10736);
+values (38417, 28, '617696093', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (78939, 27, '160752957', 9086);
+values (78939, 27, '160752957', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16248, 44, '687549039', 12545);
+values (16248, 44, '687549039', 7800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86629, 4, '974550419', 6598);
+values (86629, 4, '974550419', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (83334, 18, '855872783', 12288);
+values (83334, 18, '855872783', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51434, 2, '485394887', 12226);
+values (51434, 2, '485394887', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (61293, 50, '617833949', 42967);
+values (61293, 50, '617833949', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51661, 31, '708511967', 7687);
+values (51661, 31, '708511967', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (88828, 46, '573459851', 45907);
+values (88828, 46, '573459851', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (42636, 9, '291511425', 5587);
+values (42636, 9, '291511425', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (74653, 31, '369093284', 12391);
+values (74653, 31, '369093284', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87599, 5, '693992628', 7375);
+values (87599, 5, '693992628', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (71785, 21, '281373620', 8698);
+values (71785, 21, '281373620', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (36424, 9, '200291980', 9509);
+values (36424, 9, '200291980', 9800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (69689, 26, '349136279', 10736);
+values (69689, 26, '349136279', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45173, 24, '325057906', 10736);
+values (45173, 24, '325057906', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76677, 47, '623731843', 40713);
+values (76677, 47, '623731843', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (71137, 31, '519174701', 9157);
+values (71137, 31, '519174701', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (57281, 24, '432174519', 9086);
+values (57281, 24, '432174519', 7200);
 commit;
 prompt 200 records committed...
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (74429, 13, '364832044', 8636);
+values (74429, 13, '364832044', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (57679, 37, '229266261', 12391);
+values (57679, 37, '229266261', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (22396, 47, '004437338', 42575);
+values (22396, 47, '004437338', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (23867, 48, '998752021', 41791);
+values (23867, 48, '998752021', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54542, 44, '327770767', 15975);
+values (54542, 44, '327770767', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (99379, 10, '255902165', 9121);
+values (99379, 10, '255902165', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (33146, 17, '449103116', 14841);
+values (33146, 17, '449103116', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54495, 33, '749011451', 13175);
+values (54495, 33, '749011451', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (58295, 33, '609343955', 11313);
+values (58295, 33, '609343955', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (33612, 25, '716522491', 14326);
+values (33612, 25, '716522491', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (22932, 50, '276143046', 42183);
+values (22932, 50, '276143046', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (68123, 4, '062397734', 10188);
+values (68123, 4, '062397734', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (95967, 3, '807810311', 10188);
+values (95967, 3, '807810311', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76794, 3, '987783098', 9121);
+values (76794, 3, '987783098', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (56494, 34, '652371262', 11313);
+values (56494, 34, '652371262', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (99634, 3, '822051253', 14800);
+values (99634, 3, '822051253', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98487, 17, '616117735', 12676);
+values (98487, 17, '616117735', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (28949, 14, '405534830', 5919);
+values (28949, 14, '405534830', 6100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29842, 18, '327291998', 9086);
+values (29842, 18, '327291998', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (27957, 34, '940598817', 10823);
+values (27957, 34, '940598817', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26883, 37, '517900008', 8079);
+values (26883, 37, '517900008', 6100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (54299, 17, '064148482', 7631);
+values (54299, 17, '064148482', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (11129, 1, '897793693', 14407);
+values (11129, 1, '897793693', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86599, 8, '642604802', 5531);
+values (86599, 8, '642604802', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (17723, 25, '824648175', 10736);
+values (17723, 25, '824648175', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (57665, 7, '166963478', 6986);
+values (57665, 7, '166963478', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (19416, 21, '465075631', 9086);
+values (19416, 21, '465075631', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (68453, 21, '318308556', 7631);
+values (68453, 21, '318308556', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (59487, 45, '479117663', 11957);
+values (59487, 45, '479117663', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66844, 32, '256967718', 8765);
+values (66844, 32, '256967718', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (11755, 33, '439668090', 17096);
+values (11755, 33, '439668090', 15300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51557, 17, '938023231', 12676);
+values (51557, 17, '938023231', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (22381, 49, '264346014', 42575);
+values (22381, 49, '264346014', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (62142, 48, '610422260', 44241);
+values (62142, 48, '610422260', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (41656, 6, '705852145', 6986);
+values (41656, 6, '705852145', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (53666, 40, '187686067', 7687);
+values (53666, 40, '187686067', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98272, 11, '184623309', 12741);
+values (98272, 11, '184623309', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66937, 30, '214371905', 16507);
+values (66937, 30, '214371905', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87117, 46, '566372714', 40713);
+values (87117, 46, '566372714', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (31776, 29, '982871108', 8698);
+values (31776, 29, '982871108', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86744, 38, '850092806', 12391);
+values (86744, 38, '850092806', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (82456, 26, '259941739', 12676);
+values (82456, 26, '259941739', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (85964, 45, '559736783', 15975);
+values (85964, 45, '559736783', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (72767, 34, '959837164', 12391);
+values (72767, 34, '959837164', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45792, 18, '710020129', 11221);
+values (45792, 18, '710020129', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (85163, 15, '093460285', 9121);
+values (85163, 15, '093460285', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (73719, 44, '307081120', 14113);
+values (73719, 44, '307081120', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76394, 44, '312041206', 10487);
+values (76394, 44, '312041206', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (79391, 10, '971987270', 10188);
+values (79391, 10, '971987270', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (82965, 21, '574670543', 14326);
+values (82965, 21, '574670543', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66133, 21, '460950567', 10736);
+values (66133, 21, '460950567', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45881, 50, '268303729', 41791);
+values (45881, 50, '268303729', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (11647, 42, '581195954', 13091);
+values (11647, 42, '581195954', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (31499, 5, '683868829', 6986);
+values (31499, 5, '683868829', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (12515, 24, '879327263', 11124);
+values (12515, 24, '879327263', 9300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (34583, 48, '915523925', 43849);
+values (34583, 48, '915523925', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29559, 42, '408874915', 10837);
+values (29559, 42, '408874915', 7800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81442, 35, '306519991', 10823);
+values (81442, 35, '306519991', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (31175, 36, '685164958', 8765);
+values (31175, 36, '685164958', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81932, 0, '684744404', 6986);
+values (81932, 0, '684744404', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51893, 11, '729784083', 10576);
+values (51893, 11, '729784083', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (37959, 25, '881032236', 9086);
+values (37959, 25, '881032236', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (64966, 5, '424650791', 10964);
+values (64966, 5, '424650791', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76836, 44, '912029990', 11957);
+values (76836, 44, '912029990', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97689, 1, '275949914', 8636);
+values (97689, 1, '275949914', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (36137, 13, '245843519', 10964);
+values (36137, 13, '245843519', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97271, 33, '452597433', 12293);
+values (97271, 33, '452597433', 10000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (95254, 30, '359598513', 10736);
+values (95254, 30, '359598513', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (85855, 2, '766363065', 12226);
+values (85855, 2, '766363065', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97272, 12, '825718771', 9121);
+values (97272, 12, '825718771', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (41684, 24, '275365706', 14326);
+values (41684, 24, '275365706', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98895, 45, '240100155', 11565);
+values (98895, 45, '240100155', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (52512, 48, '185943132', 40713);
+values (52512, 48, '185943132', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (94463, 37, '769552944', 16507);
+values (94463, 37, '769552944', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (35332, 5, '934021441', 14407);
+values (35332, 5, '934021441', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29882, 15, '898034681', 10964);
+values (29882, 15, '898034681', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87932, 12, '984430684', 10188);
+values (87932, 12, '984430684', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (96595, 45, '033712611', 19307);
+values (96595, 45, '033712611', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (21656, 17, '057913650', 13064);
+values (21656, 17, '057913650', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (88151, 16, '945997798', 9086);
+values (88151, 16, '945997798', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (47191, 47, '319137744', 42575);
+values (47191, 47, '319137744', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91682, 18, '884465511', 9086);
+values (91682, 18, '884465511', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97465, 33, '003904199', 8765);
+values (97465, 33, '003904199', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51445, 14, '347949461', 5919);
+values (51445, 14, '347949461', 6100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (83497, 1, '693085728', 6598);
+values (83497, 1, '693085728', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (85734, 29, '258054874', 16507);
+values (85734, 29, '258054874', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (88869, 7, '321643516', 5531);
+values (88869, 7, '321643516', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (73187, 18, '215396573', 12288);
+values (73187, 18, '215396573', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (18912, 21, '118056743', 9475);
+values (18912, 21, '118056743', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (62322, 35, '273963341', 16507);
+values (62322, 35, '273963341', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (49862, 30, '126139999', 7631);
+values (49862, 30, '126139999', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (56456, 20, '299685315', 12676);
+values (56456, 20, '299685315', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (84971, 22, '169295786', 14326);
+values (84971, 22, '169295786', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87252, 15, '688241765', 9121);
+values (87252, 15, '688241765', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (95628, 6, '652327528', 6598);
+values (95628, 6, '652327528', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (57177, 34, '663516006', 30705);
+values (57177, 34, '663516006', 9800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45898, 28, '697207496', 9086);
+values (45898, 28, '697207496', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51238, 1, '137669479', 9121);
+values (51238, 1, '137669479', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (59327, 14, '482424220', 12226);
+values (59327, 14, '482424220', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (15397, 10, '106758411', 14407);
+values (15397, 10, '106758411', 14700);
 commit;
 prompt 300 records committed...
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (78946, 22, '135639362', 12288);
+values (78946, 22, '135639362', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (76743, 20, '686870106', 14449);
+values (76743, 20, '686870106', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (95579, 4, '798435974', 10964);
+values (95579, 4, '798435974', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97791, 6, '679634057', 10188);
+values (97791, 6, '679634057', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (81424, 13, '384427644', 8636);
+values (81424, 13, '384427644', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (82322, 25, '837205710', 16507);
+values (82322, 25, '837205710', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (75638, 34, '478202044', 13175);
+values (75638, 34, '478202044', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (88344, 43, '571220005', 13623);
+values (88344, 43, '571220005', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (24747, 22, '654249625', 16900);
+values (24747, 22, '654249625', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (78676, 26, '021114490', 8698);
+values (78676, 26, '021114490', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98754, 7, '475834164', 14407);
+values (98754, 7, '475834164', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (97849, 30, '867821231', 9475);
+values (97849, 30, '867821231', 7600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (95991, 22, '032070336', 9280);
+values (95991, 22, '032070336', 7400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (58675, 40, '120237174', 14841);
+values (58675, 40, '120237174', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (91894, 4, '897680025', 6986);
+values (91894, 4, '897680025', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (18961, 29, '984379035', 12676);
+values (18961, 29, '984379035', 10900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (56285, 19, '996383746', 14326);
+values (56285, 19, '996383746', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (93871, 35, '273995455', 7687);
+values (93871, 35, '273995455', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (58271, 27, '192849062', 12288);
+values (58271, 27, '192849062', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (43415, 46, '693359794', 38557);
+values (43415, 46, '693359794', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (75245, 15, '943811449', 10964);
+values (75245, 15, '943811449', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (49467, 8, '672905392', 14800);
+values (49467, 8, '672905392', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (89579, 12, '309682546', 11352);
+values (89579, 12, '309682546', 11700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (17433, 20, '233658208', 10736);
+values (17433, 20, '233658208', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (65117, 8, '624208805', 6986);
+values (65117, 8, '624208805', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (21747, 10, '833298755', 9121);
+values (21747, 10, '833298755', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (21918, 48, '400917628', 41791);
+values (21918, 48, '400917628', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45512, 3, '425467041', 10964);
+values (45512, 3, '425467041', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (12357, 5, '735103801', 5531);
+values (12357, 5, '735103801', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29398, 45, '999950098', 19307);
+values (29398, 45, '999950098', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (43541, 43, '049091541', 15191);
+values (43541, 43, '049091541', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (67542, 19, '555029781', 10736);
+values (67542, 19, '555029781', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (61241, 46, '328635747', 42575);
+values (61241, 46, '328635747', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (11987, 9, '924624068', 8636);
+values (11987, 9, '924624068', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (95792, 50, '399907956', 40811);
+values (95792, 50, '399907956', 9500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45851, 29, '319449185', 12288);
+values (45851, 29, '319449185', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (17315, 18, '702371190', 8698);
+values (17315, 18, '702371190', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87436, 19, '807196691', 14841);
+values (87436, 19, '807196691', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (51544, 4, '060138485', 14407);
+values (51544, 4, '060138485', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26945, 24, '577641871', 12288);
+values (26945, 24, '577641871', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (78116, 48, '108935075', 59713);
+values (78116, 48, '108935075', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (48687, 8, '338160998', 8636);
+values (48687, 8, '338160998', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (11446, 3, '975627046', 10188);
+values (11446, 3, '975627046', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98434, 0, '529679514', 12226);
+values (98434, 0, '529679514', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45967, 25, '651790012', 11221);
+values (45967, 25, '651790012', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (73449, 29, '993636785', 11221);
+values (73449, 29, '993636785', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (92381, 24, '805125593', 13064);
+values (92381, 24, '805125593', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26899, 16, '093051335', 14326);
+values (26899, 16, '093051335', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16525, 16, '282967132', 11221);
+values (16525, 16, '282967132', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (85784, 24, '375104960', 13064);
+values (85784, 24, '375104960', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (68899, 29, '772399394', 14449);
+values (68899, 29, '772399394', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86669, 12, '768494443', 6598);
+values (86669, 12, '768494443', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29139, 37, '194954711', 9157);
+values (29139, 37, '194954711', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (74744, 26, '087806495', 7631);
+values (74744, 26, '087806495', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (69753, 30, '012584652', 30609);
+values (69753, 30, '012584652', 9800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (12719, 43, '254115667', 19700);
+values (12719, 43, '254115667', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (25772, 0, '187579649', 14407);
+values (25772, 0, '187579649', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (82588, 24, '220944241', 7631);
+values (82588, 24, '220944241', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (63534, 9, '579667581', 34388);
+values (63534, 9, '579667581', 15300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (25677, 3, '318447492', 10188);
+values (25677, 3, '318447492', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39748, 7, '984918806', 9121);
+values (39748, 7, '984918806', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (34411, 0, '757024709', 14407);
+values (34411, 0, '757024709', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86184, 6, '913942557', 9121);
+values (86184, 6, '913942557', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (66861, 25, '813092669', 7631);
+values (66861, 25, '813092669', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (79522, 31, '897155427', 10823);
+values (79522, 31, '897155427', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29475, 6, '692375929', 6598);
+values (29475, 6, '692375929', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (92797, 17, '534953936', 13646);
+values (92797, 17, '534953936', 11900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (13321, 26, '004214981', 16507);
+values (13321, 26, '004214981', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (15367, 41, '106071827', 13091);
+values (15367, 41, '106071827', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (26422, 4, '852882111', 9121);
+values (26422, 4, '852882111', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (84416, 9, '877652677', 14407);
+values (84416, 9, '877652677', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (29478, 30, '175321868', 14034);
+values (29478, 30, '175321868', 11900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (24274, 32, '259407722', 13175);
+values (24274, 32, '259407722', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (75736, 37, '939829538', 8079);
+values (75736, 37, '939829538', 6100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (45119, 26, '530485585', 12288);
+values (45119, 26, '530485585', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (93282, 31, '563077478', 13175);
+values (93282, 31, '563077478', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (64259, 25, '703928930', 14326);
+values (64259, 25, '703928930', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (61883, 23, '683533120', 16900);
+values (61883, 23, '683533120', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (52548, 29, '579208908', 13064);
+values (52548, 29, '579208908', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (46734, 30, '553830128', 8698);
+values (46734, 30, '553830128', 6800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86766, 23, '756743030', 11221);
+values (86766, 23, '756743030', 9400);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (87149, 27, '091115833', 16900);
+values (87149, 27, '091115833', 15100);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (86525, 4, '018933518', 9509);
+values (86525, 4, '018933518', 9800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (48721, 27, '692936013', 12288);
+values (48721, 27, '692936013', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (64974, 35, '720298946', 13175);
+values (64974, 35, '720298946', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (98926, 14, '333348436', 12741);
+values (98926, 14, '333348436', 13000);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (23622, 1, '851082137', 10188);
+values (23622, 1, '851082137', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (25174, 13, '766797561', 9509);
+values (25174, 13, '766797561', 9800);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (39831, 21, '539087374', 12391);
+values (39831, 21, '539087374', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (13984, 0, '714371122', 6986);
+values (13984, 0, '714371122', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (59735, 41, '962374483', 11523);
+values (59735, 41, '962374483', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (99258, 18, '931607645', 12288);
+values (99258, 18, '931607645', 10500);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (42126, 41, '613689167', 15149);
+values (42126, 41, '613689167', 12600);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (74463, 3, '222632263', 5531);
+values (74463, 3, '222632263', 5700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (14561, 14, '108104963', 14407);
+values (14561, 14, '108104963', 14700);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (16982, 28, '484771335', 13064);
+values (16982, 28, '484771335', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (49284, 3, '709634152', 10964);
+values (49284, 3, '709634152', 11300);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (47672, 25, '650436166', 29736);
+values (47672, 25, '650436166', 8900);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (27774, 34, '594359980', 9157);
+values (27774, 34, '594359980', 7200);
 insert into PARAMEDIC (license_num, seniority, paramedic_id, salary)
-values (24962, 19, '714824861', 13064);
+values (24962, 19, '714824861', 11300);
 commit;
 prompt 400 records loaded
 prompt Loading RECEIVER...
@@ -7281,7 +6872,7 @@ values (77777, 'UT Southwestern', 'Amsterdam', to_date('06-02-2020', 'dd-mm-yyyy
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (22853, 'Barnes-Jewish', 'Blacksburg', to_date('15-10-2022', 'dd-mm-yyyy'), '091949373');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (42243, 'Mount Sinai', 'Kצln', to_date('08-12-2013', 'dd-mm-yyyy'), '035968149');
+values (42243, 'Mount Sinai', 'K׳¦ln', to_date('08-12-2013', 'dd-mm-yyyy'), '035968149');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (27482, 'Yale-New Haven', 'N. ft. Myers', to_date('20-07-2020', 'dd-mm-yyyy'), '032966685');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -7353,7 +6944,7 @@ values (46818, 'UT Southwestern', 'Irati', to_date('17-01-2012', 'dd-mm-yyyy'), 
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (36449, 'Froedtert Hospital', 'Pitstone', to_date('04-05-2020', 'dd-mm-yyyy'), '044698752');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (84859, 'NYU Langone', 'Hהssleholm', to_date('11-03-2014', 'dd-mm-yyyy'), '024187475');
+values (84859, 'NYU Langone', 'H׳”ssleholm', to_date('11-03-2014', 'dd-mm-yyyy'), '024187475');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (14242, 'Johns Hopkins', 'Fort Saskatchew', to_date('26-10-2014', 'dd-mm-yyyy'), '030396777');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -7455,7 +7046,7 @@ values (95781, 'UC San Diego Health', 'Hilversum', to_date('15-03-2012', 'dd-mm-
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (35443, 'University of Colora', 'Amsterdam', to_date('01-03-2024', 'dd-mm-yyyy'), '089226758');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (87661, 'University of Alabam', 'Lbeck', to_date('29-09-2016', 'dd-mm-yyyy'), '099891153');
+values (87661, 'University of Alabam', 'Lן¢•beck', to_date('29-09-2016', 'dd-mm-yyyy'), '099891153');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (54114, 'Vanderbilt Universit', 'Lengdorf', to_date('31-07-2017', 'dd-mm-yyyy'), '022714252');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -7591,7 +7182,7 @@ values (51633, 'UCSF Medical Center', 'Harsum', to_date('10-01-2018', 'dd-mm-yyy
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (97578, 'Mount Sinai', 'Changwon-si', to_date('14-12-2023', 'dd-mm-yyyy'), '030944804');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (95975, 'Mount Sinai', 'Lbeck', to_date('23-12-2020', 'dd-mm-yyyy'), '043719111');
+values (95975, 'Mount Sinai', 'Lן¢•beck', to_date('23-12-2020', 'dd-mm-yyyy'), '043719111');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (83517, 'Mayo Clinic', 'Borger', to_date('04-03-2017', 'dd-mm-yyyy'), '047496451');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -7641,7 +7232,7 @@ values (92616, 'Stanford Health Care', 'Delafield', to_date('09-06-2017', 'dd-mm
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (66455, 'Vanderbilt Universit', 'Hounslow', to_date('16-11-2011', 'dd-mm-yyyy'), '093777121');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (21541, 'Baylor University', 'Tהby', to_date('04-10-2017', 'dd-mm-yyyy'), '091314496');
+values (21541, 'Baylor University', 'T׳”by', to_date('04-10-2017', 'dd-mm-yyyy'), '091314496');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (92131, 'Cedars-Sinai', 'Lakewood', to_date('05-02-2015', 'dd-mm-yyyy'), '033846263');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -7775,7 +7366,7 @@ values (11953, 'University of Michig', 'Guelph', to_date('28-11-2013', 'dd-mm-yy
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (49182, 'Baylor University', 'Mississauga', to_date('27-11-2020', 'dd-mm-yyyy'), '045689279');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (93396, 'University of Iowa', 'Kרbenhavn', to_date('06-09-2011', 'dd-mm-yyyy'), '048530685');
+values (93396, 'University of Iowa', 'K׳¨benhavn', to_date('06-09-2011', 'dd-mm-yyyy'), '048530685');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (93533, 'Northwestern Memoria', 'Olivette', to_date('25-11-2014', 'dd-mm-yyyy'), '083127613');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -7995,7 +7586,7 @@ values (51435, 'Cleveland Clinic Flo', 'Syracuse', to_date('30-09-2022', 'dd-mm-
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (97217, 'Cedars-Sinai', 'Springfield', to_date('31-07-2013', 'dd-mm-yyyy'), '043947112');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (25848, 'UT Southwestern', 'Montrיal', to_date('21-11-2013', 'dd-mm-yyyy'), '048481285');
+values (25848, 'UT Southwestern', 'Montr׳™al', to_date('21-11-2013', 'dd-mm-yyyy'), '048481285');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (62719, 'UCLA Medical Center', 'Ricardson', to_date('03-04-2023', 'dd-mm-yyyy'), '032010157');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -8013,7 +7604,7 @@ values (27367, 'New York-Presbyteria', 'Venice', to_date('01-04-2023', 'dd-mm-yy
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (16983, 'Brigham and Women\''s', 'Timonium', to_date('09-09-2021', 'dd-mm-yyyy'), '048792220');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (89536, 'University of Chicag', 'Malmצ', to_date('31-01-2023', 'dd-mm-yyyy'), '085234761');
+values (89536, 'University of Chicag', 'Malm׳¦', to_date('31-01-2023', 'dd-mm-yyyy'), '085234761');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (44652, 'UCLA Medical Center', 'Brampton', to_date('28-05-2011', 'dd-mm-yyyy'), '032170034');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -8033,7 +7624,7 @@ values (85499, 'Emory University', 'Eden prairie', to_date('29-07-2021', 'dd-mm-
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (91114, 'Emory University', 'El Dorado Hills', to_date('24-12-2014', 'dd-mm-yyyy'), '025825948');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
-values (97834, 'Northwestern Memoria', 'Hillerרd', to_date('25-02-2014', 'dd-mm-yyyy'), '081562256');
+values (97834, 'Northwestern Memoria', 'Hiller׳¨d', to_date('25-02-2014', 'dd-mm-yyyy'), '081562256');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
 values (42823, 'Cedars-Sinai', 'El Masnou', to_date('04-09-2018', 'dd-mm-yyyy'), '083787138');
 insert into RECEIVER (hospital_id, hospital_name, city, delivery_date, hospital_phone)
@@ -15442,19 +15033,19 @@ values (772557168, 'N', to_date('10-12-2016', 'dd-mm-yyyy'), null, '971987270', 
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (929957229, 'Y', to_date('13-10-2013', 'dd-mm-yyyy'), 'N', '851082137', '096150305', 47741, 34383);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (817656332, 'Y', to_date('10-07-2024', 'dd-mm-yyyy'), 'Y', '663516006', '315420007', 58177, null);
+values (215841674, 'Y', to_date('24-03-2024', 'dd-mm-yyyy'), 'Y', '624208805', '853599144', 96595, 54769);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (637131981, 'N', to_date('10-07-2024', 'dd-mm-yyyy'), null, '182761224', '039651469', 58177, null);
+values (298197542, 'Y', to_date('08-10-2023', 'dd-mm-yyyy'), 'Y', '060138485', '165323833', 88991, 59716);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (452128354, 'Y', to_date('10-07-2024', 'dd-mm-yyyy'), 'Y', '650436166', '585972131', 58177, 22894);
+values (572476512, 'Y', to_date('06-02-2024', 'dd-mm-yyyy'), 'N', '363254369', '165323833', 51231, 12146);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (343683381, 'Y', to_date('10-07-2024', 'dd-mm-yyyy'), 'Y', '579667581', '603911711', 58177, 27367);
+values (796985816, 'Y', to_date('17-12-2023', 'dd-mm-yyyy'), 'N', '328635747', '165323833', 46195, 15355);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (122639379, 'Y', to_date('25-05-2013', 'dd-mm-yyyy'), 'Y', '060138485', '370632269', 47741, 23661);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (367475655, 'N', to_date('18-01-2023', 'dd-mm-yyyy'), null, '982871108', '853599144', 37574, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (346253457, 'Y', to_date('10-07-2024', 'dd-mm-yyyy'), 'Y', '012584652', '450816060', 58177, 58624);
+values (487472365, 'Y', to_date('12-12-2023', 'dd-mm-yyyy'), 'N', '354683638', '165323833', 82538, 55386);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (116391431, 'N', to_date('21-05-2023', 'dd-mm-yyyy'), null, '693085728', '165323833', 32343, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
@@ -15480,7 +15071,7 @@ values (181347291, 'N', to_date('24-02-2023', 'dd-mm-yyyy'), null, '728485742', 
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (323958663, 'N', to_date('21-02-2023', 'dd-mm-yyyy'), null, '688241765', '349734903', 13358, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (681962821, 'Y', to_date('10-07-2024', 'dd-mm-yyyy'), 'Y', '108935075', '693359794', 58177, 73425);
+values (895993798, 'Y', to_date('04-02-2023', 'dd-mm-yyyy'), 'N', '237230933', '853599144', 96858, 54377);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (828388548, 'N', to_date('21-06-2023', 'dd-mm-yyyy'), null, '613689167', '349734903', 31471, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
@@ -15488,27 +15079,27 @@ values (563861641, 'N', to_date('12-04-2024', 'dd-mm-yyyy'), null, '683868829', 
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (593459114, 'N', to_date('08-01-2023', 'dd-mm-yyyy'), null, '897155427', '165323833', 22514, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (817656032, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '663516006', '315420007', 58177, null);
+values (798818956, 'Y', to_date('21-03-2023', 'dd-mm-yyyy'), 'N', '182761224', '349734903', 74399, 84291);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (978277439, 'N', to_date('20-01-2023', 'dd-mm-yyyy'), null, '924624068', '349734903', 44422, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (637131081, 'N', to_date('07-10-2024', 'dd-mm-yyyy'), null, '182761224', '039651469', 58177, null);
+values (278461123, 'Y', to_date('01-12-2023', 'dd-mm-yyyy'), 'N', '852882111', '853599144', 66743, 57631);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (681902821, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '108935075', '693359794', 58177, 73425);
+values (357528258, 'Y', to_date('05-01-2023', 'dd-mm-yyyy'), 'N', '049091541', '349734903', 96488, 45111);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (452128304, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '650436166', '585972131', 58177, 22894);
+values (279826155, 'Y', to_date('04-04-2023', 'dd-mm-yyyy'), 'Y', '833298755', '853599144', 17919, 34645);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (115489988, 'N', to_date('16-07-2021', 'dd-mm-yyyy'), null, '840379495', '116730303', 47741, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (340683381, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '579667581', '603911711', 58177, 27367);
+values (596648328, 'Y', to_date('15-03-2023', 'dd-mm-yyyy'), 'N', '693085728', '165323833', 45156, 45713);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (625967443, 'N', to_date('25-12-2018', 'dd-mm-yyyy'), null, '608382546', '591817202', 47741, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (698298814, 'Y', to_date('13-12-2014', 'dd-mm-yyyy'), 'Y', '484771335', '482138217', 47741, 27525);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (346253407, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '012584652', '450816060', 58177, 58624);
+values (948311715, 'Y', to_date('16-04-2024', 'dd-mm-yyyy'), 'Y', '273455017', '853599144', 48689, 73483);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (817606032, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '663516006', '315420007', 58177, null);
+values (591618357, 'Y', to_date('10-06-2023', 'dd-mm-yyyy'), 'N', '249125666', '349734903', 44546, 16364);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (296394193, 'N', to_date('10-04-2024', 'dd-mm-yyyy'), null, '307716898', '853599144', 46819, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
@@ -15542,7 +15133,7 @@ values (911366226, 'N', to_date('23-07-2017', 'dd-mm-yyyy'), null, '683895199', 
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (541442895, 'Y', to_date('01-05-2016', 'dd-mm-yyyy'), 'Y', '684744404', '398323674', 47741, 23638);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (637191081, 'N', to_date('07-10-2024', 'dd-mm-yyyy'), null, '182761224', '039651469', 58177, null);
+values (186567224, 'Y', to_date('21-03-2023', 'dd-mm-yyyy'), 'N', '913942557', '853599144', 57991, 28589);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (226291556, 'Y', to_date('28-02-2010', 'dd-mm-yyyy'), 'N', '987133432', '116730303', 47741, 18172);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
@@ -15550,7 +15141,7 @@ values (695229992, 'Y', to_date('01-09-2010', 'dd-mm-yyyy'), 'N', '716522491', '
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (816465783, 'N', to_date('23-03-2023', 'dd-mm-yyyy'), null, '999950098', '165323833', 99531, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (681902921, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '108935075', '693359794', 58177, 73425);
+values (892974939, 'Y', to_date('25-03-2023', 'dd-mm-yyyy'), 'N', '276143046', '853599144', 46796, 62216);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (316143372, 'N', to_date('05-04-2024', 'dd-mm-yyyy'), null, '651790012', '349734903', 74465, null);
 commit;
@@ -15580,9 +15171,11 @@ values (517435751, 'N', to_date('03-07-2014', 'dd-mm-yyyy'), null, '959837164', 
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (122426575, 'N', to_date('01-01-2012', 'dd-mm-yyyy'), null, '824648175', '302017993', 47741, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
-values (346253807, 'Y', to_date('07-10-2024', 'dd-mm-yyyy'), 'Y', '012584652', '450816060', 58177, 58624);
+values (165142782, 'Y', to_date('22-03-2024', 'dd-mm-yyyy'), 'Y', '318308556', '165323833', 58944, 49182);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (218385143, 'N', to_date('16-04-2024', 'dd-mm-yyyy'), null, '312041206', '349734903', 35911, null);
+insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
+values (597211411, 'Y', to_date('09-08-2023', 'dd-mm-yyyy'), 'N', '420963265', '853599144', 24479, 14752);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (459584619, 'N', to_date('18-04-2011', 'dd-mm-yyyy'), null, '049091541', '987133432', 47741, null);
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
@@ -15592,7 +15185,7 @@ values (663662651, 'Y', to_date('26-10-2010', 'dd-mm-yyyy'), 'Y', '710020129', '
 insert into DONATION (donation_id, pass_tests, donation_date, valid, paramedic_id, donor_id, place_id, hospital_id)
 values (541554696, 'Y', to_date('26-04-2011', 'dd-mm-yyyy'), 'Y', '399907956', '096150305', 47741, 18298);
 commit;
-prompt 3718 records loaded
+prompt 3719 records loaded
 prompt Loading PERSON_PHONE_NUMBER...
 insert into PERSON_PHONE_NUMBER (phone_number, pid)
 values ('050-004-3135', '189173569');
@@ -16805,7 +16398,411 @@ values ('053-491-9046', '184623309');
 insert into PERSON_PHONE_NUMBER (phone_number, pid)
 values ('053-496-0691', '283952085');
 commit;
-prompt 600 records loaded
+prompt 600 records committed...
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0524540234', '741001511');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0523979559', '879327263');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0561987550', '705284364');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0575188447', '027847108');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0545485856', '314936445');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0512572188', '957003822');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0565454149', '338160998');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0513203757', '671348563');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0594664703', '883953054');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0518569515', '971987270');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0581717240', '696511331');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0572295587', '102088648');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0578720294', '122410288');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0573683740', '327291998');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0565267141', '048646646');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0574189139', '086786677');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0568645373', '955866429');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0587032236', '905128014');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0512427201', '805079576');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0586487293', '669496513');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0566608159', '814578172');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0512027661', '705852145');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0574436686', '678607374');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0518505975', '168999525');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0512572188', '529867055');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0548035751', '235438802');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0544263241', '624208805');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0547894449', '237161395');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0536957994', '254115667');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0547941788', '222632263');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0532992935', '405976889');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0566608159', '824629561');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0560102378', '640174589');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0504385864', '146114543');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0518569515', '748990413');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0589935174', '921565805');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0518591234', '026254013');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0538955514', '850736037');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0581773945', '609830431');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0533996612', '936285481');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0561877352', '973262503');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0517536618', '725345981');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0525463289', '135639362');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0517890123', '751102104');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0576513789', '037723814');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0581234567', '847649340');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0512345678', '127774563');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0512987654', '744075988');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0561987654', '284787689');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0561345678', '686870106');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0568765432', '302017993');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521123456', '863266868');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '144998512');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '007114333');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0523456789', '158592795');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0522345678', '337702606');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0527654321', '745115342');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0523456789', '636744011');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '194954711');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0523456789', '877800245');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521123456', '511568325');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '685918534');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '187686067');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '607883888');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '581109827');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0523456789', '912029990');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '234448967');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '682887687');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '420963265');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '025814164');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '255902165');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '498813862');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '364832044');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0523456789', '155686878');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '703928930');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '608234327');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '569849442');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '484654164');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '984430684');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0521234567', '165166680');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '300360696');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '047437879');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '570331042');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '720532971');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '710020129');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '975627046');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '108935075');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '869446489');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '579667581');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '998387270');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '724101704');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '152572605');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '864233203');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '309682546');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '033422444');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '235987479');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '210816127');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '275373015');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '189838507');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '177101709');
+commit;
+prompt 700 records committed...
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '780366947');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '187579649');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '652031992');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '047371408');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '924624068');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '696814618');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '543955576');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '299685315');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '318447492');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '799167503');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '833298755');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '754632393');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '895770231');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '400917628');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '614391180');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '768494443');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '843231819');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '007507474');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '042237113');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '072168409');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '076083621');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '307716898');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '082557774');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '720298946');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '562748536');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '477713746');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '539682561');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '948688656');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '871930292');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '432174519');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '961032191');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '658306554');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '558068638');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '979932926');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '555029781');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '053878653');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '276143046');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '012584652');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '999833209');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '242316965');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '056054703');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '483453321');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '929475618');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '175781268');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '687549039');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '190466061');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '517541852');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '585289028');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '058760424');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '629756673');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '200291980');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '916533775');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '541317968');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '671800521');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '913942557');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '785897554');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '489718006');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '647035053');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '724367146');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '610341868');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '654060128');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '934021441');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '904803417');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '552163784');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '946938069');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '048142005');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '667505144');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '780987486');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '370632269');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '569879560');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '711285053');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '009223928');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '725569007');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '057913650');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '402786140');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '889872686');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '243329904');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '104654240');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '185498109');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '998752021');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '117964189');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '321643516');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '807810311');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '135856510');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '127611024');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '306609285');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '449103116');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '160539133');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '656361203');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '499419072');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '312041206');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '616117735');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '099929610');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '692375929');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '242952342');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '119591809');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '922303690');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '291811666');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '118056743');
+insert into PERSON_PHONE_NUMBER (phone_number, pid)
+values ('0529876543', '178613896');
+commit;
+prompt 800 records loaded
 prompt Loading REPORTS...
 insert into REPORTS (report_id, report_date, report_type, r_content, event_id)
 values (2303, to_date('24-12-2025', 'dd-mm-yyyy'), 'word', 'autem commodo provident. ', 2306);
@@ -17083,1040 +17080,441 @@ values (10, 'reportwrite', 'eiusmod molestias labore ea. ', 7, 7);
 commit;
 prompt 10 records loaded
 prompt Loading VOLUNTEERS...
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('741001511', '0524540234', '63 Parker RoadBad Camberg', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('879327263', '0523979559', '88 Dan DriveThalwil', 'retired', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('705284364', '0561987550', '8 Steyr DriveOsaka', 'active', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('027847108', '0575188447', '83 Alcobendas StreetNashua', 'retired', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('314936445', '0545485856', '16 Ilmenau BlvdHolliston', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('957003822', '0512572188', '63 Moe DriveUlm', 'active', 10, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('338160998', '0565454149', '100 Taylor DriveSoroe', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('671348563', '0513203757', '80 Chandler StreetAlessandria', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('883953054', '0594664703', '78 Sartain AveUetikon am See', 'in process', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('971987270', '0518569515', '40 Jaime RoadAurora', 'active', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('696511331', '0581717240', '31st StreetMason', 'retired', 10, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('102088648', '0572295587', '66 Vance DriveBrentwood', 'active', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('122410288', '0578720294', '36 Guzman BlvdFairbanks', 'in process', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('327291998', '0573683740', '38 Hewett RoadBillund', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('048646646', '0565267141', '718 Kiefer RoadMaidenhead', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('086786677', '0574189139', '27 Keitel StreetSouth Weber', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('955866429', '0568645373', '54 Fairborn AveLinz', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('905128014', '0587032236', '1 PotterNagano', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('805079576', '0512427201', '29 Carla DrivePalo Alto', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('669496513', '0586487293', '54 Lakeville RoadAnnandale', 'in process', 10, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('814578172', '0566608159', '56 Warren AveBretzfeld-Waldbach', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('705852145', '0512027661', '23rd StreetTakapuna', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('678607374', '0574436686', '42 Rourke RoadHounslow', 'active', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('168999525', '0518505975', '45 Wilson RoadKobenhavn', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('529867055', '0512572188', '63 Moe DriveUlm', 'retired', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('235438802', '0548035751', '35 Goss AveGlen Head', 'active', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('624208805', '0544263241', '24 Chad DriveTadley', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('237161395', '0547894449', '74 Jemison StreetRedwood City', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('254115667', '0536957994', '19 Keeslar StreetToronto', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('222632263', '0547941788', '98 Everett RoadCheshire', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('405976889', '0532992935', '87 Debbie StreetBarcelona', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('824629561', '0566608159', '56 Warren AveBretzfeld-Waldbach', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('640174589', '0560102378', '70 Allison AveNew Delhi', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('146114543', '0504385864', '43 Pinter BlvdBishopbriggs', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('748990413', '0518569515', '40 Jaime RoadAurora', 'active', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('921565805', '0589935174', '29 Sandra RoadMenlo Park', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('026254013', '0518591234', '93 Chandler BlvdStuttgart', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('850736037', '0538955514', '74 Keitel AveWalldorf', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('609830431', '0581773945', '55 Amsterdam AveBreda', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('936285481', '0533996612', '74 Bishop StreetGrimbergen', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('973262503', '0561877352', '74 Everetts StLutry', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('725345981', '0517536618', '54 Robertson BlvdAlvechurch', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('135639362', '0525463289', '65 Everetts BlvdSzczecin', 'retired', 10, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('751102104', '0517890123', '77 Goss BlvdBristol', 'in process', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('037723814', '0576513789', '63 Bishop BlvdHuddinge', 'retired', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('847649340', '0581234567', '77 Goss BlvdStuttgart', 'active', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('127774563', '0512345678', '22 Everetts StLutry', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('744075988', '0512987654', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('284787689', '0561987654', '77 Bishop BlvdBristol', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('686870106', '0561345678', '63 Robertson BlvdAlvechurch', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('302017993', '0568765432', '22 Everetts BlvdSzczecin', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('863266868', '0521123456', '33 Everetts StLutry', 'retired', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('144998512', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('007114333', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('158592795', '0523456789', '77 Bishop BlvdBristol', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('337702606', '0522345678', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('745115342', '0527654321', '63 Robertson BlvdAlvechurch', 'retired', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('636744011', '0523456789', '77 Bishop BlvdBristol', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('194954711', '0521234567', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('877800245', '0523456789', '77 Bishop BlvdBristol', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('511568325', '0521123456', '63 Robertson BlvdAlvechurch', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('685918534', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('187686067', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('607883888', '0521234567', '33 Bishop BlvdHuddinge', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('581109827', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('912029990', '0523456789', '77 Bishop BlvdBristol', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('234448967', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('682887687', '0529876543', '33 Bishop BlvdHuddinge', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('420963265', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('025814164', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('255902165', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('498813862', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('364832044', '0521234567', '33 Bishop BlvdHuddinge', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('155686878', '0523456789', '77 Bishop BlvdBristol', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('703928930', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('608234327', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('569849442', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('484654164', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('984430684', '0529876543', '33 Bishop BlvdHuddinge', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('165166680', '0521234567', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('300360696', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('047437879', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('570331042', '0529876543', '33 Bishop BlvdHuddinge', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('720532971', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('710020129', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('975627046', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('108935075', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('869446489', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('579667581', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('998387270', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('724101704', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('152572605', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('864233203', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('309682546', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('033422444', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('235987479', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('210816127', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('275373015', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('189838507', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('177101709', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('741001511', '63 Parker RoadBad Camberg', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('879327263', '88 Dan DriveThalwil', 'retired', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('705284364', '8 Steyr DriveOsaka', 'active', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('027847108', '83 Alcobendas StreetNashua', 'retired', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('314936445', '16 Ilmenau BlvdHolliston', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('957003822', '63 Moe DriveUlm', 'active', 10, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('338160998', '100 Taylor DriveSoroe', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('671348563', '80 Chandler StreetAlessandria', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('883953054', '78 Sartain AveUetikon am See', 'in process', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('971987270', '40 Jaime RoadAurora', 'active', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('696511331', '31st StreetMason', 'retired', 10, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('102088648', '66 Vance DriveBrentwood', 'active', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('122410288', '36 Guzman BlvdFairbanks', 'in process', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('327291998', '38 Hewett RoadBillund', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('048646646', '718 Kiefer RoadMaidenhead', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('086786677', '27 Keitel StreetSouth Weber', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('955866429', '54 Fairborn AveLinz', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('905128014', '1 PotterNagano', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('805079576', '29 Carla DrivePalo Alto', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('669496513', '54 Lakeville RoadAnnandale', 'in process', 10, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('814578172', '56 Warren AveBretzfeld-Waldbach', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('705852145', '23rd StreetTakapuna', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('678607374', '42 Rourke RoadHounslow', 'active', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('168999525', '45 Wilson RoadKobenhavn', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('529867055', '63 Moe DriveUlm', 'retired', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('235438802', '35 Goss AveGlen Head', 'active', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('624208805', '24 Chad DriveTadley', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('237161395', '74 Jemison StreetRedwood City', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('254115667', '19 Keeslar StreetToronto', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('222632263', '98 Everett RoadCheshire', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('405976889', '87 Debbie StreetBarcelona', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('824629561', '56 Warren AveBretzfeld-Waldbach', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('640174589', '70 Allison AveNew Delhi', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('146114543', '43 Pinter BlvdBishopbriggs', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('748990413', '40 Jaime RoadAurora', 'active', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('921565805', '29 Sandra RoadMenlo Park', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('026254013', '93 Chandler BlvdStuttgart', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('850736037', '74 Keitel AveWalldorf', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('609830431', '55 Amsterdam AveBreda', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('936285481', '74 Bishop StreetGrimbergen', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('973262503', '74 Everetts StLutry', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('725345981', '54 Robertson BlvdAlvechurch', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('135639362', '65 Everetts BlvdSzczecin', 'retired', 10, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('751102104', '77 Goss BlvdBristol', 'in process', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('037723814', '63 Bishop BlvdHuddinge', 'retired', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('847649340', '77 Goss BlvdStuttgart', 'active', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('127774563', '22 Everetts StLutry', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('744075988', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('284787689', '77 Bishop BlvdBristol', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('686870106', '63 Robertson BlvdAlvechurch', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('302017993', '22 Everetts BlvdSzczecin', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('863266868', '33 Everetts StLutry', 'retired', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('144998512', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('007114333', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('158592795', '77 Bishop BlvdBristol', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('337702606', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('745115342', '63 Robertson BlvdAlvechurch', 'retired', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('636744011', '77 Bishop BlvdBristol', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('194954711', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('877800245', '77 Bishop BlvdBristol', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('511568325', '63 Robertson BlvdAlvechurch', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('685918534', '33 Bishop BlvdHuddinge', 'in process', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('187686067', '33 Bishop BlvdHuddinge', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('607883888', '33 Bishop BlvdHuddinge', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('581109827', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('912029990', '77 Bishop BlvdBristol', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('234448967', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('682887687', '33 Bishop BlvdHuddinge', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('420963265', '33 Bishop BlvdHuddinge', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('025814164', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('255902165', '33 Bishop BlvdHuddinge', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('498813862', '33 Bishop BlvdHuddinge', 'retired', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('364832044', '33 Bishop BlvdHuddinge', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('155686878', '77 Bishop BlvdBristol', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('703928930', '33 Bishop BlvdHuddinge', 'in process', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('608234327', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('569849442', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('484654164', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('984430684', '33 Bishop BlvdHuddinge', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('165166680', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('300360696', '33 Bishop BlvdHuddinge', 'in process', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('047437879', '33 Bishop BlvdHuddinge', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('570331042', '33 Bishop BlvdHuddinge', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('720532971', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('710020129', '33 Bishop BlvdHuddinge', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('975627046', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('108935075', '33 Bishop BlvdHuddinge', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('869446489', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('579667581', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('998387270', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('724101704', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('152572605', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('864233203', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('309682546', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('033422444', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('235987479', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('210816127', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('275373015', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('189838507', '33 Bishop BlvdHuddinge', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('177101709', '33 Bishop BlvdHuddinge', 'in process', 5, null);
 commit;
 prompt 100 records committed...
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('780366947', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('187579649', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('652031992', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('047371408', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('924624068', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('696814618', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('543955576', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('299685315', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('318447492', '0529876543', '33 Bishop BlvdHuddinge', 'active', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('799167503', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('833298755', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('754632393', '0529876543', '33 Bishop BlvdHuddinge', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('895770231', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('400917628', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('614391180', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('768494443', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('843231819', '0529876543', '33 Bishop BlvdHuddinge', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('007507474', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('042237113', '0529876543', '33 Bishop BlvdHuddinge', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('072168409', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('076083621', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('307716898', '0529876543', '33 Bishop BlvdHuddinge', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('082557774', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('720298946', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('562748536', '0529876543', '33 Bishop BlvdHuddinge', 'active', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('477713746', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('539682561', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('948688656', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('871930292', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('432174519', '0529876543', '33 Bishop BlvdHuddinge', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('961032191', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('658306554', '0529876543', '33 Bishop BlvdHuddinge', 'active', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('558068638', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('979932926', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('555029781', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('053878653', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('276143046', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('012584652', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('999833209', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('242316965', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('056054703', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('483453321', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('929475618', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('175781268', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('687549039', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('190466061', '0529876543', '33 Bishop BlvdHuddinge', 'active', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('517541852', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('585289028', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('058760424', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('629756673', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('200291980', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('916533775', '0529876543', '33 Bishop BlvdHuddinge', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('541317968', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('671800521', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('913942557', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('785897554', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('489718006', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('647035053', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('724367146', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('610341868', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('654060128', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('934021441', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('904803417', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('552163784', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('946938069', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('048142005', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('667505144', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('780987486', '0529876543', '33 Bishop BlvdHuddinge', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('370632269', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('569879560', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('711285053', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('009223928', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('725569007', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('057913650', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('402786140', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('889872686', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('243329904', '0529876543', '33 Bishop BlvdHuddinge', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('104654240', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('185498109', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('998752021', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('117964189', '0529876543', '33 Bishop BlvdHuddinge', 'active', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('321643516', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('807810311', '0529876543', '33 Bishop BlvdHuddinge', 'active', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('135856510', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('127611024', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('306609285', '0529876543', '33 Bishop BlvdHuddinge', 'active', 7, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('449103116', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('160539133', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('656361203', '0529876543', '33 Bishop BlvdHuddinge', 'active', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('499419072', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 8, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('312041206', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 4, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('616117735', '0529876543', '33 Bishop BlvdHuddinge', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('099929610', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('692375929', '0529876543', '33 Bishop BlvdHuddinge', 'active', 9, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('242952342', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 2, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('119591809', '0529876543', '33 Bishop BlvdHuddinge', 'active', 3, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('922303690', '0529876543', '33 Bishop BlvdHuddinge', 'in process', 5, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('291811666', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 1, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('118056743', '0529876543', '33 Bishop BlvdHuddinge', 'active', 6, null);
-insert into VOLUNTEERS (volunteer_id, phone_number, address, status, role_id, mentor_id)
-values ('178613896', '0529876543', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('780366947', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('187579649', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('652031992', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('047371408', '33 Bishop BlvdHuddinge', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('924624068', '33 Bishop BlvdHuddinge', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('696814618', '33 Bishop BlvdHuddinge', 'in process', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('543955576', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('299685315', '33 Bishop BlvdHuddinge', 'retired', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('318447492', '33 Bishop BlvdHuddinge', 'active', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('799167503', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('833298755', '33 Bishop BlvdHuddinge', 'in process', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('754632393', '33 Bishop BlvdHuddinge', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('895770231', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('400917628', '33 Bishop BlvdHuddinge', 'in process', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('614391180', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('768494443', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('843231819', '33 Bishop BlvdHuddinge', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('007507474', '33 Bishop BlvdHuddinge', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('042237113', '33 Bishop BlvdHuddinge', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('072168409', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('076083621', '33 Bishop BlvdHuddinge', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('307716898', '33 Bishop BlvdHuddinge', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('082557774', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('720298946', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('562748536', '33 Bishop BlvdHuddinge', 'active', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('477713746', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('539682561', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('948688656', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('871930292', '33 Bishop BlvdHuddinge', 'retired', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('432174519', '33 Bishop BlvdHuddinge', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('961032191', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('658306554', '33 Bishop BlvdHuddinge', 'active', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('558068638', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('979932926', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('555029781', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('053878653', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('276143046', '33 Bishop BlvdHuddinge', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('012584652', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('999833209', '33 Bishop BlvdHuddinge', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('242316965', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('056054703', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('483453321', '33 Bishop BlvdHuddinge', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('929475618', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('175781268', '33 Bishop BlvdHuddinge', 'retired', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('687549039', '33 Bishop BlvdHuddinge', 'in process', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('190466061', '33 Bishop BlvdHuddinge', 'active', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('517541852', '33 Bishop BlvdHuddinge', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('585289028', '33 Bishop BlvdHuddinge', 'in process', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('058760424', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('629756673', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('200291980', '33 Bishop BlvdHuddinge', 'in process', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('916533775', '33 Bishop BlvdHuddinge', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('541317968', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('671800521', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('913942557', '33 Bishop BlvdHuddinge', 'retired', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('785897554', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('489718006', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('647035053', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('724367146', '33 Bishop BlvdHuddinge', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('610341868', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('654060128', '33 Bishop BlvdHuddinge', 'retired', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('934021441', '33 Bishop BlvdHuddinge', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('904803417', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('552163784', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('946938069', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('048142005', '33 Bishop BlvdHuddinge', 'retired', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('667505144', '33 Bishop BlvdHuddinge', 'in process', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('780987486', '33 Bishop BlvdHuddinge', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('370632269', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('569879560', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('711285053', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('009223928', '33 Bishop BlvdHuddinge', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('725569007', '33 Bishop BlvdHuddinge', 'in process', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('057913650', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('402786140', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('889872686', '33 Bishop BlvdHuddinge', 'in process', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('243329904', '33 Bishop BlvdHuddinge', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('104654240', '33 Bishop BlvdHuddinge', 'retired', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('185498109', '33 Bishop BlvdHuddinge', 'in process', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('998752021', '33 Bishop BlvdHuddinge', 'retired', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('117964189', '33 Bishop BlvdHuddinge', 'active', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('321643516', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('807810311', '33 Bishop BlvdHuddinge', 'active', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('135856510', '33 Bishop BlvdHuddinge', 'retired', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('127611024', '33 Bishop BlvdHuddinge', 'in process', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('306609285', '33 Bishop BlvdHuddinge', 'active', 7, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('449103116', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('160539133', '33 Bishop BlvdHuddinge', 'in process', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('656361203', '33 Bishop BlvdHuddinge', 'active', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('499419072', '33 Bishop BlvdHuddinge', 'retired', 8, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('312041206', '33 Bishop BlvdHuddinge', 'in process', 4, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('616117735', '33 Bishop BlvdHuddinge', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('099929610', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('692375929', '33 Bishop BlvdHuddinge', 'active', 9, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('242952342', '33 Bishop BlvdHuddinge', 'retired', 2, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('119591809', '33 Bishop BlvdHuddinge', 'active', 3, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('922303690', '33 Bishop BlvdHuddinge', 'in process', 5, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('291811666', '33 Bishop BlvdHuddinge', 'retired', 1, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('118056743', '33 Bishop BlvdHuddinge', 'active', 6, null);
+insert into VOLUNTEERS (volunteer_id, address, status, role_id, mentor_id)
+values ('178613896', '33 Bishop BlvdHuddinge', 'retired', 3, null);
 commit;
 prompt 200 records loaded
 prompt Loading VS_IN_SHIFTS...
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1111, '072168409');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1111, '696814618');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1111, '869446489');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1112, '007114333');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1112, '314936445');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1113, '705284364');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1114, '629756673');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1116, '300360696');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1116, '321643516');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1116, '616117735');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1118, '669496513');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1120, '007114333');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1120, '705852145');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1122, '007507474');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1122, '158592795');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1122, '647035053');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1123, '047437879');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1123, '104654240');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1124, '099929610');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1125, '012584652');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1125, '025814164');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1125, '654060128');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1125, '904803417');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1126, '076083621');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1128, '705852145');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1128, '805079576');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1129, '682887687');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1129, '745115342');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1130, '099929610');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1130, '686870106');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1130, '863266868');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1131, '562748536');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1132, '541317968');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1133, '025814164');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1133, '189838507');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1134, '682887687');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1137, '321643516');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1137, '555029781');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1137, '610341868');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1137, '768494443');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1138, '569879560');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1139, '235438802');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1141, '190466061');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1141, '309682546');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1141, '741001511');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1141, '843231819');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1142, '009223928');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1142, '720298946');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1143, '312041206');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1143, '975627046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1147, '082557774');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1148, '210816127');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1149, '883953054');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1149, '957003822');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1150, '405976889');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1151, '178613896');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1152, '127774563');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1152, '243329904');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1152, '629756673');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1152, '647035053');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1153, '135639362');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1153, '314936445');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1153, '539682561');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1153, '629756673');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1154, '146114543');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1154, '847649340');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1155, '237161395');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1155, '318447492');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1155, '863266868');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1155, '877800245');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1157, '190466061');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1157, '843231819');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1157, '961032191');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1158, '027847108');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1159, '194954711');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1160, '072168409');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1160, '957003822');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1161, '082557774');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1161, '405976889');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1161, '581109827');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1162, '608234327');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1163, '255902165');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1163, '667505144');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1164, '555029781');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1164, '705852145');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1165, '432174519');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1166, '082557774');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1166, '785897554');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1166, '979932926');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1167, '118056743');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1167, '135856510');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1168, '242952342');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1169, '235987479');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1170, '284787689');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1171, '946938069');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1172, '585289028');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1172, '705852145');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1173, '033422444');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1174, '570331042');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1175, '483453321');
-commit;
-prompt 100 records committed...
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1175, '710020129');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1175, '807810311');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1175, '916533775');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1176, '144998512');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1178, '703928930');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1179, '291811666');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1179, '905128014');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1180, '667505144');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1181, '102088648');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1181, '946938069');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1182, '614391180');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1183, '275373015');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1184, '158592795');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1185, '745115342');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1187, '168999525');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1187, '608234327');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1188, '299685315');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1190, '671348563');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1193, '569849442');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1194, '072168409');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1194, '847649340');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1194, '921565805');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1195, '187579649');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1196, '711285053');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1199, '187686067');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1200, '971987270');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1201, '135639362');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1201, '889872686');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1202, '402786140');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1202, '539682561');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1202, '552163784');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1202, '929475618');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1204, '692375929');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1206, '189838507');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1206, '327291998');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1206, '656361203');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1206, '924624068');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1207, '682887687');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1208, '338160998');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1208, '748990413');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1209, '879327263');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1210, '053878653');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1210, '744075988');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1211, '135856510');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1213, '007114333');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1213, '152572605');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1215, '432174519');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1216, '135856510');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1216, '234448967');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1216, '242952342');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1216, '703928930');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1216, '864233203');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1216, '916533775');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1217, '242952342');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1218, '033422444');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1218, '895770231');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1219, '242952342');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1220, '037723814');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1220, '276143046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1221, '160539133');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1222, '276143046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1223, '117964189');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1223, '529867055');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1224, '144998512');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1224, '511568325');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1225, '306609285');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1225, '477713746');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1225, '609830431');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1226, '291811666');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1227, '007114333');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1227, '814578172');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1228, '155686878');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1228, '187686067');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1229, '048646646');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1229, '053878653');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1229, '754632393');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1230, '007507474');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1231, '099929610');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1231, '309682546');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1231, '405976889');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1231, '975627046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1233, '314936445');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1233, '929475618');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1233, '975627046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1234, '636744011');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1235, '979932926');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1236, '562748536');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1236, '669496513');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1238, '190466061');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1238, '321643516');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1238, '957003822');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1241, '299685315');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1242, '805079576');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1243, '276143046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1243, '364832044');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1243, '703928930');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1245, '552163784');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1245, '671348563');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1245, '744075988');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1246, '185498109');
-commit;
-prompt 200 records committed...
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1246, '720532971');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1247, '405976889');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1247, '955866429');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1248, '302017993');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1248, '484654164');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1248, '744075988');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1249, '877800245');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1250, '025814164');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1250, '187579649');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1250, '814578172');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1251, '569849442');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1252, '027847108');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1252, '187579649');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1252, '484654164');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1252, '511568325');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1253, '552163784');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1253, '658306554');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1253, '975627046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1254, '364832044');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1256, '629756673');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1256, '916533775');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1257, '177101709');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1258, '127774563');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1258, '585289028');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1258, '877800245');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1260, '312041206');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1260, '337702606');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1260, '364832044');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1261, '235438802');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1262, '160539133');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1263, '529867055');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1263, '671348563');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1263, '957003822');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1264, '318447492');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1266, '971987270');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1268, '255902165');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1271, '037723814');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1271, '667505144');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1273, '276143046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1275, '119591809');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1275, '235438802');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1275, '724101704');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1275, '961032191');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1277, '235987479');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1277, '624208805');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1277, '696511331');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1278, '284787689');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1279, '579667581');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1280, '405976889');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1283, '009223928');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1283, '012584652');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1284, '187579649');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1284, '187686067');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1284, '276143046');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1284, '658306554');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1284, '895770231');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1285, '048142005');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1285, '178613896');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1286, '647035053');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1287, '671348563');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1288, '636744011');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1289, '187579649');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1290, '799167503');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1291, '007507474');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1291, '483453321');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1291, '724367146');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1293, '086786677');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1293, '671800521');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1295, '402786140');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1296, '119591809');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1297, '210816127');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1297, '768494443');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1299, '235438802');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1299, '338160998');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1299, '609830431');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1299, '912029990');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1300, '012584652');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1300, '146114543');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1300, '187579649');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1301, '076083621');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1301, '099929610');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1301, '312041206');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1301, '579667581');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1301, '912029990');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1302, '033422444');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1303, '275373015');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1303, '402786140');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1303, '609830431');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1303, '682887687');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1304, '614391180');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1305, '924624068');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1307, '321643516');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1307, '768494443');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1308, '499419072');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1308, '579667581');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1309, '402786140');
-insert into VS_IN_SHIFTS (shift_id, volunteer_id)
-values (1310, '904803417');
-commit;
-prompt 297 records loaded
+prompt Table is empty
 prompt Enabling foreign key constraints for EVENTS...
 alter table EVENTS enable constraint FK_EVENT_LOCATION;
-alter table EVENTS enable constraint SYS_C008013;
+alter table EVENTS enable constraint SYS_C008195;
 prompt Enabling foreign key constraints for ACTS_IN_EVENTS...
-alter table ACTS_IN_EVENTS enable constraint SYS_C008017;
-alter table ACTS_IN_EVENTS enable constraint SYS_C008018;
+alter table ACTS_IN_EVENTS enable constraint SYS_C008199;
+alter table ACTS_IN_EVENTS enable constraint SYS_C008200;
 prompt Enabling foreign key constraints for DONATION_PLACE...
 alter table DONATION_PLACE enable constraint FK_EVENT_LOCATION2;
 prompt Enabling foreign key constraints for DONOR...
-alter table DONOR enable constraint SYS_C007179;
-alter table DONOR enable constraint SYS_C007180;
+alter table DONOR enable constraint SYS_C008248;
+alter table DONOR enable constraint SYS_C008249;
 prompt Enabling foreign key constraints for PARAMEDIC...
-alter table PARAMEDIC enable constraint SYS_C007168;
+alter table PARAMEDIC enable constraint SYS_C008253;
 prompt Enabling foreign key constraints for DONATION...
-alter table DONATION enable constraint SYS_C007187;
-alter table DONATION enable constraint SYS_C007188;
-alter table DONATION enable constraint SYS_C007189;
-alter table DONATION enable constraint SYS_C007190;
+alter table DONATION enable constraint SYS_C008266;
+alter table DONATION enable constraint SYS_C008267;
+alter table DONATION enable constraint SYS_C008268;
+alter table DONATION enable constraint SYS_C008269;
 prompt Enabling foreign key constraints for PERSON_PHONE_NUMBER...
-alter table PERSON_PHONE_NUMBER enable constraint SYS_C007172;
+alter table PERSON_PHONE_NUMBER enable constraint SYS_C008274;
 prompt Enabling foreign key constraints for REPORTS...
-alter table REPORTS enable constraint SYS_C008025;
+alter table REPORTS enable constraint SYS_C008207;
 prompt Enabling foreign key constraints for VOLUNTEERS...
 alter table VOLUNTEERS enable constraint FK_PARAMEDIC;
 alter table VOLUNTEERS enable constraint FK_PER;
-alter table VOLUNTEERS enable constraint SYS_C008041;
+alter table VOLUNTEERS enable constraint SYS_C008223;
 prompt Enabling foreign key constraints for VS_IN_SHIFTS...
-alter table VS_IN_SHIFTS enable constraint SYS_C008045;
-alter table VS_IN_SHIFTS enable constraint SYS_C008046;
+alter table VS_IN_SHIFTS enable constraint SYS_C008227;
+alter table VS_IN_SHIFTS enable constraint SYS_C008228;
 prompt Enabling triggers for ACTIVITES...
 alter table ACTIVITES enable all triggers;
 prompt Enabling triggers for SHIFTS...
